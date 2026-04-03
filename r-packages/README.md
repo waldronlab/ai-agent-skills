@@ -15,6 +15,18 @@ Analyzes your R/Bioconductor package and generates a complete set of modular ins
 
 ## Quick Start
 
+### Using GitHub Copilot
+
+**Create instructions**:
+```
+@workspace Create .github/instructions for this R package
+```
+
+**Update instructions**:
+```
+@workspace Update .github/instructions based on recent package changes
+```
+
 ### Using Claude Code
 
 **Analyze your package**:
@@ -30,12 +42,6 @@ Analyzes your R/Bioconductor package and generates a complete set of modular ins
 **Update existing instructions**:
 ```
 /update-package-instructions
-```
-
-### Using GitHub Copilot
-
-```
-@workspace Create .github/instructions for this R package
 ```
 
 ## Generated File Structure
@@ -154,6 +160,22 @@ More examples coming soon.
 
 ## Installation
 
+### For GitHub Copilot
+
+**Per-repository (recommended)**:
+```bash
+cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
+   .github/copilot-instructions.md
+```
+
+**Or reference via settings**:
+```json
+// .vscode/settings.json
+{
+  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/copilot/instructions.md"
+}
+```
+
 ### For Claude Code
 
 **Global (recommended)**:
@@ -174,24 +196,9 @@ More examples coming soon.
 {
   "claude.skills": [
     "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/claude/create-package-instructions.md"
+    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
+    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
   ]
-}
-```
-
-### For GitHub Copilot
-
-**Per-repository**:
-```bash
-cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
-   .github/copilot-instructions.md
-```
-
-**Or reference via settings**:
-```json
-// .vscode/settings.json
-{
-  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/copilot/instructions.md"
 }
 ```
 
@@ -226,7 +233,9 @@ After generating instructions:
 ### Initial Creation
 
 1. Navigate to R package root
-2. Run `/create-package-instructions` (Claude) or `@workspace Create instructions` (Copilot)
+2. Create instructions:
+   - **Copilot**: `@workspace Create .github/instructions for this R package`
+   - **Claude**: `/create-package-instructions`
 3. Review generated files
 4. Customize for package-specific patterns
 5. Commit: `git add .github/instructions/`
@@ -235,7 +244,9 @@ After generating instructions:
 ### Updating Existing
 
 1. Make changes to package (new functions, vignettes, etc.)
-2. Run `/update-package-instructions`
+2. Update instructions:
+   - **Copilot**: `@workspace Update .github/instructions based on recent changes`
+   - **Claude**: `/update-package-instructions`
 3. Review changes and diffs
 4. Adjust any sections that need manual attention
 5. Commit updates

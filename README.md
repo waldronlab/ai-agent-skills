@@ -25,7 +25,9 @@ With these skills, AI agents can:
 
 Skills for generating `.github/instructions/` files for R/Bioconductor packages. Automatically creates comprehensive AI agent instructions tailored to your package type (data/analysis/infrastructure).
 
-**Quick start**: `/create-package-instructions` in any R package
+**Quick start**:
+- Claude Code: `/create-package-instructions`
+- GitHub Copilot: `@workspace Create .github/instructions`
 
 **Features**:
 - Automatic package type detection
@@ -60,48 +62,9 @@ Skills for common statistical analysis patterns in microbiome and multi-omics re
 
 ## Installation
 
-### For Claude Code Users
-
-#### Option 1: Global Installation (Recommended)
-
-Clone this repository and configure Claude Code to use these skills globally:
-
-```bash
-# Clone the repository
-cd ~/git
-git clone https://github.com/waldronlab/ai-agent-skills.git
-
-# Add to VS Code user settings
-code ~/.config/Code/User/settings.json
-```
-
-Add to your settings:
-```json
-{
-  "claude.globalSkills": [
-    "~/git/ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "~/git/ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "~/git/ai-agent-skills/r-packages/claude/update-package-instructions.md"
-  ]
-}
-```
-
-#### Option 2: Per-Workspace Installation
-
-Add to your workspace `.vscode/settings.json`:
-```json
-{
-  "claude.skills": [
-    "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
-  ]
-}
-```
-
 ### For GitHub Copilot Users
 
-#### Option 1: Per-Repository Instructions
+#### Option 1: Per-Repository Instructions (Recommended)
 
 Copy the relevant instructions to your repository:
 
@@ -128,22 +91,58 @@ For organization admins:
 1. Go to https://github.com/organizations/waldronlab/settings/copilot
 2. Add instructions from this repository to the knowledge base
 
+### For Claude Code Users
+
+#### Option 1: Global Installation (Recommended)
+
+Clone this repository and configure Claude Code to use these skills globally:
+
+```bash
+# Clone the repository
+cd ~/git
+git clone https://github.com/waldronlab/ai-agent-skills.git
+```
+
+Add to your VS Code settings (`~/.config/Code/User/settings.json`):
+```json
+{
+  "claude.globalSkills": [
+    "~/git/ai-agent-skills/r-packages/claude/analyze-r-package.md",
+    "~/git/ai-agent-skills/r-packages/claude/create-package-instructions.md",
+    "~/git/ai-agent-skills/r-packages/claude/update-package-instructions.md"
+  ]
+}
+```
+
+#### Option 2: Per-Workspace Installation
+
+Add to your workspace `.vscode/settings.json`:
+```json
+{
+  "claude.skills": [
+    "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
+    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
+    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
+  ]
+}
+```
+
 ## Quick Start Guide
 
 ### Generating R Package Instructions
 
 1. Open an R/Bioconductor package in VS Code
-2. Ensure skills are installed (see above)
-3. Open Claude Code or Copilot Chat
-
-**With Claude Code**:
-```
-/create-package-instructions
-```
+2. Ensure skills/instructions are installed (see above)
+3. Open Copilot Chat or Claude Code
 
 **With GitHub Copilot**:
 ```
 @workspace Create .github/instructions for this R package
+```
+
+**With Claude Code**:
+```
+/create-package-instructions
 ```
 
 4. Review generated files in `.github/instructions/`
@@ -152,14 +151,14 @@ For organization admins:
 
 ### Updating Existing Instructions
 
-**With Claude Code**:
-```
-/update-package-instructions
-```
-
 **With GitHub Copilot**:
 ```
 @workspace Update .github/instructions based on recent package changes
+```
+
+**With Claude Code**:
+```
+/update-package-instructions
 ```
 
 ## Repository Structure
