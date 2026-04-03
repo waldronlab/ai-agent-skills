@@ -17,7 +17,8 @@ ai-agent-skills/
 │   ├── README.md            # Domain documentation
 │   ├── claude/
 │   │   ├── analyze-r-package.md           # Analysis skill
-│   │   └── create-package-instructions.md # Orchestrator skill
+│   │   ├── create-package-instructions.md # Creation orchestrator
+│   │   └── update-package-instructions.md # Update orchestrator
 │   ├── copilot/             # Empty, to be populated
 │   ├── templates/           # Empty, to be populated
 │   └── examples/
@@ -46,9 +47,10 @@ ai-agent-skills/
 - ✅ Complete parkinsonsMetagenomicData instruction set as reference
 
 ### Skills
-- ✅ Two working skills (Claude Code format):
+- ✅ Three working skills (Claude Code format):
   - `analyze-r-package`: Pure package analysis
   - `create-package-instructions`: Orchestrator for creating complete instruction sets
+  - `update-package-instructions`: Update existing instructions when package changes
 
 ## 📋 Immediate Next Steps
 
@@ -66,7 +68,7 @@ Based on the drafts in parkinsonsMetagenomicData/.github/instructions/, create:
 - [ ] `create-git-workflow-instructions.md`
 - [ ] `create-index.md`
 - [✓] `create-package-instructions.md` (orchestrator)
-- [ ] `update-package-instructions.md`
+- [✓] `update-package-instructions.md` (orchestrator)
 
 **Source**: Use parkinsonsMetagenomicData/.github/instructions/SKILL_IMPLEMENTATIONS.md as template
 

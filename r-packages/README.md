@@ -17,11 +17,20 @@ Analyzes your R/Bioconductor package and generates a complete set of modular ins
 
 ### Using Claude Code
 
+**Analyze your package**:
+```
+/analyze-r-package
+```
+
+**Generate complete instructions**:
 ```
 /create-package-instructions
 ```
 
-That's it! Claude will analyze your package and generate tailored instructions.
+**Update existing instructions**:
+```
+/update-package-instructions
+```
 
 ### Using GitHub Copilot
 
@@ -227,9 +236,9 @@ After generating instructions:
 
 1. Make changes to package (new functions, vignettes, etc.)
 2. Run `/update-package-instructions`
-3. Review proposed changes
-4. Accept updates or manually adjust
-5. Commit changes
+3. Review changes and diffs
+4. Adjust any sections that need manual attention
+5. Commit updates
 
 ### Maintenance
 
@@ -290,7 +299,6 @@ See main repository [CONTRIBUTING.md](../CONTRIBUTING.md) for general guidelines
 
 - **Issues**: Report bugs at https://github.com/waldronlab/ai-agent-skills/issues
 - **Questions**: Use GitHub Discussions
-- **waldronlab internal**: #ai-tools Slack channel
 
 ## Version History
 

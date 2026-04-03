@@ -242,7 +242,6 @@ Stuck? Need clarification?
 
 - **GitHub Discussions**: General questions and ideas
 - **GitHub Issues**: Specific problems or bugs
-- **Slack** (waldronlab members): #ai-tools channel
 - **Maintainers**: Tag domain maintainers in issues/PRs
 
 ## Domain Maintainers

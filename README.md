@@ -93,7 +93,8 @@ Add to your workspace `.vscode/settings.json`:
 {
   "claude.skills": [
     "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/claude/create-package-instructions.md"
+    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
+    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
   ]
 }
 ```
@@ -174,7 +175,7 @@ ai-agent-skills/
 │   ├── claude/                    # Claude Code skills
 │   │   ├── analyze-r-package.md
 │   │   ├── create-package-instructions.md
-│   │   └── ...
+│   │   └── update-package-instructions.md
 │   ├── copilot/                   # GitHub Copilot instructions
 │   │   └── instructions.md
 │   ├── templates/                 # Instruction file templates
@@ -251,7 +252,6 @@ Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md).
 
 - **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues)
 - **Discussions**: Ask questions in [GitHub Discussions](https://github.com/waldronlab/ai-agent-skills/discussions)
-- **Internal**: waldronlab members can ask in Slack #ai-tools channel
 
 ## License
 

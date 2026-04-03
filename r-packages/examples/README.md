@@ -164,5 +164,4 @@ If you're unsure which example applies to your package type, review:
 2. Primary exported functions
 3. Data access patterns (if any)
 4. Similar packages in waldronlab
-
-Or ask in #ai-tools Slack channel!
+5. GitHub Discussions for the ai-agent-skills repository
