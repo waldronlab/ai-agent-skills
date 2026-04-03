@@ -10,15 +10,17 @@ Add waldronlab skills to GitHub Copilot.
    ```
 
 2. Add to VS Code User `settings.json` (Cmd+, → search "settings.json"):
+
+   See [SKILLS.md](../SKILLS.md) for the current list of skills.
+
+   Add each skill directory to your settings:
    ```json
    {
      "chat.skillsLocations": [
        "/path/to/ai-agent-skills/skills/create-skill",
        "/path/to/ai-agent-skills/skills/check-waldronlab-skills",
-       "/path/to/ai-agent-skills/skills/validate-skill",
-       "/path/to/ai-agent-skills/skills/analyze-r-package",
-       "/path/to/ai-agent-skills/skills/create-package-instructions",
-       "/path/to/ai-agent-skills/skills/update-package-instructions"
+       "/path/to/ai-agent-skills/skills/analyze-r-package"
+       // ... add other skills from SKILLS.md
      ]
    }
    ```
@@ -35,15 +37,16 @@ ln -s /path/to/ai-agent-skills/skills .github/copilot-instructions
 ```
 
 Then add to `.vscode/settings.json` in that project:
+
+See [SKILLS.md](../SKILLS.md) for the current list of skills.
+
 ```json
 {
   "chat.skillsLocations": [
     ".github/copilot-instructions/create-skill",
     ".github/copilot-instructions/check-waldronlab-skills",
-    ".github/copilot-instructions/validate-skill",
-    ".github/copilot-instructions/analyze-r-package",
-    ".github/copilot-instructions/create-package-instructions",
-    ".github/copilot-instructions/update-package-instructions"
+    ".github/copilot-instructions/analyze-r-package"
+    // ... add other skills from SKILLS.md
   ]
 }
 ```
