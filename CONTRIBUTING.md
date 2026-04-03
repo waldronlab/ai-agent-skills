@@ -1,269 +1,141 @@
-# Contributing to waldronlab AI Agent Skills
+# Contributing
 
-Thank you for your interest in contributing! This repository is a collaborative effort to make AI agents more effective partners in waldronlab research and development.
+Thank you for your interest in contributing to waldronlab AI Agent Skills!
 
-## Ways to Contribute
+## What You Can Contribute
 
-### 1. Add New Skills
+### New Skills
 
-If you've developed patterns or workflows that AI agents could learn:
+Have a workflow or pattern that would help others?
 
-1. Choose the appropriate domain directory (or propose a new one)
-2. Follow the skill format (see examples in `r-packages/claude/`)
-3. Test on multiple real projects
-4. Include examples showing the output
-5. Document usage and expected behavior
+**Quick start**: Use the `create-skill` skill for guided help:
+- "Help me create a new skill for [purpose]"
 
-### 2. Improve Existing Skills
+**Manual process**:
+1. Create directory: `skills/{skill-name}/`
+2. Create file: `skills/{skill-name}/SKILL.md`
+3. Follow [SKILL_STANDARD.md](SKILL_STANDARD.md) format
+4. Test on at least 3 different projects
+5. Submit PR
 
-Found a way to make a skill better?
+### Improve Existing Skills
 
-1. Test your improvements on multiple packages/projects
-2. Ensure backwards compatibility or document breaking changes
-3. Update examples if output format changes
-4. Add test cases if applicable
+Found a bug or enhancement?
+1. Test your changes on multiple projects
+2. Update [SKILLS.md](SKILLS.md) if description changes
+3. Document breaking changes clearly
+4. Submit PR
 
-### 3. Add Examples
+### Examples
 
-Good examples help everyone:
+Add examples showing skill output:
+1. Use `skills/{skill-name}/examples/` directory
+2. Include representative real-world case
+3. Document what makes it notable
+4. Submit PR
 
-1. Choose a representative package/project
-2. Ensure instructions are high quality
-3. Include minimal context (DESCRIPTION, README, etc.)
-4. Follow the examples directory structure
-5. Document what makes the example notable
+### Documentation
 
-### 4. Report Issues
+Fix typos, clarify instructions, update outdated info - all welcome via PR.
 
-Found a bug or have a suggestion?
+### Issues
 
-1. Check if issue already exists
-2. Provide clear reproduction steps
-3. Include package/project details
-4. Suggest solution if you have one
+Report bugs or suggest features via [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues).
 
-### 5. Improve Documentation
-
-Documentation improvements are always welcome:
-
-- Fix typos or clarify instructions
-- Add missing usage examples
-- Update outdated information
-- Improve formatting or organization
-
-## Contribution Process
+## How to Contribute
 
 ### Small Changes (typos, doc fixes)
 
 1. Fork the repository
 2. Make your changes
-3. Submit a pull request
-4. Address any review comments
+3. Submit pull request
 
-### Larger Changes (new skills, major updates)
+### New Skills or Major Changes
 
 1. **Open an issue first** to discuss your proposal
 2. Get feedback from maintainers
-3. Fork and create a feature branch
-4. Develop and test your changes
-5. Update documentation
-6. Submit a pull request
-7. Respond to review feedback
+3. Fork and create feature branch
+4. Develop following [SKILL_STANDARD.md](SKILL_STANDARD.md)
+5. Test thoroughly (at least 3 projects)
+6. Update [SKILLS.md](SKILLS.md) to include your skill
+7. Submit pull request
 
-## Skill Development Guidelines
+## Skill Guidelines
 
-### Format
+### Required
 
-Skills should be markdown files with:
+- Follow [SKILL_STANDARD.md](SKILL_STANDARD.md) format
+- Include required YAML frontmatter: `name`, `description`, `version`, `category`
+- No `platforms:` or `triggers:` fields (skills are agent-agnostic)
+- Use natural language invocation examples
+- Test on multiple projects before submitting
 
-**For Claude Code** (`claude/` directory):
-```markdown
+### Format Example
+
+```yaml
 ---
-name: skill-name
-description: Brief description of what the skill does
+name: my-skill
+description: One-line purpose for discovery
 version: 1.0.0
+category: domain
+tags: [tag1, tag2]
+author: your-name
 ---
 
-# Skill Title
+# my-skill
 
-Clear description of purpose and usage.
+What this skill does.
 
 ## Usage
-/skill-command or "trigger phrase"
+
+Natural language examples:
+- "Do [task] for me"
+- "Help me with [thing]"
 
 ## Process
-Step-by-step instructions for the AI agent
 
-## Output Format
-Description of expected output
+### 1. First Step
+
+Platform-agnostic description of what to do.
+
+### 2. Second Step
+
+Continue with clear steps.
+
+## Examples
+
+Show realistic usage scenarios.
 ```
-
-**For GitHub Copilot** (`copilot/` directory):
-- Natural language instructions
-- Pattern-based guidance
-- Example interactions
-- Quick reference commands
 
 ### Testing
 
-Before submitting a skill:
+Before submitting:
+- Test on at least 3 different projects
+- Verify output accuracy
+- Check edge cases
+- Get feedback from others if possible
 
-1. **Test on at least 3 different packages/projects**
-   - Include different package types if applicable
-   - Test edge cases
-   - Verify output quality
+## Pull Request Process
 
-2. **Validate output**
-   - Generated files should be accurate
-   - Cross-references should work
-   - Format should be consistent
+1. Create clear PR description explaining what and why
+2. Reference any related issues
+3. Ensure all tests pass (if applicable)
+4. Respond to review feedback
+5. Be patient - reviews typically take 2-7 days
 
-3. **Get feedback**
-   - Have others test your skill
-   - Iterate based on feedback
+## Questions?
 
-### Documentation
-
-Every skill should have:
-
-- Clear description of purpose
-- Usage instructions
-- Example output
-- Known limitations
-- Maintenance notes
-
-## Code Review Process
-
-### What Reviewers Look For
-
-- **Correctness**: Does it produce accurate output?
-- **Completeness**: Are edge cases handled?
-- **Clarity**: Are instructions clear and unambiguous?
-- **Consistency**: Does it follow established patterns?
-- **Testing**: Has it been adequately tested?
-- **Documentation**: Is usage clear?
-
-### Timeline
-
-- Small PRs: Usually reviewed within 2-3 days
-- Large PRs: May take up to a week
-- Complex changes: May require discussion and iteration
-
-## Style Guidelines
-
-### Markdown Formatting
-
-- Use ATX-style headers (`#` not underlines)
-- Use fenced code blocks with language tags
-- Use lists for steps or items
-- Keep lines under 120 characters when possible
-- Include blank lines between sections
-
-### Naming Conventions
-
-**Skills**:
-- Lowercase with hyphens: `analyze-r-package`
-- Verb-noun format when possible: `create-instructions`
-
-**Files**:
-- READMEs in title case: `README.md`
-- Templates: `{number}-{name}.template.md`
-- Examples: `{type}-{pattern}/`
-
-**Directories**:
-- Lowercase, hyphens for multi-word: `r-packages`, `statistical-methods`
-
-### Writing Style
-
-- **Clear and concise**: Get to the point quickly
-- **Active voice**: "Generate instructions" not "Instructions are generated"
-- **Examples**: Show, don't just tell
-- **Specific**: "Read DESCRIPTION file" not "Read package metadata"
-
-## Commit Messages
-
-Follow conventional commit format:
-
-```
-type: brief description
-
-- Detailed point 1
-- Detailed point 2
-
-Co-Authored-By: [Your Name] <your@email.com>
-```
-
-**Types**:
-- `feat`: New skill or major feature
-- `fix`: Bug fix in existing skill
-- `docs`: Documentation updates
-- `test`: Adding or updating tests
-- `refactor`: Code restructuring
-- `chore`: Maintenance tasks
-
-## Issue Labels
-
-We use these labels:
-
-- `bug`: Something isn't working
-- `enhancement`: New feature or improvement
-- `documentation`: Documentation updates needed
-- `good first issue`: Good for newcomers
-- `help wanted`: Extra attention needed
-- `question`: Further information requested
-- `wontfix`: Will not be worked on
-
-## Community Guidelines
-
-### Be Respectful
-
-- Be kind and patient
-- Welcome newcomers
-- Respect different perspectives
-- Assume good intentions
-
-### Be Collaborative
-
-- Share knowledge openly
-- Give constructive feedback
-- Credit others' contributions
-- Help others learn
-
-### Be Professional
-
-- Keep discussions on-topic
-- Use inclusive language
-- Respect privacy
-- Follow code of conduct
-
-## Getting Help
-
-Stuck? Need clarification?
-
-- **GitHub Discussions**: General questions and ideas
-- **GitHub Issues**: Specific problems or bugs
-- **Maintainers**: Tag domain maintainers in issues/PRs
-
-## Domain Maintainers
-
-Each domain has designated maintainers (listed in domain README):
-
-- **r-packages/**: [Maintainer names]
-- **metagenomics/**: [Maintainer names]
-- **statistical-methods/**: [Maintainer names]
-
-Maintainers are responsible for:
-- Reviewing domain-specific PRs
-- Maintaining skill quality
-- Updating documentation
-- Responding to issues
+- **Skill creation help**: Use the `create-skill` skill
+- **Setup questions**: See [instructions/](instructions/) for your platform
+- **General questions**: [GitHub Discussions](https://github.com/waldronlab/ai-agent-skills/discussions)
+- **Bugs/features**: [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues)
 
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
 
-## Questions?
+---
 
-If anything is unclear, please ask! We're here to help and appreciate your contributions.
+For technical details on skill format, see [SKILL_STANDARD.md](SKILL_STANDARD.md).
 
-Thank you for helping make AI agents better collaborators! 🤖✨
+For understanding how skills work, see [AGENTS.md](AGENTS.md) and [SKILLS.md](SKILLS.md).

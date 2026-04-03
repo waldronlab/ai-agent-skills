@@ -2,21 +2,9 @@
 name: analyze-r-package
 description: Analyze R/Bioconductor package structure to extract key information about its purpose, exports, and characteristics
 version: 1.0.0
-platforms:
-  - claude-code
-  - github-copilot
-triggers:
-  claude:
-    - /analyze-r-package
-    - "Analyze this R package"
-    - "What type of R package is this?"
-  copilot:
-    - "@workspace analyze this R package"
-    - "@workspace what type of R package is this?"
-    - "@workspace tell me about this package structure"
-    - "@workspace examine this R package"
-author: waldronlab
 category: r-packages
+tags: [r-packages, analysis, bioconductor, documentation]
+author: waldronlab
 ---
 
 # analyze-r-package
@@ -25,20 +13,19 @@ Analyze an R/Bioconductor package to understand its structure, purpose, and key 
 
 ## Usage
 
-**Claude Code**:
-- `/analyze-r-package`
+Invoke this skill when you want to understand an R package's architecture:
 - "Analyze this R package"
 - "What type of R package is this?"
+- "Tell me about this package structure"
+- "Examine this R package"
 
-**GitHub Copilot**:
-- `@workspace analyze this R package`
-- `@workspace what type of R package is this?`
-- `@workspace tell me about this package structure`
+You must be in an R package directory (contains DESCRIPTION file) for this skill to work.
 
 ## Prerequisites
 
 - Working directory is an R package root (contains DESCRIPTION file)
 - Package has standard R structure (R/, NAMESPACE, etc.)
+- You have read access to package files
 
 ## Process
 
@@ -55,7 +42,7 @@ Read and analyze the DESCRIPTION file to extract:
   - "StatisticalMethod", "Workflow" → **Analysis Package**
   - "Infrastructure", "DataRepresentation" → **Infrastructure Package**
   - Otherwise → **Utility Package**
-- **Key dependencies**: Parse `Imports` and `Depends` fields, especially note:
+- **Key dependencies**: Parse `Imports` and `Depends` fields, especially noting:
   - SummarizedExperiment / TreeSummarizedExperiment
   - ExperimentHub / AnnotationHub
   - Database packages (DBI, DuckDB, RSQLite)
@@ -91,7 +78,7 @@ Note presence of:
 
 ### 4. Detect Data Access Patterns
 
-Search R source files (in `R/` directory) for data access indicators. Search for these patterns (case insensitive):
+Search R source files (in `R/` directory) for data access indicators:
 
 - **"ExperimentHub"** → ExperimentHub integration
 - **"AnnotationHub"** → AnnotationHub integration
@@ -102,7 +89,7 @@ Search R source files (in `R/` directory) for data access indicators. Search for
 - **"parquet"** → Parquet file handling
 - **"hdf5"** OR **"h5"** → HDF5 file handling
 
-If any matches found, classify as having **remote data access**.
+If matches found, classify as having **remote data access**.
 
 Classify data access type:
 - **None**: No data access functions
@@ -112,7 +99,9 @@ Classify data access type:
 
 ### 5. Identify S4 Classes
 
-Search R source files for S4 class definitions. Look for:
+Search R source files for S4 class definitions:
+
+Look for:
 - `setClass(`
 - `methods::setClass(`
 - `setMethod(`
@@ -141,6 +130,7 @@ Check test structure:
 ### 8. List Vignettes
 
 If vignettes directory exists, for each `.Rmd` file:
+
 - Read first 50 lines to identify title and purpose
 - Extract YAML frontmatter `title:` field
 - Note the vignette filename
@@ -149,7 +139,7 @@ Create a list with vignette names and their purposes.
 
 ## Output Format
 
-Produce a structured markdown summary in this format:
+Produce a structured markdown summary:
 
 ```markdown
 ## Package Analysis: [Package Name]
@@ -198,20 +188,28 @@ Produce a structured markdown summary in this format:
 - Test data: [location and types]
 
 ### Special Characteristics
-[List notable patterns that should be documented:]
-- [Pattern 1]
-- [Pattern 2]
-- [Pattern 3]
+[List notable patterns that should be documented]
 
 ### Dependencies of Note
-[List key Bioconductor or specialized packages:]
-- [Package1] - [why it's significant]
-- [Package2] - [why it's significant]
+[List key Bioconductor or specialized packages and why they matter]
 ```
 
-## Example Output
+## Error Handling
 
-For parkinsonsMetagenomicData package:
+**If required files don't exist**:
+- **DESCRIPTION missing** → "Not an R package directory"
+- **NAMESPACE missing** → "No NAMESPACE found - package may not be built yet"
+- **No R/ directory** → "No R source files found"
+
+**If directory structure is unclear**:
+- Ask: "Is this a data package, analysis package, or infrastructure package?"
+- Explain what was found and why classification is ambiguous
+
+## Examples
+
+### Example 1: Data Package Analysis
+
+For parkinsonsMetagenomicData:
 
 ```markdown
 ## Package Analysis: parkinsonsMetagenomicData
@@ -237,76 +235,32 @@ For parkinsonsMetagenomicData package:
 - `get_ref_info()` - List available reference tables
 - `biobakery_files()` - List available data types with descriptions
 
-**Utility Functions** (3):
-- `data_dict()` - Sample metadata field definitions
-- `output_file_types()` - Map data types to tool/file info
-- Internal validation functions (confirm_*)
-
 ### Data Access Pattern
 - **Type**: Hybrid (Remote primary, Local for testing)
 - **Sources**:
   - HuggingFace: waldronlab/metagenomics_mac (full dataset)
   - HuggingFace: waldronlab/metagenomics_mac_examples (example subset)
   - Local: inst/extdata/ (test fixtures)
-- **Technologies**: DuckDB for remote parquet access, TreeSummarizedExperiment output format
-
-### S4 Classes
-No S4 classes defined (returns TreeSummarizedExperiment from TreeSummarizedExperiment package)
+- **Technologies**: DuckDB for remote parquet access, TreeSummarizedExperiment output
 
 ### Documentation
 
 **Vignettes** (5):
-1. codebook.Rmd - Data Codebook: reference for all variables and data structures
-2. first-15-minutes.Rmd - First 15 Minutes: quick start guide for new users
-3. full-workflow.Rmd - Full Workflow: comprehensive tutorial with multiple data types
-4. piecewise-workflow.Rmd - Piecewise Workflow: advanced direct database control patterns
-5. working-with-large-parquet-files.Rmd - Working with Large Parquet Files: performance optimization strategies
+1. codebook.Rmd - Data Codebook: reference for all variables
+2. first-15-minutes.Rmd - Quick start guide for new users
+3. full-workflow.Rmd - Comprehensive tutorial with multiple data types
+4. piecewise-workflow.Rmd - Advanced direct database control patterns
 
 **Testing**:
 - Framework: testthat
-- Test files: 3 (test-readParquet.R, test-utils.R, test-data.R)
-- Test data: inst/extdata/ (parquet, TSV, RDS files - ~20KB each)
+- Test files: 3
+- Test data: inst/extdata/ (parquet, TSV, RDS files)
 
 ### Special Characteristics
 - Uses DuckDB for efficient remote parquet file querying without full download
+- Multiple data types: taxonomic (MetaPhlAn), functional (HUMAnN), QC (FastQC)
 - Large file handling requires sorted column filtering strategies
-- Multiple data types: taxonomic (MetaPhlAn), functional (HUMAnN), QC (FastQC, KneadData)
-- Sample metadata included as package data object (sampleMetadata)
-- Normalized and stratified variants of functional data
-- Reference tables for feature name mappings
-
-### Dependencies of Note
-- TreeSummarizedExperiment - Return format for all data retrieval functions
-- DuckDB - Core technology for remote parquet access
-- dplyr - Data manipulation and filtering
-- arrow - Parquet file support
 ```
-
-## Platform-Specific Notes
-
-### Claude Code
-- Use Read tool to read files (DESCRIPTION, NAMESPACE, README)
-- Use Grep tool to search for patterns in R/ directory
-- Use Glob tool to find files (vignettes, tests)
-- Use Bash tool only for directory listing if needed
-- Output is saved to conversation context automatically
-
-### GitHub Copilot
-- Use VS Code file browser to navigate directories
-- Use built-in search to find patterns in files
-- Read files using editor or file preview
-- Output is displayed in chat window
-
-## Error Handling
-
-**If required files don't exist**:
-- **DESCRIPTION missing** → Error: "Not an R package directory"
-- **NAMESPACE missing** → Warning: "No NAMESPACE found - package may not be built yet"
-- **No R/ directory** → Error: "No R source files found"
-
-**If directory structure is unclear**:
-- Ask user: "Is this a data package, analysis package, or infrastructure package?"
-- Explain what you found and why classification is ambiguous
 
 ## Integration
 
@@ -319,5 +273,8 @@ This analysis output is consumed by:
 
 - This skill produces analysis output for use by other skills or for user understanding
 - Manual verification recommended for complex packages
-- If ambiguities exist, ask user for clarification rather than guessing
+- If ambiguities exist, ask the user for clarification rather than guessing
 - The output should be comprehensive enough to inform instruction generation
+- Results can be used directly as input to `create-package-instructions`
+
+See [SKILL_STANDARD.md](../../SKILL_STANDARD.md) for format details and [create-package-instructions](../create-package-instructions/SKILL.md) for how to use this analysis.
