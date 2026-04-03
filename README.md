@@ -13,7 +13,7 @@ Skills are structured instructions that teach AI agents about:
 
 With these skills, AI agents can:
 - Generate appropriate documentation
-- Follow waldronlab coding standards
+- Follow Bioconductor coding standards
 - Suggest context-aware improvements
 - Understand domain-specific patterns
 - Provide better assistance on complex tasks
@@ -259,7 +259,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
-These skills are developed and maintained by the waldronlab community at CUNY SPH. Special thanks to all contributors who share their expertise to make AI agents more effective collaborators.
+These skills are developed and maintained by the waldronlab at CUNY SPH and collaborators to make AI agents more effective collaborators.
 
 ---
 

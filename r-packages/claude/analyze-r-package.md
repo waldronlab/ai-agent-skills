@@ -1,21 +1,12 @@
-# Example: Complete Claude Code Skill Implementation
-
-This shows a fully implemented skill as it would appear in the waldronlab/r-package-instructions-skills repository.
-
----
-
-## File: claude/analyze-r-package.md
-
-```markdown
 ---
 name: analyze-r-package
-description: Analyze R/Bioconductor package structure to extract key information for creating AI instructions
+description: Analyze R/Bioconductor package structure to extract key information about its purpose, exports, and characteristics
 version: 1.0.0
 ---
 
 # analyze-r-package
 
-Analyze an R/Bioconductor package to understand its structure, purpose, and key characteristics. This skill provides structured output that other instruction-generation skills depend on.
+Analyze an R/Bioconductor package to understand its structure, purpose, and key characteristics. This skill provides structured output that can be used for documentation, understanding, or as input to other skills.
 
 ## Usage
 
@@ -30,10 +21,10 @@ User invokes with:
 
 Read and analyze the DESCRIPTION file:
 
-\`\`\`
+```
 Tools to use:
 - Read: DESCRIPTION file
-\`\`\`
+```
 
 Extract:
 - **Package name**: Package field
@@ -55,10 +46,10 @@ Extract:
 
 Read and parse the NAMESPACE file:
 
-\`\`\`
+```
 Tools to use:
 - Read: NAMESPACE
-\`\`\`
+```
 
 Extract all lines starting with:
 - `export(` - Regular function exports
@@ -75,12 +66,12 @@ Count and categorize:
 
 Check which directories exist:
 
-\`\`\`
+```
 Tools to use:
 - Bash: ls -la to check directory structure
 - Glob: */**.R to find R files
 - Glob: vignettes/*.Rmd to find vignettes
-\`\`\`
+```
 
 Note presence of:
 - **data/** - R data objects (RDA files)
@@ -93,10 +84,10 @@ Note presence of:
 
 Search R source files for data access indicators:
 
-\`\`\`
+```
 Tools to use:
 - Grep: Search for patterns in R/ directory
-\`\`\`
+```
 
 Search for these patterns (case insensitive):
 - "ExperimentHub" → ExperimentHub integration
@@ -114,10 +105,10 @@ If any matches found, classify as having **remote data access**.
 
 Search for S4 class definitions:
 
-\`\`\`
+```
 Tools to use:
 - Grep: Search R/ for S4 patterns
-\`\`\`
+```
 
 Search for:
 - `setClass(`
@@ -131,10 +122,10 @@ List any S4 classes defined in the package.
 
 Read the README file for package overview:
 
-\`\`\`
+```
 Tools to use:
 - Read: README.md (first 500 lines)
-\`\`\`
+```
 
 Extract:
 - High-level purpose (usually first few paragraphs)
@@ -146,11 +137,11 @@ Extract:
 
 Check test structure:
 
-\`\`\`
+```
 Tools to use:
 - Glob: tests/testthat/test-*.R
 - Bash: ls inst/extdata/ | head -20
-\`\`\`
+```
 
 Note:
 - Number of test files
@@ -161,11 +152,11 @@ Note:
 
 If vignettes exist:
 
-\`\`\`
+```
 Tools to use:
 - Glob: vignettes/*.Rmd
 - Read: First 50 lines of each vignette to get title/purpose
-\`\`\`
+```
 
 Create list with vignette names and purposes.
 
@@ -173,7 +164,7 @@ Create list with vignette names and purposes.
 
 Produce a structured summary in this format:
 
-\`\`\`markdown
+```markdown
 ## Package Analysis: [Package Name]
 
 ### Classification
@@ -227,24 +218,13 @@ Produce a structured summary in this format:
 [List key Bioconductor or specialized packages:]
 - [Package1] - [why it's significant]
 - [Package2] - [why it's significant]
-
-## Recommendations for Instructions
-
-Based on this analysis, create:
-- [Always] 00-overview.md
-- [If data access] 10-data-access.md
-- [Always] 20-development.md
-- [Always] 30-testing-docs.md
-- [If vignettes exist] 40-vignettes.md
-- [Always] 50-git-workflow.md
-- [Always] INDEX.md
-\`\`\`
+```
 
 ## Example Output
 
 Here's what the output looks like for parkinsonsMetagenomicData:
 
-\`\`\`markdown
+```markdown
 ## Package Analysis: parkinsonsMetagenomicData
 
 ### Classification
@@ -309,23 +289,12 @@ No S4 classes defined (returns TreeSummarizedExperiment from TreeSummarizedExper
 - DuckDB - Core technology for remote parquet access
 - dplyr - Data manipulation and filtering
 - arrow - Parquet file support
-
-## Recommendations for Instructions
-
-Based on this analysis, create:
-- [✓] 00-overview.md - Package overview, key functions, data sources
-- [✓] 10-data-access.md - Critical: document returnSamples vs accessParquetData patterns, large file strategies
-- [✓] 20-development.md - Parquet column structure, validation patterns
-- [✓] 30-testing-docs.md - Test data usage, example requirements (\donttest for remote access)
-- [✓] 40-vignettes.md - Document the 5 vignettes and their distinct purposes
-- [✓] 50-git-workflow.md - Bioconductor submission requirements, git workflow
-- [✓] INDEX.md - Navigation and quick reference
-\`\`\`
+```
 
 ## Notes
 
-- This skill should be run first before other instruction-generation skills
-- Output should be saved to conversation context for use by subsequent skills
+- This skill produces analysis output that can be consumed by other skills (like `create-package-instructions`)
+- Output should be saved to conversation context for use by subsequent operations
 - Manual verification recommended for complex packages
 - If ambiguities exist, ask user for clarification rather than guessing
 
@@ -339,65 +308,3 @@ If required files don't exist:
 If directory structure is unclear:
 - Ask user: "Is this a data package, analysis package, or infrastructure package?"
 - Explain what you found and why classification is ambiguous
-```
-
----
-
-## Usage Example in VS Code
-
-### Scenario: User Opens New R Package
-
-1. User opens a waldronlab R package in VS Code
-2. User opens Claude Code panel
-3. User types: `/analyze-r-package`
-
-### Claude's Response:
-
-```
-I'll analyze the package structure to understand its characteristics.
-
-[Reads DESCRIPTION file...]
-[Reads NAMESPACE...]
-[Checks directory structure...]
-[Searches for data access patterns...]
-[Reads README...]
-
-## Package Analysis: curatedMetagenomicData
-
-[Complete structured output as shown above]
-
----
-
-This package appears to be a Data Package with remote data access via ExperimentHub.
-
-Would you like me to:
-1. Create complete instructions with `/create-package-instructions`
-2. Create specific instruction files (e.g., just data access guidance)
-3. Explain any of these findings in more detail
-```
-
-### Follow-up Command:
-
-User: `/create-package-instructions`
-
-Claude generates all appropriate instruction files based on the analysis.
-
----
-
-## Integration with Other Skills
-
-The `analyze-r-package` skill output is consumed by:
-
-1. **create-overview-instructions** - Uses classification, key exports, and purpose
-2. **create-data-access-instructions** - Uses data access patterns and sources
-3. **create-development-instructions** - Uses coding patterns and S4 classes
-4. **create-testing-docs-instructions** - Uses testing framework and test data info
-5. **create-vignette-instructions** - Uses vignette list and purposes
-6. **create-git-workflow-instructions** - Uses package type for appropriate checks
-7. **create-index** - Uses all information for comprehensive navigation
-
-This modular design allows:
-- Running full suite with one command
-- Running individual skills for targeted updates
-- Easy maintenance and improvement of individual skills
-- Consistent data flow between skills
