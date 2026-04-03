@@ -78,6 +78,38 @@ Infrastructure and workflow skills for working with this repository itself.
 
 ---
 
+### validate-skill
+
+**Purpose**: Validate that a skill conforms to the ai-agent-skills repository standards
+
+**Location**: `skills/validate-skill/SKILL.md`
+
+**When to use**:
+- Creating new skills (before committing)
+- Reviewing PRs
+- Ensuring existing skills meet current standards
+- CI/CD validation in automated workflows
+
+**Invocation**:
+- Natural language: "Validate this skill", "Check if skills/[skill-name]/SKILL.md meets standards", "Does this skill conform to standards?"
+- Claude Code optional shortcut: `/validate-skill`
+- Copilot optional shortcut: `@workspace validate this skill`
+
+**What happens**:
+- Runs generic validation (markdownlint, yamllint) if available
+- Validates waldronlab-specific requirements:
+  - Checks for prohibited fields (platforms, triggers)
+  - Ensures platform-agnostic language (no tool references)
+  - Validates required fields (name, description, version, category)
+  - Checks naming conventions and consistency
+- Generates detailed report with issues, fixes, and references to AGENTS.md/SKILL_STANDARD.md
+
+**Output**: Comprehensive validation report with pass/fail status, categorized issues (CRITICAL/WARNING/INFO), and specific fix suggestions
+
+**Related skills**: create-skill, check-waldronlab-skills
+
+---
+
 ## R/Bioconductor Package Skills
 
 Skills for analyzing, documenting, and developing R/Bioconductor packages following waldronlab conventions.
@@ -207,7 +239,7 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **meta** | create-skill, check-waldronlab-skills | Repository and workflow infrastructure |
+| **meta** | create-skill, check-waldronlab-skills, validate-skill | Repository and workflow infrastructure |
 | **r-packages** | analyze-r-package, create-package-instructions, update-package-instructions | R/Bioconductor package development |
 | **metagenomics** | (Planned) | Metagenomics data workflows |
 | **statistical-methods** | (Planned) | Statistical analysis patterns |
@@ -216,7 +248,9 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 | Tag | Skills | Use Case |
 |-----|--------|----------|
-| **infrastructure** | create-skill, check-waldronlab-skills | Repository and workflow tasks |
+| **infrastructure** | create-skill, check-waldronlab-skills, validate-skill | Repository and workflow tasks |
+| **validation** | validate-skill | Quality control and standards compliance |
+| **quality-control** | validate-skill | Ensuring skill quality |
 | **documentation** | create-package-instructions, update-package-instructions | Generating and maintaining docs |
 | **analysis** | analyze-r-package | Understanding code and architecture |
 | **bioconductor** | analyze-r-package, create-package-instructions, update-package-instructions | Bioconductor-specific workflows |
@@ -235,7 +269,8 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 ### "I want to create a new skill..."
 
 1. **Get guided help** → `create-skill`
-2. **Verify it works** → `check-waldronlab-skills`
+2. **Validate it meets standards** → `validate-skill`
+3. **Verify it's accessible** → `check-waldronlab-skills`
 
 ### "I want to verify my setup..."
 
@@ -245,6 +280,12 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 ### "I want to analyze a workflow and automate it..."
 
 1. **Create a skill for it** → `create-skill`
+
+### "I want to ensure my skill meets standards..."
+
+1. **Validate the skill** → `validate-skill`
+2. **Fix any issues** based on the validation report
+3. **Re-validate** until it passes
 
 ---
 

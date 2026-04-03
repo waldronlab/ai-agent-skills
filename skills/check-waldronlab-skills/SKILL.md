@@ -34,6 +34,7 @@ Collect all discoverable skill files associated with `waldronlab/ai-agent-skills
 
 At minimum, include these canonical skills:
 - `create-skill` (meta domain)
+- `validate-skill` (meta domain)
 - `check-waldronlab-skills` (meta domain)
 - `analyze-r-package` (r-packages domain)
 - `create-package-instructions` (r-packages domain)
@@ -78,6 +79,7 @@ Status: ✅ Installed and discoverable
 
 **Meta Domain**
 - create-skill: Help create a new AI agent skill through collaborative Q&A
+- validate-skill: Validate that a skill conforms to repository standards
 - check-waldronlab-skills: Verify waldronlab skills and find the right one
 
 **R/Bioconductor Domain**
@@ -117,6 +119,7 @@ Available waldronlab skills:
 
 Meta
   • create-skill - Help create a new skill
+  • validate-skill - Validate skill standards compliance
   • check-waldronlab-skills - List and verify skills (you are here)
 
 R/Bioconductor
