@@ -75,10 +75,11 @@ tags: [tag1, tag2]          # Searchable tags (OPTIONAL)
 
 ### What NOT to Include
 
-- **PROHIBITED**: `platforms:` field (skills are agent-agnostic)
-- **PROHIBITED**: `triggers:` field (agents use natural language discovery)
-- **PROHIBITED**: Agent-specific tool references (e.g., "use Read tool")
-- **PROHIBITED**: Platform-specific syntax (e.g., "invoke with /command")
+Skills **MUST NOT** contain:
+- ❌ `platforms:` field (skills are agent-agnostic by design)
+- ❌ `triggers:` field (agents use natural language + SKILLS.md for discovery)
+- ❌ Agent-specific tool references (e.g., "use the Read tool")
+- ❌ Platform-specific invocation syntax (e.g., "/command" or "@workspace" patterns)
 
 ### Content Structure (Recommended)
 
@@ -176,13 +177,14 @@ Compliant agents:
 
 ### SHOULD (Strong Recommendation)
 
-- [ ] SHOULD provide optional platform-specific shortcuts for convenience
-- [ ] SHOULD document these shortcuts in instructions/{agent}.md
+- [ ] SHOULD document platform shortcuts in instructions/{agent}.md (setup and usage only, not skill descriptions)
 - [ ] SHOULD test all skills before promoting to production
 - [ ] SHOULD handle errors gracefully and guide users to skill documentation
+- [ ] SHOULD direct users to [SKILLS.md](SKILLS.md) as the authoritative skill catalog
 
 ### MAY (Optional)
 
+- [ ] MAY provide optional platform-specific shortcuts for convenience (e.g., `/skill-name`, `@workspace` patterns)
 - [ ] MAY provide additional UX conveniences (auto-completion, suggestion UI, etc.)
 - [ ] MAY extend skills with platform-specific enhancements
 - [ ] MAY implement caching or optimization for performance
@@ -208,38 +210,129 @@ Located in: `instructions/{agent-name}.md`
 
 ### What Adapters Should Include
 
-- ✅ Setup/installation instructions
-- ✅ References to AGENTS.md as authoritative source
-- ✅ Optional platform-specific shortcuts with explanations
-- ✅ Examples of natural language invocation
-- ✅ Troubleshooting tips
-- ✅ Links to SKILLS.md for skill discovery
+- ✅ Setup/installation instructions specific to the platform
+- ✅ References to AGENTS.md and SKILLS.md as authoritative sources
+- ✅ Optional platform-specific shortcuts (if any) with explanations
+- ✅ Troubleshooting tips for that platform
+- ✅ Brief explanation of how that platform differs from canonical behavior (if applicable)
 
-Example structure (from `instructions/claude.md`):
+**What Adapters Must NOT Include**:
+- ❌ Skill invocation examples (those belong in SKILLS.md only)
+- ❌ Skill descriptions or purpose statements (reference SKILLS.md instead)
+- ❌ Step-by-step skill process details (these live in SKILL.md files)
+
+Example minimal structure:
 
 ```markdown
 # Claude Code Setup
 
 ## Installation
 
-[Setup steps specific to Claude Code]
+[Setup steps for configuring skills on Claude Code]
 
-## Discovering Skills
+## Using Skills
 
-1. Read SKILLS.md in the repository root
-2. Ask me to help with a skill or describe what you need
-3. I'll match your request to a skill and use it
+1. Browse available skills in [SKILLS.md](../SKILLS.md)
+2. Invoke naturally: "Analyze this R package"
+3. Optional: Use slash commands if configured (e.g., `/analyze-r-package`)
 
-## Optional Slash Command Shortcuts
+## Troubleshooting
 
-Claude Code supports optional slash command shortcuts:
-- `/create-skill` - Help create a new skill
-- `/check-waldronlab-skills` - List available skills
+[Platform-specific troubleshooting tips]
 
-**Note**: These are optional shortcuts. Natural language invocation (e.g., "help me create a new skill") works regardless.
-
-See [AGENTS.md](../AGENTS.md) for canonical behavior.
+See [AGENTS.md](../AGENTS.md) for canonical behavior and [SKILLS.md](../SKILLS.md) for skill catalog.
 ```
+
+## Responsibility Mapping: Single Source of Truth
+
+This section clarifies **what goes where** to maintain clean separation of concerns and avoid duplication.
+
+### Skill Invocation Examples
+
+**Who owns it**: SKILLS.md only
+
+**What goes in SKILLS.md**:
+```markdown
+**Invocation**:
+- "Help me create a new skill"
+- "Create a skill for [domain]"
+- "I want to make a skill that..."
+```
+
+**What does NOT go in instructions/{agent}.md**:
+- ❌ Lists of invocation examples
+- ❌ "When to use this skill" descriptions
+- ❌ Alternative ways to say the same thing
+
+**Why**: Duplicating invocation examples across platform adapters creates maintenance burden. SKILLS.md is the single source.
+
+### Platform-Specific Shortcuts
+
+**Who owns it**: instructions/{agent}.md only
+
+**What goes in instructions/{agent}.md**:
+```markdown
+Optional shortcuts for this platform:
+- `/create-skill` - Shortcut for "create a new skill"
+- `/analyze-r-package` - Shortcut for "analyze this R package"
+```
+
+**What goes in skill files**: Nothing. Shortcuts are platform-specific conveniences, not core skill metadata.
+
+**Why**: Shortcuts vary by platform (Claude Code uses `/`, Copilot uses `@workspace`, etc.). They're configuration, not skill logic.
+
+### Skill Process & Logic
+
+**Who owns it**: SKILL.md files only
+
+**What goes in SKILL.md**:
+- Step-by-step process
+- Prerequisites
+- Output format
+- Examples
+- Platform-agnostic logic
+
+**What does NOT go in instructions/{agent}.md**:
+- ❌ How to run the skill
+- ❌ What the skill produces
+- ❌ Step-by-step skill process
+
+**Why**: Skill logic is platform-agnostic. All agents follow the same process.
+
+### Setup & Configuration
+
+**Who owns it**: instructions/{agent}.md only
+
+**What goes in instructions/{agent}.md**:
+- How to install skills for this platform
+- Configuration files (settings.json, CLAUDE.md, etc.)
+- Platform-specific troubleshooting
+- References to authoritative sources (AGENTS.md, SKILLS.md)
+
+**Example**: "Add to ~/.claude/CLAUDE.md: [reference]/SKILLS.md"
+
+### Canonical Behavior Rules
+
+**Who owns it**: AGENTS.md (this file)
+
+**What goes in AGENTS.md**:
+- How agents discover skills (via SKILLS.md)
+- How agents invoke skills (natural language matching)
+- Mandatory agent responsibilities
+- Prohibited skill metadata (platforms, triggers)
+- Compliance criteria
+
+### Technical Format Specification
+
+**Who owns it**: SKILL_STANDARD.md
+
+**What goes in SKILL_STANDARD.md**:
+- YAML frontmatter fields
+- Markdown structure
+- Validation checklist
+- Examples of well-formed skills
+
+---
 
 ## Compliance Criteria
 

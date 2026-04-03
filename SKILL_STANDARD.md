@@ -3,9 +3,11 @@
 ## Relationship to Other Documentation
 
 - **[AGENTS.md](AGENTS.md)**: Defines WHAT agents must do (behavior, compliance, discovery)
-- **SKILL_STANDARD.md** (this document): Defines HOW to format skills (structure, syntax)
+- **SKILL_STANDARD.md** (this document): Defines HOW to format skills (structure, syntax, technical specification)
+- **[SKILLS.md](SKILLS.md)**: WHERE to find skills and WHEN to use them (skill catalog and index)
+- **[instructions/{agent}.md](instructions/)**: HOW to install skills for a specific platform (setup and configuration)
 
-This document provides detailed technical guidance for skill format. For canonical agent behavior rules, see [AGENTS.md](AGENTS.md).
+This document provides detailed technical guidance for skill format and YAML structure. For canonical agent behavior rules, see [AGENTS.md](AGENTS.md). For platform-specific setup, see [instructions/](instructions/).
 
 ## Purpose
 
@@ -231,31 +233,11 @@ Skills are discovered via [SKILLS.md](SKILLS.md):
 2. Invoke using natural language matching the description
 3. Optional: Use platform shortcuts documented in [instructions/](instructions/)
 
-### For Platform Adapters
+### For Agents and Platforms
 
-Platforms configure skill locations:
+Agents discover skills via [SKILLS.md](SKILLS.md) and invoke them by reading [SKILL.md](skills/) files. Platform-specific setup instructions (configuration, installation) belong in [instructions/{agent}.md](instructions/), not here.
 
-**Claude Code** (`settings.json`):
-```json
-{
-  "claude.globalSkills": [
-    "/path/to/ai-agent-skills/skills/create-skill/SKILL.md",
-    "/path/to/ai-agent-skills/skills/analyze-r-package/SKILL.md"
-  ]
-}
-```
-
-**GitHub Copilot** (`settings.json`):
-```json
-{
-  "chat.skillsLocations": [
-    "/path/to/ai-agent-skills/skills/create-skill",
-    "/path/to/ai-agent-skills/skills/analyze-r-package"
-  ]
-}
-```
-
-See [instructions/claude.md](instructions/claude.md) and [instructions/copilot.md](instructions/copilot.md) for complete setup.
+See [instructions/claude.md](instructions/claude.md) and [instructions/copilot.md](instructions/copilot.md) for platform-specific setup, or [AGENTS.md](AGENTS.md) for canonical behavior requirements.
 
 ## Version Management
 

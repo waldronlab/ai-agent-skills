@@ -14,6 +14,8 @@ Add waldronlab skills to GitHub Copilot.
    {
      "chat.skillsLocations": [
        "/path/to/ai-agent-skills/skills/create-skill",
+       "/path/to/ai-agent-skills/skills/check-waldronlab-skills",
+       "/path/to/ai-agent-skills/skills/validate-skill",
        "/path/to/ai-agent-skills/skills/analyze-r-package",
        "/path/to/ai-agent-skills/skills/create-package-instructions",
        "/path/to/ai-agent-skills/skills/update-package-instructions"
@@ -37,7 +39,11 @@ Then add to `.vscode/settings.json` in that project:
 {
   "chat.skillsLocations": [
     ".github/copilot-instructions/create-skill",
-    ".github/copilot-instructions/analyze-r-package"
+    ".github/copilot-instructions/check-waldronlab-skills",
+    ".github/copilot-instructions/validate-skill",
+    ".github/copilot-instructions/analyze-r-package",
+    ".github/copilot-instructions/create-package-instructions",
+    ".github/copilot-instructions/update-package-instructions"
   ]
 }
 ```

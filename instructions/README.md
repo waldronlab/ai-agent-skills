@@ -23,7 +23,7 @@ They do **NOT**:
 
 - **[claude.md](claude.md)** - Claude Code setup and usage
 - **[copilot.md](copilot.md)** - GitHub Copilot setup and usage
-- **[gemini.md](gemini.md)** - Google Gemini (placeholder for future support)
+- **[gemini.md](gemini.md)** - Google Gemini setup and usage
 
 ## Core Principles
 
@@ -109,6 +109,10 @@ Adapters should **NOT** be updated when:
 - Individual skill logic changes (update the skill, not the adapter)
 - YAML frontmatter format changes (update SKILL_STANDARD.md)
 - New skills are added (update SKILLS.md)
+
+Adapters should be **CREATED** when:
+- A new agent platform is supported (create new instructions/{agent-name}.md file)
+- New platform-specific integration mechanisms become available
 
 ## Relationship to Other Documentation
 

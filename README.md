@@ -20,7 +20,7 @@ With these skills, AI agents can:
 
 ## Agent-Agnostic Design
 
-Skills in this repository are **platform-neutral** by design. They work across multiple AI agents through natural language invocation:
+Skills in this repository are **agent-agnostic** by design. They work across multiple AI agents through natural language invocation:
 
 - **Canonical invocation**: Natural language matching skill descriptions
 - **Optional shortcuts**: Platform adapters document conveniences (slash commands, @workspace patterns)
@@ -84,43 +84,14 @@ Choose your AI agent platform:
 - **GitHub Copilot**: See [instructions/copilot.md](instructions/copilot.md) for setup
 - **Other agents**: See [AGENTS.md](AGENTS.md) for compliance requirements
 
-### Quick Setup
+### Platform-Specific Setup
 
-**Note**: Replace `/Users/<your-user>/git/ai-agent-skills` with the actual fully-qualified path to your cloned repository.
+See the appropriate guide for your platform:
+- **Claude Code**: [instructions/claude.md](instructions/claude.md)
+- **GitHub Copilot**: [instructions/copilot.md](instructions/copilot.md)
+- **Google Gemini**: [instructions/gemini.md](instructions/gemini.md)
 
-#### Claude Code
-
-Add to your VS Code `settings.json`:
-
-```json
-{
-  "claude.globalSkills": [
-    "/Users/<your-user>/git/ai-agent-skills/skills/create-skill/SKILL.md",
-    "/Users/<your-user>/git/ai-agent-skills/skills/check-waldronlab-skills/SKILL.md",
-    "/Users/<your-user>/git/ai-agent-skills/skills/analyze-r-package/SKILL.md",
-    "/Users/<your-user>/git/ai-agent-skills/skills/create-package-instructions/SKILL.md",
-    "/Users/<your-user>/git/ai-agent-skills/skills/update-package-instructions/SKILL.md"
-  ]
-}
-```
-
-#### GitHub Copilot
-
-Add to your VS Code `settings.json`:
-
-```json
-{
-  "chat.skillsLocations": [
-    "/Users/<your-user>/git/ai-agent-skills/skills/create-skill",
-    "/Users/<your-user>/git/ai-agent-skills/skills/check-waldronlab-skills",
-    "/Users/<your-user>/git/ai-agent-skills/skills/analyze-r-package",
-    "/Users/<your-user>/git/ai-agent-skills/skills/create-package-instructions",
-    "/Users/<your-user>/git/ai-agent-skills/skills/update-package-instructions"
-  ]
-}
-```
-
-Then run "Developer: Reload Window" in VS Code.
+Each guide includes complete setup instructions specific to that platform.
 
 ### Verify Installation
 
@@ -148,7 +119,7 @@ Or use optional shortcuts:
 Natural language invocation:
 ```
 "Analyze this R package"
-"What type of package is this?"
+"What type of R package is this?"
 ```
 
 Or use optional shortcuts:
