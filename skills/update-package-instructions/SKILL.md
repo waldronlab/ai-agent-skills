@@ -2,21 +2,9 @@
 name: update-package-instructions
 description: Update existing AI instruction documentation when an R/Bioconductor package changes
 version: 1.0.0
-platforms:
-  - claude-code
-  - github-copilot
-triggers:
-  claude:
-    - /update-package-instructions
-    - "Update the package instructions"
-    - "Refresh AI documentation for this package"
-  copilot:
-    - "@workspace update .github/instructions based on recent package changes"
-    - "@workspace refresh the package instructions"
-    - "@workspace update AI documentation"
-    - "@workspace sync instructions with current package state"
-author: waldronlab
 category: r-packages
+tags: [r-packages, documentation, bioconductor]
+author: waldronlab
 ---
 
 # update-package-instructions
@@ -25,15 +13,13 @@ Update existing `.github/instructions/` files to reflect changes in an R/Biocond
 
 ## Usage
 
-**Claude Code**:
-- `/update-package-instructions`
+Invoke this skill when your package has changed and you want to refresh the AI instructions:
 - "Update the package instructions"
-- "Refresh AI documentation for this package"
+- "Refresh AI documentation"
+- "Update instructions based on package changes"
+- "Sync instructions with current package state"
 
-**GitHub Copilot**:
-- `@workspace update .github/instructions based on recent package changes`
-- `@workspace refresh the package instructions`
-- `@workspace update AI documentation`
+You must have existing `.github/instructions/` files for this skill to work.
 
 ## Prerequisites
 
@@ -65,17 +51,13 @@ For each `.md` file:
 
 Compare current package state (from analysis) to documented state (from instruction files):
 
-#### Package Metadata Changes
-
-Check for differences in:
+**Package Metadata Changes**:
 - **Version numbers**: Old version → New version
 - **Package title or description**: Changes in DESCRIPTION
 - **Dependencies**: New packages added to Imports/Depends
 - **biocViews**: Modified classification keywords
 
-#### Structural Changes
-
-Check for:
+**Structural Changes**:
 - **New exported functions**: In NAMESPACE but not in instructions
 - **Removed functions**: In instructions but not in NAMESPACE
 - **Renamed functions**: Similar names, one removed + one added
@@ -85,9 +67,7 @@ Check for:
 - **New S4 classes**: `setClass` definitions not documented
 - **Directory structure changes**: New directories or moved files
 
-#### Documentation Changes
-
-Check for:
+**Documentation Changes**:
 - **New test files**: `test-*.R` files not mentioned
 - **README updates**: Significant content changes
 - **Example changes**: Different usage patterns in README or vignettes
@@ -96,60 +76,46 @@ Check for:
 
 Based on identified changes, determine which files need updates:
 
-#### 00-overview.md
-
-**Update if**:
+**00-overview.md** - Update if:
 - Package version changed
 - New key functions exported
 - Package description changed significantly
 - Major features added or removed
 - Data sources changed
 
-#### 10-data-access.md
-
-**Update if**:
+**10-data-access.md** - Update if:
 - New data access functions added
-- Data sources changed (new URLs, ExperimentHub IDs, etc.)
+- Data sources changed
 - Access patterns modified
 - New data types available
 - Large file handling strategies changed
 
-#### 20-development.md
-
-**Update if**:
+**20-development.md** - Update if:
 - New S4 classes defined
 - Coding patterns changed
 - New dependencies affect development
 - Function organization changed
 - Validation patterns updated
 
-#### 30-testing-and-docs.md
-
-**Update if**:
+**30-testing-and-docs.md** - Update if:
 - New test files added
 - Testing patterns changed
-- Example requirements changed (new `\donttest` usage)
+- Example requirements changed
 - Documentation structure modified
 - Test data location or format changed
 
-#### 40-vignettes.md
-
-**Update if**:
+**40-vignettes.md** - Update if:
 - New vignettes added
 - Vignette purposes or titles changed
 - Recommended reading order should change
 - Key topics in vignettes modified
 
-#### 50-git-workflow.md
-
-**Usually static unless**:
-- Package type changed (Data ↔ Analysis)
+**50-git-workflow.md** - Update only if:
+- Package type changed
 - New workflow requirements added
 - Bioconductor submission requirements changed
 
-#### INDEX.md
-
-**Update if**:
+**INDEX.md** - Update if:
 - Any other file changed
 - New functions to reference
 - Section organization changed
@@ -159,47 +125,47 @@ Based on identified changes, determine which files need updates:
 
 For each file that needs updates, use these strategies:
 
-#### Preserve Customizations
+**Preserve Customizations**:
 
-**Identify custom content**:
+Identify custom content:
 - Domain-specific terminology and explanations
 - Detailed examples with actual package data
 - Warning boxes or important notes
 - Links to domain-specific resources
 - Author comments or clarifications
-- Biological or statistical context
 
-**Preservation approach**:
+Preservation approach:
 - Extract custom sections before updating
 - Apply updates only to auto-generated portions (version numbers, function lists, file counts)
 - Re-insert custom sections in appropriate places
 - Flag any conflicts for manual review
 
-#### Update Systematically
+**Update Systematically**:
 
-**For version numbers**:
+For version numbers:
 - Direct find-and-replace throughout all files
 - Search for "Version", "version", and version number patterns
 
-**For function lists**:
+For function lists:
 - Add new functions to appropriate category with placeholder description: "[Description needed]"
 - Remove functions that no longer exist
 - Preserve any customized descriptions for existing functions
 - Maintain the categorical organization and ordering
 
-**For new sections**:
+For new sections:
 - Add at the end of the appropriate category
 - Use clear markers if helpful: `<!-- Added [date] -->`
 - Preserve existing section ordering
 
-**For structural changes**:
+For structural changes:
 - Edit specific sections, not wholesale replacement
 - Maintain existing headers and organization
 - Add new subsections where appropriate
 
-#### Mark Changes
+**Mark Changes**:
 
 When adding new content, consider marking it:
+
 ```markdown
 <!-- Auto-updated [date]: Added new function -->
 ```
@@ -208,33 +174,11 @@ This helps users identify what was automatically changed vs. manually customized
 
 ### 6. Apply Updates
 
-For each file to update:
-
-**Use targeted edits**:
+For each file to update, make targeted edits:
 - Make specific, surgical changes to update outdated information
 - Preserve surrounding content and formatting
 - Keep manual customizations intact
 - Only replace what needs to change
-
-**Example edit patterns**:
-
-Updating a version number:
-- Find: `Version**: 0.99.0`
-- Replace: `Version**: 1.0.0`
-
-Adding a new function to a list:
-- Find the end of the appropriate category section
-- Insert: `- \`newFunction()\` - [Description needed]`
-
-Removing a deleted function:
-- Find the line: `- \`oldFunction()\` - ...`
-- Delete that line
-
-Adding a new vignette:
-- Find the vignette list section
-- Append new entry with number, filename, title, and purpose
-
-#### Check Cross-References
 
 After updates:
 - Verify internal links still work
@@ -243,87 +187,28 @@ After updates:
 
 ### 7. Provide Update Summary
 
-After updating files, provide a detailed summary:
-
-```markdown
-## Updated Package Instructions
-
-### Changes Detected
-
-**Version**: 0.99.0 → 1.0.0
-
-**Functions**:
-- Added (3): `newFunction1()`, `newFunction2()`, `newFunction3()`
-- Removed (1): `oldFunction()`
-- Renamed: `getData()` → `retrieveData()`
-
-**Documentation**:
-- New vignette: advanced-usage.Rmd
-
-**Data Access**:
-- New data source: HuggingFace waldronlab/new-dataset
-
-### Files Updated
-
-#### 00-overview.md
-Changes made:
-- Updated version number to 1.0.0
-- Added 3 new functions to exports list
-- Removed deprecated function `oldFunction()`
-- Updated function count (18 → 20 total)
-
-#### 10-data-access.md
-Changes made:
-- Added new HuggingFace data source
-- Updated data source list with new URLs
-
-#### INDEX.md
-Changes made:
-- Updated function quick reference with new functions
-- Added link to new vignette
-- Updated function count
-
-### Files Not Updated
-
-- 30-testing-and-docs.md - No changes to testing structure
-- 50-git-workflow.md - No workflow changes
-
-### Manual Review Recommended
-
-The following changes may need your attention:
-- New function `complexFunction()` has unique patterns - consider adding detailed usage examples
-- Vignette reading order changed - verify the sequence makes sense for new users
-
-### Preserved Customizations
-
-The following manually-added content was preserved:
-- Custom domain explanations in 00-overview.md
-- Detailed biological context in 10-data-access.md
-- Warning about memory usage in 20-development.md
-
-### Next Steps
-
-1. Review the updated files for accuracy
-2. Verify cross-references still work
-3. Add descriptions for new functions marked "[Description needed]"
-4. Test that examples in documentation still work
-5. Commit changes: `git add .github/instructions/`
-```
+After updating files, provide a detailed summary showing:
+- Which changes were detected (version, new functions, removed functions, etc.)
+- Which files were updated
+- Which files were not updated
+- What manual review is recommended
+- Which customizations were preserved
+- Next steps for the user
 
 ## Smart Update Strategies
 
 ### Handling Version Changes
 
-**Patch version (0.99.0 → 0.99.1)**:
+**Patch version** (0.99.0 → 0.99.1):
 - Update version number only
 - Check for "Version X.X.X" references throughout files
 
-**Minor version (0.99.0 → 1.0.0)**:
+**Minor version** (0.99.0 → 1.0.0):
 - Update version number
 - Check if "What's new" section should be added
 - Look for "new in version X" markers that need updating
 
-**Major version (1.0.0 → 2.0.0)**:
+**Major version** (1.0.0 → 2.0.0):
 - Update version number
 - Flag as significant change requiring careful review
 - Recommend reviewing all instruction files for breaking changes
@@ -357,7 +242,6 @@ The following manually-added content was preserved:
 - Warning boxes or caution notes
 - Links to publications or external resources
 - Author annotations or clarifications
-- Biological/medical context
 
 **Preservation tactics**:
 1. Before updating a section, extract paragraphs that look custom (not lists, not version numbers)
@@ -370,8 +254,8 @@ The following manually-added content was preserved:
 Users can specify scope:
 
 **Update all files (default)**:
-- `/update-package-instructions`
-- `@workspace update .github/instructions`
+- "Update the package instructions"
+- "Refresh all instructions"
 
 **Update specific files**:
 - "Update just the overview and data access instructions"
@@ -385,19 +269,6 @@ Users can specify scope:
 - "Force refresh all instructions"
 - Always warn before forcing
 
-## Platform-Specific Notes
-
-### Claude Code
-- Use Read tool to read existing instruction files
-- Use Edit tool to make targeted updates (preferred)
-- Use Write tool only for complete rewrites (ask user first)
-- Run `/analyze-r-package` for current state
-
-### GitHub Copilot
-- Read files using VS Code editor
-- Make edits through file operations
-- Run analysis following analyze-r-package instructions
-
 ## Error Handling
 
 ### No Existing Instructions Found
@@ -408,8 +279,7 @@ If `.github/instructions/` doesn't exist or is empty:
 Error: No existing instructions found in .github/instructions/
 
 These instructions can only update existing files. To create instructions from scratch, use:
-- Claude: /create-package-instructions
-- Copilot: @workspace create .github/instructions for this R package
+- create-package-instructions
 ```
 
 ### No Changes Detected
@@ -436,9 +306,7 @@ The instructions document data source X at URL A, but current package uses URL B
 Options:
 1. Keep existing (URL A) - assumes custom override
 2. Use new (URL B) - assumes code is source of truth
-3. Manual merge - I'll show you both for review
-
-Which would you prefer?
+3. Manual merge - show both for review
 ```
 
 ### File Format Incompatible
@@ -454,30 +322,30 @@ Options:
 1. Skip this file (recommended - preserve customizations)
 2. Attempt update anyway (may break formatting)
 3. Regenerate from scratch (loses customizations)
-
-What would you like to do?
 ```
 
 ## Best Practices
 
-### DO
-✅ Run package analysis first to understand current state
-✅ Read all existing files before making changes
-✅ Preserve manually added domain knowledge
-✅ Use targeted edits rather than wholesale replacement
-✅ Update cross-references between files
-✅ Verify examples still work after updates
-✅ Provide detailed change summary
-✅ Flag content that needs manual review
+### DO ✅
 
-### DON'T
-❌ Blindly overwrite all content
-❌ Remove custom examples without checking
-❌ Update without running fresh analysis
-❌ Ignore user customizations
-❌ Skip verification of cross-references
-❌ Make assumptions about ambiguous changes
-❌ Update files that weren't modified
+- Run package analysis first to understand current state
+- Read all existing files before making changes
+- Preserve manually added domain knowledge
+- Use targeted edits rather than wholesale replacement
+- Update cross-references between files
+- Verify examples still work after updates
+- Provide detailed change summary
+- Flag content that needs manual review
+
+### DON'T ❌
+
+- Blindly overwrite all content
+- Remove custom examples without checking
+- Update without running fresh analysis
+- Ignore user customizations
+- Skip verification of cross-references
+- Make assumptions about ambiguous changes
+- Update files that weren't modified
 
 ## Integration
 
@@ -486,79 +354,9 @@ What would you like to do?
 
 **This skill is used by**:
 - Users manually when package changes
-- Potentially automated via git hooks (future)
 
 **Works with**:
 - `create-package-instructions` - For initial creation
-- Individual file generator skills - For targeted updates
-
-## Examples
-
-### Example 1: Version Bump Only
-
-```
-User: /update-package-instructions
-
-Agent: Analyzing package changes...
-
-## Changes Detected
-- Package version: 1.0.0 → 1.0.1
-- No structural changes
-
-## Files Updated
-- 00-overview.md: Updated version number
-
-All other files are up-to-date.
-```
-
-### Example 2: New Functions Added
-
-```
-User: /update-package-instructions
-
-Agent: Analyzing package changes...
-
-## Changes Detected
-- 2 new exported functions:
-  - `getData()` - data access
-  - `validateInput()` - utility
-
-## Files Updated
-
-00-overview.md:
-+ Added `getData()` to data access functions
-+ Added `validateInput()` to utility functions
-
-20-development.md:
-+ Added documentation for input validation pattern
-
-INDEX.md:
-+ Updated function quick reference
-
-Manual review recommended for `getData()` -
-consider adding usage examples showing filtering patterns.
-```
-
-### Example 3: Breaking Change
-
-```
-User: /update-package-instructions
-
-Agent: Analyzing package changes...
-
-## ⚠️ Significant Changes Detected
-- Major version: 1.5.0 → 2.0.0
-- 1 function removed: `oldAccessMethod()`
-- 1 function added: `newAccessMethod()`
-- README indicates API redesign
-
-This looks like a breaking change. I recommend:
-1. Review all instruction files for mentions of removed functions
-2. Consider adding migration guide
-3. Update examples to use new API
-
-Proceed with update? [y/N]
-```
 
 ## Notes
 
@@ -568,3 +366,8 @@ Proceed with update? [y/N]
 - Version changes alone may not require full regeneration
 - When in doubt, ask the user before making destructive changes
 - Provide clear diffs or summaries so users can review changes
+- Incremental updates are better than full regeneration when possible
+
+---
+
+**Related**: See [create-package-instructions](../create-package-instructions/SKILL.md) for creating new instructions, [analyze-r-package](../analyze-r-package/SKILL.md) for package analysis.

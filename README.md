@@ -1,6 +1,6 @@
 # waldronlab AI Agent Skills
 
-A collection of skills and instructions for AI agents (Claude Code, GitHub Copilot) working projects relevant to the Waldron Lab at CUNY SPH. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
+A collection of agent-agnostic skills and instructions for AI assistants (Claude Code, GitHub Copilot, and future platforms) working on projects relevant to the Waldron Lab at CUNY SPH. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
 
 ## What are AI Agent Skills?
 
@@ -18,213 +18,155 @@ With these skills, AI agents can:
 - Understand domain-specific patterns
 - Provide better assistance on complex tasks
 
-## Cross-Platform Compatibility
+## Agent-Agnostic Design
 
-Skills in this repository follow the [Agent Skills Standard Format](SKILL_STANDARD.md), making them compatible with multiple AI agents:
+Skills in this repository are **platform-neutral** by design. They work across multiple AI agents through natural language invocation:
 
-- **Claude Code**: Use `/skill-name` or natural language triggers
-- **GitHub Copilot**: Use `@workspace` triggers
-- **Future platforms**: Extensible format for new agents
+- **Canonical invocation**: Natural language matching skill descriptions
+- **Optional shortcuts**: Platform adapters document conveniences (slash commands, @workspace patterns)
+- **Single source**: One skill works everywhere without duplication
+- **Portable**: Skills adapt to any compliant agent platform
 
-This unified approach eliminates duplication and ensures consistency across platforms. See [SKILL_STANDARD.md](SKILL_STANDARD.md) for details on the format and how to create cross-platform skills.
+See [AGENTS.md](AGENTS.md) for how agent behavior and skill discovery work. See [SKILL_STANDARD.md](SKILL_STANDARD.md) for technical format details.
 
-## Available Skill Domains
+## Quick Start
 
-### 🔧 [r-packages/](skills/r-packages/)
-**Status**: ✅ Production ready
+### 1. Find Skills
 
-Skills for generating `.github/instructions/` files for R/Bioconductor packages. Automatically creates comprehensive AI agent instructions tailored to your package type (data/analysis/infrastructure).
+Browse [SKILLS.md](SKILLS.md) to see all available skills organized by category and use case.
 
-**Quick start**:
-- Claude Code: `/create-package-instructions`
-- GitHub Copilot: `@workspace Create .github/instructions`
+### 2. Invoke Naturally
 
-**Features**:
-- Automatic package type detection
-- Generates modular instruction files
-- Data access pattern documentation
-- Bioconductor compliance guidance
-- Vignette and testing standards
+Describe what you need in natural language:
+- "Help me create a new skill"
+- "Analyze this R package"
+- "Create .github/instructions for this package"
 
-### 🛠️ [meta/](skills/meta/)
-**Status**: ✅ Production ready
+Your AI agent will match your request to the appropriate skill and execute it.
 
-Skills for working with the ai-agent-skills repository itself - creating, maintaining, and improving the skill framework.
+### 3. Optional Platform Shortcuts
 
-**Quick start**:
-- Claude Code: `/create-skill`
-- Claude Code: `/check-waldronlab-skills`
-- GitHub Copilot: `@workspace create a new skill`
-- GitHub Copilot: `@workspace What waldronlab skills are there?`
+If you prefer shortcuts:
+- **Claude Code**: `/skill-name` slash commands (see [instructions/claude.md](instructions/claude.md))
+- **GitHub Copilot**: `@workspace` patterns (see [instructions/copilot.md](instructions/copilot.md))
 
-**Features**:
-- Collaborative Q&A for skill creation
-- Skill installation/discovery checks
-- Brainstorming from rough ideas
-- Platform-agnostic guidance
-- Iteration-friendly approach
+But natural language works everywhere.
 
-### 🧬 [metagenomics/](skills/metagenomics/)
-**Status**: 🚧 Planned
+## Available Skills
 
-Skills for analyzing metagenomic data following waldronlab standards.
+See [SKILLS.md](SKILLS.md) for the complete skill catalog. Quick overview:
 
-**Planned features**:
-- Standard preprocessing pipelines
-- Taxonomic profiling workflows
-- Functional analysis patterns
-- Multi-study integration
-- Reproducible analysis templates
+### Meta Domain (Repository Infrastructure)
 
-### 📊 [statistical-methods/](skills/statistical-methods/)
-**Status**: 🚧 Planned
+- **create-skill** - Collaborative Q&A for creating new skills
+- **check-waldronlab-skills** - Verify installation and discover available skills
 
-Skills for common statistical analysis patterns in microbiome and multi-omics research.
+### R/Bioconductor Domain
 
-**Planned features**:
-- Differential abundance analysis
-- Dimension reduction approaches
-- Batch effect correction
-- Multi-omics integration
-- Power analysis and study design
+- **analyze-r-package** - Analyze package structure and characteristics
+- **create-package-instructions** - Generate comprehensive .github/instructions files
+- **update-package-instructions** - Update existing package instructions
+
+### Future Domains
+
+- **metagenomics** (🚧 Planned) - Standard metagenomics workflows
+- **statistical-methods** (🚧 Planned) - Statistical analysis patterns
+
+For details on each skill, see [SKILLS.md](SKILLS.md).
 
 ## Installation
 
-### For GitHub Copilot in VS Code
+### Setup for Your Platform
 
-#### Recommended: Global Setup (User Settings)
+Choose your AI agent platform:
 
-Add the following to your VS Code User `settings.json`:
+- **Claude Code**: See [instructions/claude.md](instructions/claude.md) for setup
+- **GitHub Copilot**: See [instructions/copilot.md](instructions/copilot.md) for setup
+- **Other agents**: See [AGENTS.md](AGENTS.md) for compliance requirements
+
+### Quick Setup
+
+**Note**: Replace `/Users/<your-user>/git/ai-agent-skills` with the actual fully-qualified path to your cloned repository.
+
+#### Claude Code
+
+Add to your VS Code `settings.json`:
+
+```json
+{
+  "claude.globalSkills": [
+    "/Users/<your-user>/git/ai-agent-skills/skills/create-skill/SKILL.md",
+    "/Users/<your-user>/git/ai-agent-skills/skills/check-waldronlab-skills/SKILL.md",
+    "/Users/<your-user>/git/ai-agent-skills/skills/analyze-r-package/SKILL.md",
+    "/Users/<your-user>/git/ai-agent-skills/skills/create-package-instructions/SKILL.md",
+    "/Users/<your-user>/git/ai-agent-skills/skills/update-package-instructions/SKILL.md"
+  ]
+}
+```
+
+#### GitHub Copilot
+
+Add to your VS Code `settings.json`:
 
 ```json
 {
   "chat.skillsLocations": [
-    "/Users/<your-user>/git/ai-agent-skills/skills/meta",
-    "/Users/<your-user>/git/ai-agent-skills/skills/r-packages"
-  ],
-  "github.copilot.advanced.instructionsFolders": [
-    "/Users/<your-user>/git/ai-agent-skills/skills"
+    "/Users/<your-user>/git/ai-agent-skills/skills/create-skill",
+    "/Users/<your-user>/git/ai-agent-skills/skills/check-waldronlab-skills",
+    "/Users/<your-user>/git/ai-agent-skills/skills/analyze-r-package",
+    "/Users/<your-user>/git/ai-agent-skills/skills/create-package-instructions",
+    "/Users/<your-user>/git/ai-agent-skills/skills/update-package-instructions"
   ]
 }
 ```
 
-Notes:
-- `chat.skillsLocations` is used for agent skill discovery.
-- Point to the domain folders that actually contain skill `.md` files.
-- Use absolute paths for reliability.
+Then run "Developer: Reload Window" in VS Code.
 
-#### Optional: Per-Project Symlink (if you want project-scoped skills)
+### Verify Installation
 
-In a target project:
+Ask your agent:
+- "Do I have the waldronlab skills?"
+- "What waldronlab skills are available?"
 
-```bash
-cd ~/git/your-project
-mkdir -p .github
-ln -s ~/git/ai-agent-skills/skills .github/copilot-instructions
+The agent should list the installed skills.
+
+## Usage Examples
+
+### Creating R Package Instructions
+
+Natural language invocation (works everywhere):
+```
+"Create .github/instructions for this R package"
 ```
 
-This creates `.github/copilot-instructions` as a symlink to the shared skills repo so updates are immediately available.
+Or use optional shortcuts:
+- Claude Code: `/create-package-instructions`
+- GitHub Copilot: `@workspace Create .github/instructions`
 
-Use this only if you specifically want project-scoped instruction wiring instead of global setup via User settings.
+### Analyzing an R Package
 
-#### Option 3: Organization-Wide (Copilot Enterprise)
-
-For organization admins:
-1. Go to https://github.com/organizations/waldronlab/settings/copilot
-2. Add skill files from domain directories (e.g., `r-packages/*.md`) to the knowledge base
-
-#### Verify It Works
-
-1. Run `Developer: Reload Window`.
-2. Open Copilot Chat in Agent mode.
-3. Trigger a known skill:
-
-```text
-@workspace What waldronlab skills are there?
+Natural language invocation:
+```
+"Analyze this R package"
+"What type of package is this?"
 ```
 
-If setup is correct, Copilot should route to `check-waldronlab-skills` and list available skills.
+Or use optional shortcuts:
+- Claude Code: `/analyze-r-package`
+- GitHub Copilot: `@workspace analyze this package`
 
-### Direction
+### Creating a New Skill
 
-The preferred direction is global setup for day-to-day use. A future skill can be added to automate per-project `.github` setup when needed.
-
-### For Claude Code Users
-
-#### Option 1: Global Installation (Recommended)
-
-Clone this repository and configure Claude Code to use these skills globally:
-
-```bash
-# Clone the repository
-cd ~/git
-git clone https://github.com/waldronlab/ai-agent-skills.git
+Natural language invocation:
+```
+"Help me create a new skill for [purpose]"
 ```
 
-Add to your VS Code settings (`~/.config/Code/User/settings.json`):
-```json
-{
-  "claude.globalSkills": [
-    "~/git/ai-agent-skills/skills/meta/create-skill.md",
-    "~/git/ai-agent-skills/skills/r-packages/analyze-r-package.md",
-    "~/git/ai-agent-skills/skills/r-packages/create-package-instructions.md",
-    "~/git/ai-agent-skills/skills/r-packages/update-package-instructions.md"
-  ]
-}
-```
+Or use optional shortcuts:
+- Claude Code: `/create-skill`
+- GitHub Copilot: `@workspace create a new skill`
 
-#### Option 2: Per-Workspace Installation
-
-Add to your workspace `.vscode/settings.json`:
-```json
-{
-  "claude.skills": [
-    "../ai-agent-skills/skills/meta/create-skill.md",
-    "../ai-agent-skills/skills/r-packages/analyze-r-package.md",
-    "../ai-agent-skills/skills/r-packages/create-package-instructions.md",
-    "../ai-agent-skills/skills/r-packages/update-package-instructions.md"
-  ]
-}
-```
-
-## Quick Start Guide
-
-### Generating R Package Instructions
-
-1. Open an R/Bioconductor package in VS Code
-2. Ensure skills/instructions are installed (see above)
-3. Open Copilot Chat or Claude Code
-
-**With GitHub Copilot**:
-```
-@workspace Create .github/instructions for this R package
-```
-
-**Discovery check in GitHub Copilot**:
-```
-@workspace Do I have the waldronlab skills?
-```
-
-**With Claude Code**:
-```
-/create-package-instructions
-```
-
-4. Review generated files in `.github/instructions/`
-5. Customize as needed
-6. Commit and create PR
-
-### Updating Existing Instructions
-
-**With GitHub Copilot**:
-```
-@workspace Update .github/instructions based on recent package changes
-```
-
-**With Claude Code**:
-```
-/update-package-instructions
-```
+See [SKILLS.md](SKILLS.md) for all available skills and invocation examples.
 
 ## Repository Structure
 
@@ -232,34 +174,47 @@ Add to your workspace `.vscode/settings.json`:
 ai-agent-skills/
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
+├── AGENTS.md                      # Agent behavior standard (how discovery works)
+├── SKILLS.md                      # Human-readable skill index (what skills exist)
+├── SKILL_STANDARD.md              # Technical format spec (how to format skills)
 ├── CONTRIBUTING.md                # Contribution guidelines
-├── SKILL_STANDARD.md              # Standard format for cross-platform skills
-├── SETUP.md                       # Setup guide for Claude Code & Copilot
+├── MIGRATION.md                   # Upgrade guide from v1.x to v2.0
 │
-└── skills/                        # All agent skills organized by domain
-    ├── r-packages/                # R/Bioconductor package skills
-    │   ├── analyze-r-package.md
-    │   ├── create-package-instructions.md
-    │   ├── update-package-instructions.md
-    │   ├── templates/             # Shared templates
-    │   └── examples/              # Real-world examples
-    │       ├── data-package-parquet/
-    │       └── ...
-    │
-    ├── meta/                      # Repository infrastructure skills
-    │   ├── create-skill.md                # Collaborative skill creation
-    │   └── check-waldronlab-skills.md     # Setup verification and skill discovery
-    │
-    ├── metagenomics/              # Metagenomics skills (planned)
-    │
-    └── statistical-methods/       # Statistical analysis skills (planned)
+├── skills/                        # All skills (flat structure)
+│   ├── create-skill/
+│   │   └── SKILL.md               # Collaborative skill creation
+│   ├── check-waldronlab-skills/
+│   │   └── SKILL.md               # Skill discovery and verification
+│   ├── analyze-r-package/
+│   │   └── SKILL.md               # R package analysis
+│   ├── create-package-instructions/
+│   │   ├── SKILL.md               # Generate package instructions
+│   │   ├── templates/             # Shared Bioconductor and waldronlab standards
+│   │   └── examples/              # Example generated instructions
+│   └── update-package-instructions/
+│       └── SKILL.md               # Update existing instructions
+│
+└── instructions/                  # Platform adapters (thin wrappers)
+    ├── README.md                  # Adapter purpose and requirements
+    ├── claude.md                  # Claude Code setup and shortcuts
+    ├── copilot.md                 # GitHub Copilot setup and shortcuts
+    └── gemini.md                  # Google Gemini (placeholder)
 ```
+
+## Key Documentation
+
+- **[AGENTS.md](AGENTS.md)** - How agents discover and invoke skills (mandatory behavior)
+- **[SKILLS.md](SKILLS.md)** - Complete skill catalog organized by domain
+- **[SKILL_STANDARD.md](SKILL_STANDARD.md)** - Technical format for creating skills
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute new skills or improvements
+- **[MIGRATION.md](MIGRATION.md)** - Upgrade guide for v1.x users
+- **[instructions/](instructions/)** - Platform-specific setup and shortcuts
 
 ## Examples
 
-See [skills/r-packages/examples/](skills/r-packages/examples/) for complete examples of generated instructions from real waldronlab packages:
+See [skills/create-package-instructions/examples/](skills/create-package-instructions/examples/) for complete examples of generated instructions from real waldronlab packages:
 
-- **data-package-parquet** (parkinsonsMetagenomicData): Remote parquet data via DuckDB
+- **data-package-parquet** - parkinsonsMetagenomicData with remote parquet access via DuckDB
 - More examples coming soon...
 
 ## Contributing
@@ -268,43 +223,37 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Adding New Skills
 
-**Quick start**: Use the `/create-skill` skill (or `@workspace create a new skill`) to get guided help!
+**Quick start**: Use the `create-skill` skill to get guided help!
 
-Manual steps:
-1. Choose or create appropriate domain directory (e.g., `r-packages/`, `metagenomics/`)
-2. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
-3. Include YAML frontmatter with all required fields
-4. Write platform-agnostic core logic
-5. Add platform-specific notes where necessary
-6. Test on both Claude Code and GitHub Copilot
-7. Add examples demonstrating the skill
-8. Update this main README if needed for discoverability
-9. Submit PR for review
+Natural language: "Help me create a new skill for [purpose]"
+
+Or manually:
+1. Create directory: `skills/{skill-name}/`
+2. Create file: `skills/{skill-name}/SKILL.md`
+3. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
+4. Include YAML frontmatter with required fields (no `platforms:` or `triggers:`)
+5. Write platform-agnostic core logic
+6. Add to [SKILLS.md](SKILLS.md) index
+7. Test on multiple platforms
+8. Submit PR for review
 
 ### Adding New Domains
 
 If you have a new category of skills:
 
-1. Create new domain directory with README.md
-2. Add at least one cross-platform skill file (`.md`) in that domain
-3. Add at least one working skill with examples
-4. Update this main README
-5. Submit PR for review
+1. Create skills with the new `category:` value
+2. Add domain description to [SKILLS.md](SKILLS.md)
+3. Include at least one working skill with examples
+4. Submit PR for review
 
 ## Maintenance
 
 ### Ownership
 
-Each domain has designated maintainers listed in its README:
-
-- **r-packages/**: [Maintainer names]
-- **metagenomics/**: [Maintainer names]
-- **statistical-methods/**: [Maintainer names]
-
 Domain maintainers are responsible for:
-- Reviewing PRs for their domain
+- Reviewing PRs for their skills
 - Keeping skills up-to-date
-- Testing on new package versions
+- Testing on supported platforms
 - Responding to issues
 
 ### Version Compatibility
@@ -314,12 +263,13 @@ We aim to keep skills compatible with:
 - **GitHub Copilot**: Latest VS Code extension
 - **R/Bioconductor**: Current release and devel
 
-Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md).
+Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md) and [MIGRATION.md](MIGRATION.md).
 
 ## Support and Feedback
 
 - **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues)
 - **Discussions**: Ask questions in [GitHub Discussions](https://github.com/waldronlab/ai-agent-skills/discussions)
+- **Skills Check**: Use `check-waldronlab-skills` to verify your setup
 
 ## License
 
@@ -336,3 +286,6 @@ These skills are developed and maintained by the waldronlab at CUNY SPH and coll
 - 🚧 Under development
 - 📋 Planned
 - ⚠️  Deprecated
+
+**Version**: 2.0.0 (agent-agnostic)
+**Last Updated**: 2026-04-03

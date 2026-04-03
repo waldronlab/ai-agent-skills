@@ -66,7 +66,7 @@ Package-specific `.github/instructions/` files include:
 
 ### Referenced Standards
 Package instructions **reference** (not duplicate) universal rules:
-- Core Bioconductor standards → [bioconductor-standards.md](bioconductor-standards.md)
+- Core Bioconductor standards → [bioconductor-development.md](bioconductor-development.md)
 - Lab-wide conventions → [waldronlab-standards.md](waldronlab-standards.md)
 
 ### Example Structure
@@ -77,8 +77,8 @@ A generated `20-development.md` file looks like:
 # Development Patterns
 
 For complete Bioconductor standards, see:
-- [Core standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md)
-- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md)
+- [Core standards](https://github.com/waldronlab/ai-agent-skills/blob/main/skills/create-package-instructions/templates/bioconductor-development.md)
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/skills/create-package-instructions/templates/waldronlab-standards.md)
 
 ## Package-Specific Patterns
 

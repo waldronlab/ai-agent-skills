@@ -2,21 +2,9 @@
 name: create-package-instructions
 description: Create complete AI instruction documentation for an R/Bioconductor package in .github/instructions/
 version: 1.0.0
-platforms:
-  - claude-code
-  - github-copilot
-triggers:
-  claude:
-    - /create-package-instructions
-    - "Create instructions for this package"
-    - "Generate AI documentation for this package"
-  copilot:
-    - "@workspace create .github/instructions for this R package"
-    - "@workspace generate AI documentation"
-    - "@workspace set up instructions for this package"
-    - "@workspace create instructions"
-author: waldronlab
 category: r-packages
+tags: [r-packages, documentation, bioconductor]
+author: waldronlab
 ---
 
 # create-package-instructions
@@ -27,15 +15,13 @@ The generated instructions help AI agents understand your package structure, cod
 
 ## Usage
 
-**Claude Code**:
-- `/create-package-instructions`
+Invoke this skill when you want to generate AI-friendly documentation for an R package:
 - "Create instructions for this package"
-- "Generate AI documentation for this package"
+- "Generate AI documentation"
+- "Create .github/instructions for this R package"
+- "Set up instructions for this package"
 
-**GitHub Copilot**:
-- `@workspace create .github/instructions for this R package`
-- `@workspace generate AI documentation`
-- `@workspace set up instructions for this package`
+You must be in an R package directory (contains DESCRIPTION file) for this skill to work.
 
 ## Prerequisites
 
@@ -65,8 +51,8 @@ Based on the analysis output, determine which instruction files are needed:
 - `INDEX.md` - Navigation and quick reference
 
 **Conditionally create**:
-- `10-data-access.md` - **Only if** the package has data access patterns (Type: Remote or Hybrid from analysis)
-- `40-vignettes.md` - **Only if** the package has vignettes (count > 0 from analysis)
+- `10-data-access.md` - Only if package has data access patterns (Type: Remote or Hybrid from analysis)
+- `40-vignettes.md` - Only if package has vignettes (count > 0 from analysis)
 
 ### 3. Create `.github/instructions/` Directory
 
@@ -76,11 +62,12 @@ If the directory doesn't exist, create it:
 
 ### 4. Create Instruction Files
 
-For each required file, create it with appropriate content based on the package analysis:
+For each required file, create it with appropriate content based on the package analysis.
 
 #### 00-overview.md
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # [Package Name] Overview
 
@@ -109,7 +96,7 @@ For each required file, create it with appropriate content based on the package 
 - [Source 1]: [Details]
 ```
 
-**Data to populate from analysis**:
+Populate from analysis:
 - Package type classification
 - Version number
 - Purpose from DESCRIPTION and README
@@ -118,9 +105,10 @@ For each required file, create it with appropriate content based on the package 
 
 #### 10-data-access.md (if needed)
 
-**Create only if**: Package has Remote or Hybrid data access pattern
+Create only if package has Remote or Hybrid data access pattern.
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Data Access Patterns
 
@@ -159,80 +147,63 @@ For each required file, create it with appropriate content based on the package 
 - **Running tests**: [How tests handle remote vs local data]
 ```
 
-**Data to populate from analysis**:
-- Data access technologies (DuckDB, ExperimentHub, etc.)
+Populate from analysis:
+- Data access technologies
 - Data access function categories
 - Data source URLs and types
 - Large file handling characteristics
 
 #### 20-development.md
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Development Patterns
 
 For complete Bioconductor and waldronlab standards, see:
-- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md)
-- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md)
+- [Core Bioconductor standards](../../templates/bioconductor-development.md)
+- [Waldronlab conventions](../../templates/waldronlab-standards.md)
 
 ## Package-Specific Patterns
 
 ### Function Organization
 [How this package's R/ directory is structured]
-[Note any special files or organization patterns]
 
 ### Naming Conventions
 [Patterns specific to this package]
-[e.g., validation helpers prefixed with confirm_*, data access with get_*]
 
 ## S4 Classes and Methods
 [If applicable - describe package-specific classes]
 
-### Classes Defined in This Package
-
-#### ClassName
-**Purpose**: [What this class represents]
-**Slots**:
-- `slot_name` (type): Description
-
-### Methods
-[Key methods specific to this package's classes]
-
-## Input Validation
-[Package-specific validation patterns]
-[e.g., custom validators, special checks]
-
 ## Key Dependencies
 [Important dependencies and their specific usage in this package]
-- **dplyr**: Used for data transformation in processing functions
-- **TreeSummarizedExperiment**: Return type for taxonomic data
 
 ## Code Style Notes
-[Any package-specific style patterns that differ from standards]
+[Any package-specific style patterns]
 ```
 
-**Data to populate from analysis**:
-- S4 classes if defined (with slots and purpose)
-- Key dependencies and their specific role
+Populate from analysis:
+- S4 classes if defined
+- Key dependencies and their role
 - Package-specific naming patterns
 - Custom validation patterns
 - Function organization approach
 
 #### 30-testing-and-docs.md
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Testing and Documentation
 
 For complete standards, see:
-- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md) - Documentation and testing requirements
-- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Documentation and testing practices
+- [Core Bioconductor standards](../../templates/bioconductor-development.md)
+- [Waldronlab conventions](../../templates/waldronlab-standards.md)
 
 ## Package-Specific Testing
 
 ### Test Organization
 [How tests are organized for this package]
-[e.g., tests/testthat/test-data-access.R, test-validation.R]
 
 ### Test Data
 - **Location**: [inst/extdata/, tests/testthat/fixtures/]
@@ -240,21 +211,10 @@ For complete standards, see:
 - **Purpose**: [What the test data represents]
 
 ### Remote Data Testing
-[If applicable - how this package handles remote resources in tests]
-[e.g., skip conditions, local alternatives]
+[If applicable - how this package handles remote resources]
 
 ### Running Tests
-\`\`\`r
-# All tests
-devtools::test()
-
-# Specific test file
-testthat::test_file("tests/testthat/test-name.R")
-
-# Skip remote tests
-Sys.setenv(SKIP_REMOTE_TESTS = "true")
-devtools::test()
-\`\`\`
+[Commands and examples]
 
 ## Package-Specific Documentation Patterns
 
@@ -263,19 +223,12 @@ devtools::test()
 
 ### Common Parameters
 [If functions share common parameters, document them]
-- `data`: [Standard interpretation across functions]
-- `study_id`: [How study IDs work in this package]
-
-### Examples Approach
-[Package-specific example conventions]
-[e.g., all examples use example_data() helper, network examples use \\donttest]
 
 ## Common Testing Patterns
 [Specific to this package]
-[e.g., how invalid UUIDs are tested, how empty data is handled]
 ```
 
-**Data to populate from analysis**:
+Populate from analysis:
 - Test file organization and names
 - Test data location, types, and purpose
 - Whether remote resources are tested
@@ -284,9 +237,10 @@ devtools::test()
 
 #### 40-vignettes.md (if needed)
 
-**Create only if**: Package has vignettes (count > 0)
+Create only if package has vignettes (count > 0).
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Vignette Guide
 
@@ -314,19 +268,20 @@ Guidelines for maintaining vignettes:
 - Test: `devtools::build_vignettes()`
 ```
 
-**Data to populate from analysis**:
+Populate from analysis:
 - List of vignettes with titles and purposes
 - Suggested reading order based on content
 
 #### 50-git-workflow.md
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Git Workflow
 
 For complete workflow standards, see:
-- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md) - R CMD check, BiocCheck requirements
-- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Git workflow, commits, PRs
+- [Core Bioconductor standards](../../templates/bioconductor-development.md)
+- [Waldronlab conventions](../../templates/waldronlab-standards.md)
 
 ## Package-Specific Checks
 
@@ -337,50 +292,20 @@ For complete workflow standards, see:
 R CMD build .
 R CMD check [PackageName]_*.tar.gz
 
-# Bioconductor check (if applicable)
-R -e "BiocCheck::BiocCheck('[PackageName]_*.tar.gz')"
-
 # Documentation
 R -e "roxygen2::roxygenize()"
 
 # Tests
 R -e "devtools::test()"
-
-# Vignettes (if applicable)
-R -e "devtools::build_vignettes()"
 \`\`\`
 
 ## Package-Specific Considerations
 
-### [If data package with remote resources]
-Testing checklist includes:
-- Local tests with example data
-- Remote data connectivity (manual check)
-- Large file handling performance
-
-### [If package has vignettes]
-Pre-commit vignette checks:
-\`\`\`r
-rmarkdown::render("vignettes/[vignette-name].Rmd")
-\`\`\`
-
-### [If package has S4 classes]
-Verify:
-- Class validity methods work
-- Method dispatch is correct
-- show() methods display appropriately
+[List any special requirements for this package]
 
 ## Version and Release
 
 Current version: [from DESCRIPTION]
-
-### [If pre-Bioconductor: 0.99.x]
-- Increment patch version for changes
-- Prepare for Bioconductor submission when ready
-
-### [If Bioconductor package: x.y.z]
-- Follow Bioconductor version bumping (see standards)
-- Coordinate with Bioconductor release cycle
 
 ## CI/CD
 
@@ -389,7 +314,7 @@ Current version: [from DESCRIPTION]
 - Manual checks: [list what requires manual verification]
 ```
 
-**Data to populate from analysis**:
+Populate from analysis:
 - Package name for command examples
 - Current version from DESCRIPTION
 - Package type (pre-Bioc, Bioc, CRAN)
@@ -398,7 +323,8 @@ Current version: [from DESCRIPTION]
 
 #### INDEX.md
 
-**Content structure**:
+Content structure:
+
 ```markdown
 # Instructions Index
 
@@ -422,15 +348,11 @@ Quick reference for AI assistants working with [Package Name].
 
 ## Key Functions Quick Reference
 
-### Data Access
-[One-line descriptions]
-
-### Analysis/Processing
-[One-line descriptions]
+[Organized by category with one-line descriptions]
 
 ## External Resources
-- [Bioconductor page](https://bioconductor.org/packages/[PackageName]/)
-- [GitHub repository]([URL])
+- [Bioconductor page]
+- [GitHub repository]
 
 ## Quick Commands
 
@@ -442,7 +364,7 @@ browseVignettes("[PackageName]")
 \`\`\`
 ```
 
-**Data to populate from analysis**:
+Populate from analysis:
 - All metadata from package analysis
 - Links to all created instruction files
 - Function quick reference by category
@@ -452,8 +374,6 @@ browseVignettes("[PackageName]")
 #### .gitignore
 
 Check that `.github/instructions/` is NOT ignored (instructions should be committed).
-
-If `.gitignore` contains `.github/instructions/`, remove that line.
 
 #### .Rbuildignore
 
@@ -467,111 +387,13 @@ If `.Rbuildignore` doesn't exist, create it with this line.
 
 ### 6. Provide Summary
 
-After creating all files, provide a detailed summary:
-
-```markdown
-## Created Package Instructions
-
-Created the following instruction files in `.github/instructions/`:
-
-- ✓ 00-overview.md - Package overview with [N] key functions
-[If applicable:]
-- ✓ 10-data-access.md - [Type] data access patterns with [N] sources
-- ✓ 20-development.md - Development patterns and coding standards
-- ✓ 30-testing-and-docs.md - Testing ([N] test files) and documentation
-[If applicable:]
-- ✓ 40-vignettes.md - Guide for [N] vignettes
-- ✓ 50-git-workflow.md - Git workflow and release process
-- ✓ INDEX.md - Navigation and quick reference
-
-These instructions provide comprehensive guidance for AI assistants working with [PackageName].
-
-### Next Steps
-1. Review the generated instructions for accuracy
-2. Add package-specific examples where helpful
-3. Customize domain-specific terminology
-4. Commit the instructions: `git add .github/instructions/`
-5. Create PR for team review
-
-### Customization Recommended
-The following sections may benefit from manual enhancement:
-- [Section 1] - [Why]
-- [Section 2] - [Why]
-```
-
-## Example Output
-
-For a data package like parkinsonsMetagenomicData:
-
-```
-## Created Package Instructions
-
-Created the following instruction files in `.github/instructions/`:
-
-- ✓ 00-overview.md - Package overview with 18 exported functions across 3 categories
-- ✓ 10-data-access.md - DuckDB/parquet data access patterns with large file strategies
-- ✓ 20-development.md - Development patterns for TreeSummarizedExperiment output
-- ✓ 30-testing-and-docs.md - Testing with remote resources and example data
-- ✓ 40-vignettes.md - Documentation for 5 vignettes from quick-start to advanced
-- ✓ 50-git-workflow.md - Bioconductor submission workflow and version management
-- ✓ INDEX.md - Complete navigation and quick reference
-
-These instructions provide comprehensive guidance for AI assistants working with parkinsonsMetagenomicData.
-
-Key highlights:
-- Hybrid data access pattern (remote HuggingFace + local testing)
-- DuckDB technology for efficient parquet queries
-- Multiple data types: taxonomic, functional, QC
-- 5 vignettes covering different use cases and skill levels
-```
-
-## Platform-Specific Notes
-
-### Claude Code
-- Use Write tool to create new instruction files
-- Use Edit tool if files already exist (ask user first)
-- Run `/analyze-r-package` or invoke the skill directly
-- Output summary to conversation
-
-### GitHub Copilot
-- Create files using VS Code file operations
-- Run analysis by following analyze-r-package instructions
-- Display summary in chat
-
-## Configuration Options
-
-Users can customize the instruction generation:
-
-**Skip specific files**:
-- "Create instructions but skip vignettes documentation"
-- "Just create the data access instructions"
-
-**Custom directory**:
-- Default is `.github/instructions/`
-- User can specify alternate location
-
-**Template customization**:
-- Files follow waldronlab conventions
-- Can be adjusted based on organization preferences
-
-## Error Handling
-
-**If package analysis fails**:
-- Propagate error from analyze-r-package
-- Provide guidance on what's missing or misconfigured
-
-**If instruction directory creation fails**:
-- Check permissions
-- Suggest alternative locations or manual creation
-
-**If individual file creation fails**:
-- Continue with other files
-- Report which files succeeded and which failed
-- Provide partial output with instructions to complete
-
-**If instructions already exist**:
-- Ask user: "Instructions already exist. Overwrite, merge, or cancel?"
-- Suggest using `update-package-instructions` instead
+After creating all files, provide a detailed summary showing:
+- Which files were created
+- Number of functions documented
+- Data access patterns if applicable
+- Number of vignettes if applicable
+- Next steps for customization
+- Recommendation to commit to the repository
 
 ## Integration
 
@@ -584,7 +406,20 @@ Users can customize the instruction generation:
 
 **Works with**:
 - `update-package-instructions` - For updating existing instructions
-- Individual file generator skills (if they exist)
+
+## Error Handling
+
+**If package analysis fails**:
+- Propagate error from analyze-r-package
+- Provide guidance on what's missing or misconfigured
+
+**If instruction directory creation fails**:
+- Check permissions
+- Suggest alternative locations or manual creation
+
+**If instructions already exist**:
+- Ask user: "Instructions already exist. Overwrite, merge, or cancel?"
+- Suggest using `update-package-instructions` instead
 
 ## Notes
 
@@ -594,3 +429,10 @@ Users can customize the instruction generation:
 - Focus on package-specific patterns, not general R/Bioconductor knowledge
 - Generated content is a starting point - encourage customization
 - Instructions should be committed to the repository for team use
+- Reference shared standards documents rather than duplicating them
+
+The generated instructions provide a foundation for AI-assisted development. Customization and iteration are expected based on team preferences and package evolution.
+
+---
+
+**Related**: See [analyze-r-package](../analyze-r-package/SKILL.md) for package analysis skill, [update-package-instructions](../update-package-instructions/SKILL.md) for updating existing instructions.

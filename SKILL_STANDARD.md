@@ -1,81 +1,112 @@
-# Agent Skills Standard Format
+# Skill Format Standard (Technical Specification)
+
+## Relationship to Other Documentation
+
+- **[AGENTS.md](AGENTS.md)**: Defines WHAT agents must do (behavior, compliance, discovery)
+- **SKILL_STANDARD.md** (this document): Defines HOW to format skills (structure, syntax)
+
+This document provides detailed technical guidance for skill format. For canonical agent behavior rules, see [AGENTS.md](AGENTS.md).
 
 ## Purpose
 
-This document defines the standard format for cross-platform AI agent skills in the waldronlab/ai-agent-skills repository. Skills following this standard can be used with multiple AI agents (Claude Code, GitHub Copilot, etc.) without platform-specific duplication.
+This document defines the standard format for agent-agnostic skills in the waldronlab/ai-agent-skills repository. Skills following this standard work with multiple AI agents without platform-specific metadata or duplication.
 
-## Motivation
+## Core Principles
 
-Previously, we maintained separate `/claude` and `/copilot` directories with near-identical skill logic, differing only in:
-- Trigger syntax (Claude: `/command` vs Copilot: `@workspace ...`)
-- Tool invocation patterns (Claude: XML-style vs Copilot: natural language)
-- Minor formatting preferences
+### 1. Agent Neutrality
 
-This duplication created maintenance overhead and logic drift. The unified format provides a **single source of truth** while documenting platform-specific adaptations where necessary.
+Skills contain no platform-specific metadata (no `platforms:` or `triggers:` fields). Agents discover skills via [SKILLS.md](SKILLS.md) and match user natural language to skill descriptions.
+
+### 2. Single Source of Truth
+
+One skill file per skill at `skills/{skill-name}/SKILL.md`. No platform-specific variants or duplicates.
+
+### 3. Portability
+
+Skills work on any compliant agent platform through natural language invocation. Platform-specific shortcuts (slash commands, @workspace patterns) are optional conveniences documented in [instructions/](instructions/) adapters.
 
 ## File Structure
 
 ### Location
 
-Unified skills live directly in domain directories:
+Skills live in flat individual directories:
 
 ```
 ai-agent-skills/
-├── r-packages/                      # R/Bioconductor domain
-│   ├── analyze-r-package.md         # Unified skill
-│   ├── create-package-instructions.md
-│   ├── update-package-instructions.md
-│   ├── templates/                   # Supporting resources
-│   └── examples/
-├── metagenomics/                    # Metagenomics domain
-│   └── (skills will go here)
-└── statistical-methods/             # Statistical methods domain
-    └── (skills will go here)
+├── AGENTS.md                           # Agent behavior standard
+├── SKILLS.md                           # Human-readable skill index
+├── SKILL_STANDARD.md                   # This file - technical format spec
+│
+├── skills/                             # All skills (flat structure)
+│   ├── create-skill/
+│   │   └── SKILL.md
+│   ├── check-waldronlab-skills/
+│   │   └── SKILL.md
+│   ├── analyze-r-package/
+│   │   └── SKILL.md
+│   ├── create-package-instructions/
+│   │   ├── SKILL.md
+│   │   ├── templates/                 # Shared standards
+│   │   └── examples/                  # Example outputs
+│   └── update-package-instructions/
+│       └── SKILL.md
+│
+└── instructions/                       # Platform adapters
+    ├── README.md
+    ├── claude.md
+    ├── copilot.md
+    └── gemini.md
 ```
 
-This keeps everything for a domain together while the unified format prevents platform-specific duplication.
+### Naming Convention
 
-## Standard Format
+- **Directory**: `skills/{skill-name}/` (kebab-case)
+- **Skill file**: `SKILL.md` (uppercase, consistent across all skills)
+- **Supporting files**: Optional templates, examples, or resources in the skill directory
 
-### YAML Frontmatter
+## YAML Frontmatter (Required)
 
-Every skill MUST begin with YAML frontmatter containing these fields:
+Every skill MUST begin with YAML frontmatter:
 
 ```yaml
 ---
-name: skill-name                     # Kebab-case identifier (REQUIRED)
-description: One-line purpose        # High-level trigger description (REQUIRED)
-version: 1.0.0                       # Semantic version (REQUIRED)
-platforms:                           # Supported platforms (REQUIRED)
-  - claude-code
-  - github-copilot
-triggers:                            # Platform-specific invocations (REQUIRED)
-  claude:
-    - /skill-name
-    - "Natural language variant"
-  copilot:
-    - "@workspace natural language trigger"
-    - "@workspace alternate trigger"
-author: waldronlab                   # Optional
-category: r-packages                 # Optional domain categorization
+name: skill-name                        # Unique identifier (REQUIRED)
+description: One-line purpose           # Used for discovery (REQUIRED)
+version: 1.0.0                          # Semantic version (REQUIRED)
+category: domain                        # Primary domain (REQUIRED)
+tags: [tag1, tag2, tag3]               # Searchable metadata (OPTIONAL)
+author: waldronlab                      # Creator/maintainer (OPTIONAL)
 ---
 ```
 
-**Required Fields**:
-- `name`: Unique identifier, kebab-case
-- `description`: Single sentence describing the skill's purpose
-- `version`: Semantic version (MAJOR.MINOR.PATCH)
-- `platforms`: Array of supported AI agents
-- `triggers`: Platform-specific trigger phrases
+### Required Fields
 
-**Optional Fields**:
-- `author`: Creator or maintaining organization
-- `category`: Domain grouping (r-packages, metagenomics, etc.)
-- `tags`: Additional metadata for discovery
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `name` | string | Unique kebab-case identifier | `create-skill` |
+| `description` | string | One-line purpose for discovery | `Help create a new AI agent skill through collaborative Q&A` |
+| `version` | string | Semantic version (MAJOR.MINOR.PATCH) | `1.0.0` |
+| `category` | string | Primary domain classification | `meta`, `r-packages`, `metagenomics` |
 
-### Main Content
+### Optional Fields
 
-After the frontmatter, structure the skill content as follows:
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `tags` | array | Cross-cutting metadata for discovery | `[meta, infrastructure, skill-creation]` |
+| `author` | string | Creator or maintaining organization | `waldronlab` |
+
+### Prohibited Fields
+
+❌ **Do NOT include**:
+- `platforms:` - Skills are agent-agnostic by design
+- `triggers:` - Agents use natural language + SKILLS.md for discovery
+- Agent-specific metadata
+
+Platform-specific invocation patterns belong in [instructions/](instructions/) adapter files, not in skill YAML.
+
+## Main Content Structure
+
+After frontmatter, structure content as follows:
 
 ```markdown
 # [Skill Name]
@@ -84,29 +115,27 @@ Brief overview of what the skill does (1-2 paragraphs).
 
 ## Usage
 
-How users invoke this skill across platforms:
-- **Claude Code**: `/command` or "natural trigger"
-- **GitHub Copilot**: `@workspace trigger phrase`
+How to invoke this skill (natural language examples):
+- "Create a new skill for [purpose]"
+- "Help me with [task]"
+- "[Action] this [thing]"
+
+Platform adapters may provide optional shortcuts.
 
 ## Prerequisites
 
 List any requirements:
 - Working directory location
-- Required files (e.g., DESCRIPTION for R packages)
+- Required files
 - Dependencies or prior setup
 
 ## Process
 
-Detailed step-by-step instructions for the AI agent. Use numbered sections:
+Detailed step-by-step instructions using numbered sections:
 
 ### 1. First Major Step
 
-Description of what to do.
-
-**Tools/Methods**:
-- Platform-agnostic: "Read the DESCRIPTION file"
-- Claude-specific: "Use Read tool"
-- Copilot-specific: "Use file browser"
+Description of what to do (platform-agnostic).
 
 ### 2. Second Major Step
 
@@ -114,43 +143,43 @@ Continue with clear, actionable instructions.
 
 ## Output Format
 
-If the skill produces structured output, document the expected format using markdown code blocks or examples.
-
-## Platform-Specific Notes
-
-Document differences between platforms:
-
-### Claude Code
-- Use dedicated tools (Read, Grep, Glob, Edit, Write)
-- Output saved to conversation context
-- Can use /skill invocations
-
-### GitHub Copilot
-- Use VS Code file browser and search
-- Output displayed in chat
-- Trigger via @workspace
-
-## Error Handling
-
-Document common errors and how to handle them.
+Expected output structure or examples (if applicable).
 
 ## Examples
 
-Provide concrete examples showing:
-1. How users invoke the skill
-2. What the AI agent does
-3. Expected output
+Concrete usage scenarios showing:
+1. User invocation (natural language)
+2. What the skill does
+3. Expected outcome
 
 ## Notes
 
 Additional context, caveats, or best practices.
 ```
 
+### Section Guidelines
+
+**Usage Section**:
+- Use natural language invocation examples
+- Avoid platform-specific syntax (no `/command` or `@workspace` patterns)
+- Let platform adapters document optional shortcuts
+
+**Process Section**:
+- Describe WHAT to do, not HOW (which tools to use)
+- Use platform-agnostic language: "read the file" not "use Read tool"
+- Number major steps clearly
+- Provide clear decision points
+
+**Examples Section**:
+- Show natural language invocation
+- Demonstrate typical workflows
+- Include expected outcomes
+
 ## Design Principles
 
-### 1. Platform-Agnostic Core Logic
+### Platform-Agnostic Core Logic
 
-The majority of the skill should describe **what** to do, not **how** (which tools to use):
+The majority of the skill describes **what** to do, not **how** (which tools):
 
 **❌ Platform-specific**:
 ```markdown
@@ -166,243 +195,209 @@ Read and analyze the DESCRIPTION file to extract:
 - Version number
 ```
 
-**Platform notes** can clarify implementation:
-```markdown
-**Implementation**:
-- Claude Code: Use `Read` tool
-- Copilot: Use file browser or editor
-```
+### Natural Language Invocation
 
-### 2. Trigger Alignment
+Skills are invoked through natural language matching to descriptions, not rigid command syntax:
 
-Ensure triggers capture the same **user intent** across platforms:
-
+**❌ Rigid triggers**:
 ```yaml
 triggers:
   claude:
     - /analyze-r-package
-    - "Analyze this R package"
   copilot:
     - "@workspace analyze this R package"
-    - "@workspace what type of R package is this?"
 ```
 
-Both should handle:
-- Direct command invocations
-- Natural language requests with similar meaning
-
-### 3. Template References
-
-When skills generate content from templates, reference **shared template files** rather than embedding platform-specific templates:
-
-```markdown
-## Creating 00-overview.md
-
-Use the template from `r-packages/templates/00-overview.template.md` and populate with:
-- Package classification from analysis
-- Key exports by category
-- Data sources (if applicable)
+**✅ Natural language discovery**:
+```yaml
+description: Analyze R/Bioconductor package structure to extract key information about its purpose, exports, and characteristics
 ```
 
-### 4. Output Portability
+Agents match user intent like "analyze this package" or "what type of package is this?" to the description.
 
-Skills should produce output that is useful regardless of platform:
+### Output Portability
 
+Skills should produce output useful regardless of platform:
 - Use markdown for structured output
 - Avoid platform-specific formatting
 - Keep examples self-contained
 
-## Migration Guide
+## Installation & Discovery
 
-### Converting Platform-Specific Skills to Unified Format
+### For Users
 
-1. **Extract Common Logic**
+Skills are discovered via [SKILLS.md](SKILLS.md):
+1. Browse SKILLS.md to find relevant skills
+2. Invoke using natural language matching the description
+3. Optional: Use platform shortcuts documented in [instructions/](instructions/)
 
-   Compare Claude and Copilot versions side-by-side:
-   - Identify identical sections (usually 90%+)
-   - Extract to platform-agnostic language
-   - Document only true differences
+### For Platform Adapters
 
-2. **Create YAML Frontmatter**
+Platforms configure skill locations:
 
-   ```yaml
-   ---
-   name: existing-skill-name
-   description: [from existing header]
-   version: [current version]
-   platforms: ["claude-code", "github-copilot"]
-   triggers:
-     claude: [from Claude version]
-     copilot: [from Copilot version]
-   ---
-   ```
-
-3. **Generalize Tool References**
-
-   Replace:
-   ```markdown
-   Tools to use:
-   - Read: DESCRIPTION
-   - Grep: R/ for patterns
-   ```
-
-   With:
-   ```markdown
-   Read the DESCRIPTION file to extract metadata.
-   Search R source files for patterns (e.g., setClass, ExperimentHub).
-   ```
-
-4. **Add Platform Notes Section**
-
-   ```markdown
-   ## Platform-Specific Notes
-
-   ### Claude Code
-   - Use Read, Grep, Glob tools directly
-   - Can invoke with `/skill-name`
-
-   ### GitHub Copilot
-   - Use VS Code file operations
-   - Trigger with `@workspace ...`
-   ```
-
-5. **Test Both Platforms**
-
-   Verify the unified skill works correctly:
-   - Claude Code: Install as global skill or workspace skill
-   - GitHub Copilot: Reference from `.github/copilot-instructions.md`
-   - Test all trigger variations
-   - Verify output is consistent
-
-## Installation
-
-### For Claude Code
-
-Reference unified skills in VS Code settings:
-
+**Claude Code** (`settings.json`):
 ```json
 {
   "claude.globalSkills": [
-    "~/git/ai-agent-skills/r-packages/analyze-r-package.md",
-    "~/git/ai-agent-skills/r-packages/create-package-instructions.md"
+    "/path/to/ai-agent-skills/skills/create-skill/SKILL.md",
+    "/path/to/ai-agent-skills/skills/analyze-r-package/SKILL.md"
   ]
 }
 ```
 
-### For GitHub Copilot
-
-Copy or reference unified skills:
-
-**Option 1: Direct reference** (if supported):
+**GitHub Copilot** (`settings.json`):
 ```json
 {
-  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/"
+  "chat.skillsLocations": [
+    "/path/to/ai-agent-skills/skills/create-skill",
+    "/path/to/ai-agent-skills/skills/analyze-r-package"
+  ]
 }
 ```
 
-**Option 2: Copy to repository**:
-```bash
-cp ~/git/ai-agent-skills/r-packages/*.md \
-   .github/copilot-instructions/
-```
+See [instructions/claude.md](instructions/claude.md) and [instructions/copilot.md](instructions/copilot.md) for complete setup.
+
+## Version Management
+
+Skills use semantic versioning:
+
+- **MAJOR**: Breaking changes to skill behavior or interface
+- **MINOR**: New features, non-breaking enhancements
+- **PATCH**: Bug fixes, clarifications, documentation updates
+
+When updating skills:
+1. Increment version in YAML frontmatter
+2. Update [SKILLS.md](SKILLS.md) if description changes
+3. Document changes in commit message
+4. Consider updating [CHANGELOG.md](CHANGELOG.md) for significant changes
 
 ## Validation Checklist
 
-Use this checklist when creating or migrating skills:
+Use this checklist when creating or updating skills:
 
-- [ ] YAML frontmatter includes all required fields
+### Required Elements
+- [ ] YAML frontmatter includes all required fields (`name`, `description`, `version`, `category`)
 - [ ] `name` is unique and kebab-case
-- [ ] `platforms` lists all supported agents
-- [ ] `triggers` defined for each platform
-- [ ] Core logic is platform-agnostic
-- [ ] Tool references are generalized or in platform notes
-- [ ] Output format is documented
-- [ ] Examples show usage for both platforms
-- [ ] Error handling is documented
-- [ ] Tested on at least two platforms
+- [ ] `description` is one clear sentence suitable for discovery
+- [ ] `category` matches an existing domain or is a new domain with rationale
+- [ ] Core logic is platform-agnostic (describes WHAT, not HOW)
+- [ ] No `platforms:` or `triggers:` fields in YAML
+- [ ] Usage section shows natural language invocation examples
 
-## Bioconductor-Specific Considerations
+### Content Quality
+- [ ] Process section has numbered steps with clear actions
+- [ ] Examples show realistic usage scenarios
+- [ ] Output format is documented (if applicable)
+- [ ] Prerequisites are clear and complete
+- [ ] Cross-references use correct paths
 
-For waldronlab R package skills:
-
-### Template Integration
-
-Reference shared templates in `r-packages/templates/`:
-
-```markdown
-Populate `00-overview.md` using the structure:
-- [Link to template if exists, or describe inline]
-```
-
-### Standards References
-
-Link to Bioconductor standards rather than duplicating:
-
-```markdown
-Follow Bioconductor coding standards:
-- Function documentation: https://bioconductor.org/developers/package-guidelines/#rcode
-- Testing requirements: https://bioconductor.org/developers/package-guidelines/#tests
-```
-
-### Domain Knowledge
-
-Waldron lab domain knowledge (metagenomics, multi-omics) should be:
-- Documented in the `/templates` directory
-- Referenced by skills, not embedded
-- Versioned alongside skills
-
-## Future Extensions
-
-### MCP (Model Context Protocol) Integration
-
-When defining tools or capabilities:
-
-```yaml
-capabilities:
-  - read_files
-  - search_files
-  - execute_commands
-mcp_servers:
-  - filesystem
-  - git
-```
-
-### Multi-Agent Workflows
-
-For skills that coordinate multiple agents:
-
-```yaml
-workflow:
-  - step: analyze
-    agent: explore
-  - step: generate
-    agent: main
-```
+### Portability
+- [ ] Tool references are generalized or in platform-specific notes
+- [ ] Examples work across platforms
+- [ ] No platform-specific assumptions in core logic
 
 ## Examples
 
-See [r-packages/](r-packages/) for complete examples of unified skills:
-- [analyze-r-package.md](r-packages/analyze-r-package.md)
-- [create-package-instructions.md](r-packages/create-package-instructions.md)
-- [update-package-instructions.md](r-packages/update-package-instructions.md)
+### Complete Skill Example
 
-## Maintaining Parity
+```markdown
+---
+name: analyze-r-package
+description: Analyze R/Bioconductor package structure to extract key information about its purpose, exports, and characteristics
+version: 1.0.0
+category: r-packages
+tags: [r-packages, analysis, bioconductor, documentation]
+author: waldronlab
+---
 
-To ensure skills remain in sync across platforms:
+# analyze-r-package
 
-1. **Single Source of Truth**: Always edit the unified skill in `/skills`
-2. **Platform Testing**: Test changes on both Claude Code and Copilot
-3. **Version Bumping**: Increment version in frontmatter when updating
-4. **Changelog**: Document changes in skill-level comments or repo CHANGELOG
+Analyze an R/Bioconductor package to understand its structure, purpose, and key characteristics.
+
+## Usage
+
+Invoke when you want to understand an R package's architecture:
+- "Analyze this R package"
+- "What type of R package is this?"
+- "Tell me about this package structure"
+
+## Prerequisites
+
+- Working directory is an R package root (contains DESCRIPTION file)
+- Package has standard R structure (R/, NAMESPACE, etc.)
+
+## Process
+
+### 1. Read Package Metadata
+
+Read and analyze the DESCRIPTION file to extract:
+- Package name from `Package` field
+- Title from `Title` field
+- Description from `Description` field
+- Version from `Version` field
+
+### 2. Identify Exported Functions
+
+Parse the NAMESPACE file to extract all exports and categorize by function type.
+
+## Output Format
+
+Produce a structured markdown summary with classification, key exports, data access patterns, and documentation status.
+
+## Examples
+
+**User**: "Analyze this R package"
+
+**Skill produces**:
+```
+## Package Analysis: packageName
+### Classification
+- **Type**: Data Package
+- **Version**: 1.0.0
+...
+```
+
+## Notes
+
+- This skill produces analysis for use by other skills or for user understanding
+- Manual verification recommended for complex packages
+```
+
+## Migration from v1.x
+
+If you have skills from v1.x format:
+
+1. **Remove platform-specific fields**:
+   - Delete `platforms:` array
+   - Delete `triggers:` sections
+
+2. **Add required metadata**:
+   - Add `category:` field (domain name)
+   - Optionally add `tags:` array
+
+3. **Update invocation examples**:
+   - Change from `/command` syntax to natural language
+   - Remove `@workspace` patterns from skill file
+   - Document optional shortcuts in [instructions/](instructions/) adapters
+
+4. **Test on both platforms**:
+   - Verify natural language invocation works
+   - Check optional shortcuts work (if configured)
+
+See [MIGRATION.md](MIGRATION.md) for detailed upgrade guide.
 
 ## Questions?
 
-For questions about this standard:
-- Open an issue: https://github.com/waldronlab/ai-agent-skills/issues
-- Discuss: https://github.com/waldronlab/ai-agent-skills/discussions
+- **How does skill discovery work?** → See [AGENTS.md](AGENTS.md)
+- **How do I create a new skill?** → Use the `create-skill` skill or see [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Where are skills stored?** → `skills/{skill-name}/SKILL.md`
+- **How do platform shortcuts work?** → See [instructions/claude.md](instructions/claude.md) or [instructions/copilot.md](instructions/copilot.md)
+- **I found an issue** → File at https://github.com/waldronlab/ai-agent-skills/issues
 
 ---
 
-**Version**: 1.0.0
+**Version**: 2.0.0
 **Last Updated**: 2026-04-03
 **Authors**: waldronlab
+
+See [AGENTS.md](AGENTS.md) for agent behavior standard, [SKILLS.md](SKILLS.md) for skill index, [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
