@@ -18,6 +18,16 @@ With these skills, AI agents can:
 - Understand domain-specific patterns
 - Provide better assistance on complex tasks
 
+## Cross-Platform Compatibility
+
+Skills in this repository follow the [Agent Skills Standard Format](SKILL_STANDARD.md), making them compatible with multiple AI agents:
+
+- **Claude Code**: Use `/skill-name` or natural language triggers
+- **GitHub Copilot**: Use `@workspace` triggers
+- **Future platforms**: Extensible format for new agents
+
+This unified approach eliminates duplication and ensures consistency across platforms. See [SKILL_STANDARD.md](SKILL_STANDARD.md) for details on the format and how to create cross-platform skills.
+
 ## Available Skill Domains
 
 ### 🔧 [r-packages/](r-packages/)
@@ -69,27 +79,29 @@ Skills for common statistical analysis patterns in microbiome and multi-omics re
 Copy the relevant instructions to your repository:
 
 ```bash
-# For R packages
-cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
-   .github/copilot-instructions.md
+# For R packages - copy unified skills
+cp ~/git/ai-agent-skills/r-packages/*.md \
+   .github/copilot-instructions/
 ```
 
-Copilot automatically loads `.github/copilot-instructions.md`.
+Copilot automatically loads instructions from `.github/copilot-instructions/`.
 
 #### Option 2: Workspace Reference
 
 Add to your workspace `.vscode/settings.json`:
 ```json
 {
-  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/copilot/instructions.md"
+  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/"
 }
 ```
+
+Or reference specific skill files if your Copilot version supports it.
 
 #### Option 3: Organization-Wide (Copilot Enterprise)
 
 For organization admins:
 1. Go to https://github.com/organizations/waldronlab/settings/copilot
-2. Add instructions from this repository to the knowledge base
+2. Add skill files from domain directories (e.g., `r-packages/*.md`) to the knowledge base
 
 ### For Claude Code Users
 
@@ -107,9 +119,9 @@ Add to your VS Code settings (`~/.config/Code/User/settings.json`):
 ```json
 {
   "claude.globalSkills": [
-    "~/git/ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "~/git/ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "~/git/ai-agent-skills/r-packages/claude/update-package-instructions.md"
+    "~/git/ai-agent-skills/r-packages/analyze-r-package.md",
+    "~/git/ai-agent-skills/r-packages/create-package-instructions.md",
+    "~/git/ai-agent-skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
@@ -120,9 +132,9 @@ Add to your workspace `.vscode/settings.json`:
 ```json
 {
   "claude.skills": [
-    "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
+    "../ai-agent-skills/r-packages/analyze-r-package.md",
+    "../ai-agent-skills/r-packages/create-package-instructions.md",
+    "../ai-agent-skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
@@ -168,27 +180,23 @@ ai-agent-skills/
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
 ├── CONTRIBUTING.md                # Contribution guidelines
+├── SKILL_STANDARD.md              # Standard format for cross-platform skills
 │
 ├── r-packages/                    # R/Bioconductor package skills
 │   ├── README.md                  # R packages documentation
-│   ├── claude/                    # Claude Code skills
-│   │   ├── analyze-r-package.md
-│   │   ├── create-package-instructions.md
-│   │   └── update-package-instructions.md
-│   ├── copilot/                   # GitHub Copilot instructions
-│   │   └── instructions.md
-│   ├── templates/                 # Instruction file templates
-│   │   ├── 00-overview.template.md
-│   │   └── ...
+│   ├── analyze-r-package.md       # Unified skill
+│   ├── create-package-instructions.md
+│   ├── update-package-instructions.md
+│   ├── templates/                 # Shared templates
 │   └── examples/                  # Real-world examples
 │       ├── README.md
 │       ├── data-package-parquet/
 │       └── ...
 │
-├── metagenomics/                  # Metagenomics analysis skills
+├── metagenomics/                  # Metagenomics skills (planned)
 │   └── README.md
 │
-└── statistical-methods/           # Statistical analysis skills
+└── statistical-methods/           # Statistical analysis skills (planned)
     └── README.md
 ```
 
@@ -205,12 +213,15 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Adding New Skills
 
-1. Choose or create appropriate domain directory
-2. Follow the existing skill format (see examples)
-3. Test on multiple real packages/projects
-4. Add examples demonstrating the skill
-5. Update relevant README files
-6. Submit PR for review
+1. Choose or create appropriate domain directory (e.g., `r-packages/`, `metagenomics/`)
+2. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
+3. Include YAML frontmatter with all required fields
+4. Write platform-agnostic core logic
+5. Add platform-specific notes where necessary
+6. Test on both Claude Code and GitHub Copilot
+7. Add examples demonstrating the skill
+8. Update the domain's README file
+9. Submit PR for review
 
 ### Adding New Domains
 

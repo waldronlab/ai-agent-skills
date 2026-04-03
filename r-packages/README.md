@@ -164,7 +164,14 @@ More examples coming soon.
 
 **Per-repository (recommended)**:
 ```bash
-cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
+# Copy all R package skills
+cp ~/git/ai-agent-skills/r-packages/*.md \
+   .github/copilot-instructions/
+```
+
+Or just the create instructions:
+```bash
+cp ~/git/ai-agent-skills/r-packages/create-package-instructions.md \
    .github/copilot-instructions.md
 ```
 
@@ -172,7 +179,7 @@ cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
 ```json
 // .vscode/settings.json
 {
-  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/copilot/instructions.md"
+  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/"
 }
 ```
 
@@ -183,9 +190,9 @@ cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
 // ~/.config/Code/User/settings.json
 {
   "claude.globalSkills": [
-    "~/git/ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "~/git/ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "~/git/ai-agent-skills/r-packages/claude/update-package-instructions.md"
+    "~/git/ai-agent-skills/r-packages/analyze-r-package.md",
+    "~/git/ai-agent-skills/r-packages/create-package-instructions.md",
+    "~/git/ai-agent-skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
@@ -195,9 +202,9 @@ cp ~/git/ai-agent-skills/r-packages/copilot/instructions.md \
 // .vscode/settings.json
 {
   "claude.skills": [
-    "../ai-agent-skills/r-packages/claude/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/claude/create-package-instructions.md",
-    "../ai-agent-skills/r-packages/claude/update-package-instructions.md"
+    "../ai-agent-skills/r-packages/analyze-r-package.md",
+    "../ai-agent-skills/r-packages/create-package-instructions.md",
+    "../ai-agent-skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
