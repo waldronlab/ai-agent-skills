@@ -1,7 +1,7 @@
 ---
 name: create-skill
 description: Help create a new AI agent skill through collaborative Q&A
-version: 1.0.0
+version: 1.1.0
 category: meta
 tags: [meta, infrastructure, skill-creation]
 author: waldronlab
@@ -33,6 +33,15 @@ The skill guides you through the creation process interactively.
 - Existing domain directories (skills/*, or you're creating a new domain)
 
 ## Process
+
+The skill creation process follows these steps:
+1. Understand the user's intent through Q&A
+2. Determine domain and location
+3. Outline the process steps
+4. Generate the skill file
+5. Review and refine with user feedback
+6. **Validate** the skill against repository standards
+7. Update repository documentation (only after validation passes)
 
 ### 1. Understand the Intent
 
@@ -169,7 +178,134 @@ After generating the draft:
 **Offer next steps**:
 - "You can refine this iteratively as you test it"
 - "Want to add examples or error handling?"
-- "Ready to commit and test this skill?"
+- "Ready to validate and document this skill?"
+
+### 6. Validate the Skill
+
+Before updating repository documentation, validate that the skill meets waldronlab standards:
+
+**Run validation**:
+- Invoke `validate-skill` on the newly created skill file
+- Review the validation report
+
+**Address issues**:
+- Fix any CRITICAL issues (required for standards compliance)
+- Strongly consider fixing WARNING issues
+- Note INFO suggestions for future improvements
+
+**If validation fails**:
+- Help user fix the issues
+- Re-run validation after fixes
+- Iterate until validation passes
+
+**If validation passes**:
+- Confirm: "✅ Validation passed! Ready to update repository documentation?"
+- Only proceed to documentation step if validation is successful
+
+### 7. Update Repository Documentation
+
+After the skill file is finalized, update necessary repository files to register and document the new skill:
+
+#### Required: Update SKILLS.md
+
+Add an entry for the new skill in the appropriate category section:
+
+```markdown
+### [skill-name]
+
+**Purpose**: [One-line description from frontmatter]
+
+**Location**: `skills/[skill-name]/SKILL.md`
+
+**When to use**:
+- [Context 1]
+- [Context 2]
+- [Context 3]
+
+**Invocation**:
+- Natural language: "[example 1]", "[example 2]", "[example 3]"
+- Claude Code optional shortcut: `/[skill-name]`
+- Copilot optional shortcut: `@workspace [natural language example]`
+
+**What happens**:
+- [Step 1 summary]
+- [Step 2 summary]
+- [Step 3 summary]
+
+**Output**: [What the skill produces]
+
+**Related skills**: [other-skill-1], [other-skill-2]
+
+---
+```
+
+Also update:
+- **By Category** table: Add skill to the appropriate row
+- **By Tag** table: Add skill to relevant tag rows, create new tags if needed
+- **Finding Skills by Use Case**: Add to relevant use case workflows
+
+#### Required: Update Platform Instructions
+
+**For Claude Code** (`instructions/claude.md`):
+- Add skill path to the configuration example in the "Global Installation" section:
+  ```json
+  "/Users/<your-user>/git/ai-agent-skills/skills/[skill-name]/SKILL.md"
+  ```
+- Add optional slash command shortcut to the "Available Shortcuts" list:
+  ```
+  /[skill-name]          → [Brief purpose]
+  ```
+
+**For GitHub Copilot** (`instructions/copilot.md`):
+- Add skill directory to the configuration example in the "Global Setup" section:
+  ```json
+  "/Users/<your-user>/git/ai-agent-skills/skills/[skill-name]"
+  ```
+- Add optional `@workspace` pattern example to the "Available Patterns" list
+
+#### Optional: Update User's Global Configuration
+
+If the user wants the skill available immediately in their environment:
+
+**Update `~/.claude/CLAUDE.md`** (or equivalent global instructions):
+```markdown
+- **[skill-name]** - [Brief purpose]
+```
+
+**Update VS Code settings** (if user confirms):
+- Add to `claude.globalSkills` array:
+  ```json
+  "/Users/Levi/git/ai-agent-skills/skills/[skill-name]/SKILL.md"
+  ```
+- Add to `chat.skillsLocations` array:
+  ```json
+  "/Users/Levi/git/ai-agent-skills/skills/[skill-name]"
+  ```
+
+#### Checklist for Documentation Updates
+
+Present this checklist to the user (only after validation passes):
+```
+Skill creation complete:
+✅ Skill file created and validated
+
+Documentation updates needed:
+□ Add entry to SKILLS.md (required)
+  - Category section with full details
+  - By Category table
+  - By Tag table
+  - Use case workflows (if applicable)
+□ Update instructions/claude.md (required)
+  - Configuration example
+  - Available shortcuts list
+□ Update instructions/copilot.md (required)
+  - Configuration example
+  - Available patterns list
+□ Update ~/.claude/CLAUDE.md (optional, for immediate availability)
+□ Update VS Code settings.json (optional, for immediate availability)
+```
+
+Ask the user: "Would you like me to make these documentation updates now, or would you prefer to do them manually?"
 
 ## Output Format
 
@@ -268,9 +404,15 @@ If user says "like skill X but for Y":
 ## Integration with Other Skills
 
 **Complements**:
-- SKILL_STANDARD.md - Reference for format details
-- AGENTS.md - Understanding agent behavior and discovery
-- check-waldronlab-skills - For discovering existing skills before creating duplicates
+- **validate-skill** - Automatically validates the new skill before documentation (required step)
+- **check-waldronlab-skills** - For discovering existing skills before creating duplicates
+- **SKILL_STANDARD.md** - Reference for format details
+- **AGENTS.md** - Understanding agent behavior and discovery
+
+**Workflow Integration**:
+1. Use `create-skill` to generate the skill file
+2. Use `validate-skill` to ensure standards compliance (automatic in step 6)
+3. Use `check-waldronlab-skills` to verify the skill is discoverable
 
 **Not a replacement for**:
 - Manual refinement and testing
@@ -316,6 +458,8 @@ Result: `skills/[domain]/[workflow-name]/SKILL.md` capturing your process
 - **Standards are guidelines**: Focus on clarity and usefulness
 - **Metadata tags help discovery**: Use relevant tags (r-packages, bioconductor, data-access, etc.)
 - **Domain knowledge helps**: Familiarity with existing skills improves suggestions
+- **Documentation is critical**: A skill isn't complete until it's documented in SKILLS.md and platform instructions—this makes it discoverable by users and agents
+- **Validate before documenting**: Use `validate-skill` to check standards compliance before updating repository documentation
 
 The goal is to **lower the barrier** to creating skills, not raise it. Make it easy to capture and share workflows.
 
