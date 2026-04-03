@@ -15,8 +15,10 @@ Have a workflow or pattern that would help others?
 1. Create directory: `skills/{skill-name}/`
 2. Create file: `skills/{skill-name}/SKILL.md`
 3. Follow [SKILL_STANDARD.md](SKILL_STANDARD.md) format
-4. Test on at least 3 different projects
-5. Submit PR
+4. **Validate**: Use `validate-skill` to check compliance
+5. Fix any issues found in validation report
+6. Test on at least 3 different projects
+7. Submit PR
 
 ### Improve Existing Skills
 
@@ -56,9 +58,11 @@ Report bugs or suggest features via [GitHub Issues](https://github.com/waldronla
 2. Get feedback from maintainers
 3. Fork and create feature branch
 4. Develop following [SKILL_STANDARD.md](SKILL_STANDARD.md)
-5. Test thoroughly (at least 3 projects)
-6. Update [SKILLS.md](SKILLS.md) to include your skill
-7. Submit pull request
+5. **Validate**: Run `validate-skill` to ensure standards compliance
+6. Fix any CRITICAL or WARNING issues from validation
+7. Test thoroughly (at least 3 projects)
+8. Update [SKILLS.md](SKILLS.md) to include your skill
+9. Submit pull request
 
 ## Skill Guidelines
 
@@ -107,9 +111,11 @@ Continue with clear steps.
 Show realistic usage scenarios.
 ```
 
-### Testing
+### Testing & Validation
 
 Before submitting:
+- **Run validation**: Use `validate-skill` to check standards compliance
+- Fix all CRITICAL issues and strongly consider fixing WARNING issues
 - Test on at least 3 different projects
 - Verify output accuracy
 - Check edge cases
@@ -126,6 +132,7 @@ Before submitting:
 ## Questions?
 
 - **Skill creation help**: Use the `create-skill` skill
+- **Validation help**: Use the `validate-skill` skill to check if your skill meets standards
 - **Setup questions**: See [instructions/](instructions/) for your platform
 - **General questions**: [GitHub Discussions](https://github.com/waldronlab/ai-agent-skills/discussions)
 - **Bugs/features**: [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues)
