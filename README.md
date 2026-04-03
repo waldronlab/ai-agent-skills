@@ -1,6 +1,6 @@
 # waldronlab AI Agent Skills
 
-A collection of skills and instructions for AI agents (Claude Code, GitHub Copilot) working with waldronlab projects. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
+A collection of skills and instructions for AI agents (Claude Code, GitHub Copilot) working projects relevant to the Waldron Lab at CUNY SPH. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
 
 ## What are AI Agent Skills?
 
