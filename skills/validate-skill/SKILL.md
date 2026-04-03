@@ -1,0 +1,364 @@
+---
+name: validate-skill
+description: Validate that a skill conforms to the ai-agent-skills repository standards
+version: 1.0.0
+category: meta
+tags: [meta, infrastructure, validation, quality-control]
+author: waldronlab
+---
+
+# validate-skill
+
+Validate that a skill file in the ai-agent-skills repository conforms to waldronlab-specific standards defined in SKILL_STANDARD.md and AGENTS.md. This skill uses existing generic validators (markdownlint, yamllint) for basic markdown and YAML validation, then adds waldronlab-specific checks for platform-agnostic compliance, prohibited fields, and repository conventions.
+
+Use this skill when creating new skills, reviewing PRs, or ensuring existing skills meet current standards.
+
+## Usage
+
+Invoke this skill to validate a skill file:
+- "Validate this skill"
+- "Check if skills/[skill-name]/SKILL.md meets standards"
+- "Does this skill conform to the repository standards?"
+- "Run validation on [skill-name]"
+
+## Prerequisites
+
+- Working directory is the ai-agent-skills repository (or path to skill file is provided)
+- Access to SKILL_STANDARD.md and AGENTS.md for reference standards
+- Target skill file exists at `skills/{skill-name}/SKILL.md`
+- Optional: `markdownlint` and `yamllint` installed for enhanced generic validation
+
+## Process
+
+### 1. Locate the Target Skill File
+
+Determine which skill to validate:
+- If user specifies a skill name, look for `skills/{skill-name}/SKILL.md`
+- If in a skill directory, validate the current `SKILL.md`
+- If user provides a file path, use that path
+- If ambiguous, ask which skill to validate
+
+### 2. Run Generic Validation (Optional but Recommended)
+
+Use existing generic validators if available:
+
+**Markdown Validation** (using markdownlint or similar):
+```bash
+markdownlint skills/{skill-name}/SKILL.md
+```
+This checks:
+- Markdown syntax correctness
+- Heading level consistency
+- List formatting
+- Line length (if configured)
+- Trailing whitespace
+
+**YAML Validation** (using yamllint or similar):
+```bash
+yamllint -d relaxed skills/{skill-name}/SKILL.md
+```
+This checks:
+- YAML frontmatter syntax validity
+- Proper YAML structure
+- Quote consistency
+
+If these tools are not available, skip to waldronlab-specific validation (step 3). Generic validation is recommended but not required.
+
+### 3. Read the Skill File
+
+Read the complete skill file to analyze waldronlab-specific requirements.
+
+### 4. Validate Waldronlab-Specific YAML Requirements
+
+Check waldronlab-specific frontmatter requirements:
+
+**Required Fields** (waldronlab standard):
+- `name`: Must be kebab-case, match directory name
+- `description`: Must be one clear sentence (ideally under 150 characters)
+- `version`: Must follow semantic versioning (MAJOR.MINOR.PATCH)
+- `category`: Must be valid domain (meta, r-packages, metagenomics, statistical-methods, or new justified domain)
+
+**Prohibited Fields** (waldronlab agent-agnostic standard):
+- `platforms`: ❌ Skills are platform-agnostic (see AGENTS.md)
+- `triggers`: ❌ Agents use natural language discovery via SKILLS.md (see AGENTS.md)
+
+These prohibited fields violate the agent-agnostic principle defined in AGENTS.md.
+
+### 5. Validate Waldronlab File Structure
+
+Check waldronlab-specific section requirements:
+
+**Required Sections**:
+- Title (# skill-name) matching frontmatter `name`
+- Overview paragraph(s) after title
+- ## Usage (with natural language invocation examples)
+- ## Process (with numbered subsections: ### 1., ### 2., etc.)
+
+**Strongly Recommended Sections**:
+- ## Prerequisites (if applicable)
+- ## Output Format (if applicable)
+- ## Examples
+
+### 6. Validate Platform-Agnostic Compliance
+
+Check compliance with AGENTS.md platform-agnostic requirements:
+
+**Prohibited Platform-Specific References**:
+- ❌ Tool references: "use Read tool", "use Write tool", "use Edit tool", "use Grep", etc.
+- ❌ Platform commands in Usage: `/skill-name`, `@workspace skill-name`
+- ❌ Platform-specific instructions in Process section
+
+**Required Platform-Agnostic Language**:
+- ✅ Generic actions: "read the file", "write to", "search for", "edit the section"
+- ✅ Natural language in Usage: "Validate this skill", "Check if skill meets standards"
+- ✅ Platform shortcuts documented separately (in Platform-Specific Notes section if needed)
+
+This ensures skills work across Claude Code, GitHub Copilot, and future platforms.
+
+### 7. Check Waldronlab Naming Conventions
+
+Validate waldronlab-specific naming and consistency:
+
+**Directory and File Naming**:
+- Skill directory name matches frontmatter `name` field
+- File is named `SKILL.md` (uppercase)
+- Directory name is kebab-case
+
+**Content Consistency**:
+- Title (# heading) matches `name` field
+- Skill referenced consistently throughout the file
+- References to SKILL_STANDARD.md, AGENTS.md, SKILLS.md use correct relative paths
+
+### 8. Generate Validation Report
+
+Create a comprehensive report with:
+
+**Status Line**:
+- `✅ PASS: All validation checks passed`
+- `❌ FAIL: [N] issues found`
+
+**Generic Validation Results** (if run):
+- Report markdownlint/yamllint results
+- Note: These are standard markdown/YAML issues, not waldronlab-specific
+
+**Waldronlab-Specific Issues** (for each issue found):
+- **Severity**: CRITICAL, WARNING, or INFO
+- **Location**: Section name or line number (if determinable)
+- **Issue**: Clear description of what violates waldronlab standards
+- **Fix**: Specific suggestion for how to fix it
+- **Reference**: Link to AGENTS.md or SKILL_STANDARD.md section if applicable
+
+**Example Waldronlab Issue Format**:
+```
+❌ CRITICAL: Prohibited field in YAML frontmatter (line 5)
+   Issue: Found 'platforms:' field which violates agent-agnostic standard
+   Fix: Remove the 'platforms:' field entirely
+   Reference: See AGENTS.md section "What NOT to Include"
+```
+
+**Summary Statistics**:
+- Generic validation: Pass/Fail (if run)
+- Waldronlab-specific checks: Total issues by severity
+- List of passed waldronlab checks
+
+### 9. Suggest Next Steps
+
+Based on validation results:
+
+**If PASS**:
+- "All checks passed! This skill meets repository standards."
+- "Ready to commit or submit for review"
+- Optionally suggest running tests or checking SKILLS.md entry
+
+**If FAIL**:
+- "Please address the issues above before committing"
+- For critical issues: "These must be fixed for the skill to work properly"
+- For warnings: "These should be fixed to meet quality standards"
+- For info: "These are optional improvements"
+- Offer to help fix the issues
+
+## Output Format
+
+Generate a validation report in markdown format:
+
+```markdown
+# Skill Validation Report: [skill-name]
+
+**Status**: ✅ PASS | ❌ FAIL ([N] waldronlab-specific issues)
+**File**: skills/[skill-name]/SKILL.md
+**Validated**: [timestamp]
+
+---
+
+## Generic Validation (markdownlint/yamllint)
+
+**markdownlint**: ✅ PASS (0 issues) | ⚠️ [N] warnings
+**yamllint**: ✅ PASS | ❌ FAIL (YAML syntax error on line X)
+
+_Note: Generic validation uses standard markdown/YAML linters. Install markdownlint and yamllint for enhanced checking._
+
+---
+
+## Waldronlab-Specific Validation
+
+### CRITICAL Issues (Must Fix)
+
+❌ **Prohibited field: platforms** (YAML frontmatter, line 7)
+   - Issue: The 'platforms:' field violates agent-agnostic standard
+   - Fix: Remove this field entirely. Platform shortcuts belong in instructions/{agent}.md
+   - Reference: AGENTS.md - "What NOT to Include"
+
+❌ **Platform-specific tool reference** (Process section, line 42)
+   - Issue: Found "use the Read tool" which is platform-specific
+   - Fix: Use platform-agnostic language: "Read the DESCRIPTION file to extract package metadata"
+   - Reference: AGENTS.md - "Platform-Agnostic Core Logic"
+
+### WARNING Issues (Should Fix)
+
+⚠️ **Missing recommended section: Examples** (file structure)
+   - Issue: Examples section helps users understand usage
+   - Fix: Add ## Examples section with concrete usage scenarios
+   - Reference: SKILL_STANDARD.md - "Strongly Recommended Sections"
+
+### INFO Issues (Optional Improvements)
+
+ℹ️ **Description could be more concise** (YAML frontmatter, line 3)
+   - Issue: Description is 180 characters, ideally should be under 150
+   - Fix: Condense to focus on core purpose
+
+---
+
+## Validation Summary
+
+**Generic Validation**:
+- markdownlint: ✅ PASS
+- yamllint: ✅ PASS
+
+**Waldronlab-Specific Checks**:
+- ✅ Required fields present (name, description, version, category)
+- ❌ Prohibited field present: platforms
+- ✅ No 'triggers' field
+- ✅ Name is kebab-case
+- ✅ Name matches directory
+- ✅ Title matches name
+- ✅ Version is semantic (1.0.0)
+- ✅ Usage section with natural language examples
+- ✅ Process section with numbered steps
+- ❌ Platform-specific tool references found
+- ⚠️ Examples section missing
+- ✅ References use correct relative paths
+
+**Total**: 2 CRITICAL, 1 WARNING, 1 INFO
+
+---
+
+## Next Steps
+
+[Appropriate recommendations based on pass/fail]
+```
+
+## Examples
+
+### Example 1: Validating a Skill in Current Directory
+
+**User**: "Validate this skill"
+
+**Agent**:
+1. Checks if current directory contains SKILL.md
+2. Optionally runs markdownlint and yamllint (if installed)
+3. Reads file and performs waldronlab-specific validation
+4. Generates detailed report with any issues found
+5. Suggests fixes for each issue
+
+**Output**: Two-phase validation report with generic and waldronlab-specific results
+
+### Example 2: Validating by Skill Name
+
+**User**: "Check if the analyze-r-package skill meets standards"
+
+**Agent**:
+1. Locates `skills/analyze-r-package/SKILL.md`
+2. Performs all validation checks
+3. Reports results
+
+**Output**: Validation report for analyze-r-package
+
+### Example 3: Quick Validation Check
+
+**User**: "Does skills/create-skill/SKILL.md conform to standards?"
+
+**Agent**:
+1. Reads specified file
+2. Runs all validations
+3. Reports pass/fail with any issues
+
+**Output**: Concise report focusing on any failures
+
+### Example 4: Pre-commit Validation
+
+**User**: "Validate all my changes to skills before I commit"
+
+**Agent**:
+1. Identifies modified skill files in git status
+2. Validates each modified skill
+3. Provides summary report
+
+**Output**: Multi-skill validation report
+
+## Platform-Specific Notes
+
+This skill can be used across platforms:
+
+**Claude Code**:
+- Use natural language: "Validate this skill"
+- Or slash command: `/validate-skill`
+- Can validate current file or specified skill
+
+**GitHub Copilot**:
+- Use `@workspace` pattern: "@workspace validate this skill"
+- Particularly useful in PR review workflows
+- Can integrate with GitHub Actions for CI/CD
+
+**CI/CD Integration**:
+- Can be invoked programmatically in GitHub Actions
+- Fails PR if validation fails
+- Provides actionable feedback in PR comments
+
+## Notes
+
+### Architecture: Generic + Waldronlab-Specific
+
+This skill uses a two-phase validation approach:
+
+1. **Generic Validation** (delegated to existing tools):
+   - Uses `markdownlint` for markdown formatting
+   - Uses `yamllint` for YAML syntax
+   - These are standard, well-maintained tools we don't need to duplicate
+
+2. **Waldronlab-Specific Validation** (this skill's focus):
+   - Checks agent-agnostic compliance (AGENTS.md)
+   - Validates waldronlab field requirements (SKILL_STANDARD.md)
+   - Detects platform-specific language
+   - Ensures naming conventions
+
+This separation reduces maintenance burden—we don't reinvent markdown/YAML validation, only enforce waldronlab standards.
+
+### Using This Skill
+
+- **Validation is strict but helpful**: The goal is to catch issues early and provide clear guidance
+- **Standards evolve**: Update this skill when SKILL_STANDARD.md or AGENTS.md change
+- **Not a replacement for human review**: Validation catches structural/format issues but doesn't assess whether the skill logic makes sense
+- **Complementary to testing**: Validation checks format; testing checks functionality
+- **Use before committing**: Running validation before submitting PRs saves review time
+- **Generic validators are optional**: The skill works without markdownlint/yamllint, but they provide enhanced checking
+
+## Related Skills
+
+- **create-skill**: Use to create a new skill that follows standards from the start
+- **check-waldronlab-skills**: Discover and list available skills
+- **SKILL_STANDARD.md**: Reference document for technical format specification
+- **AGENTS.md**: Reference document for agent behavior and compliance rules
+
+---
+
+**See also**: [SKILL_STANDARD.md](../../SKILL_STANDARD.md), [AGENTS.md](../../AGENTS.md), [CONTRIBUTING.md](../../CONTRIBUTING.md)
