@@ -53,10 +53,13 @@ Skills for working with the ai-agent-skills repository itself - creating, mainta
 
 **Quick start**:
 - Claude Code: `/create-skill`
+- Claude Code: `/check-waldronlab-skills`
 - GitHub Copilot: `@workspace create a new skill`
+- GitHub Copilot: `@workspace What waldronlab skills are there?`
 
 **Features**:
 - Collaborative Q&A for skill creation
+- Skill installation/discovery checks
 - Brainstorming from rough ideas
 - Platform-agnostic guidance
 - Iteration-friendly approach
@@ -87,36 +90,64 @@ Skills for common statistical analysis patterns in microbiome and multi-omics re
 
 ## Installation
 
-### For GitHub Copilot Users
+### For GitHub Copilot in VS Code
 
-#### Option 1: Per-Repository Instructions (Recommended)
+#### Recommended: Global Setup (User Settings)
 
-Copy the relevant instructions to your repository:
+Add the following to your VS Code User `settings.json`:
 
-```bash
-# For R packages - copy unified skills
-cp ~/git/ai-agent-skills/skills/r-packages/*.md \
-   .github/copilot-instructions/
-```
-
-Copilot automatically loads instructions from `.github/copilot-instructions/`.
-
-#### Option 2: Workspace Reference
-
-Add to your workspace `.vscode/settings.json`:
 ```json
 {
-  "github.copilot.instructionsFile": "../ai-agent-skills/skills/r-packages/"
+  "chat.skillsLocations": [
+    "/Users/<your-user>/git/ai-agent-skills/skills/meta",
+    "/Users/<your-user>/git/ai-agent-skills/skills/r-packages"
+  ],
+  "github.copilot.advanced.instructionsFolders": [
+    "/Users/<your-user>/git/ai-agent-skills/skills"
+  ]
 }
 ```
 
-Or reference specific skill files if your Copilot version supports it.
+Notes:
+- `chat.skillsLocations` is used for agent skill discovery.
+- Point to the domain folders that actually contain skill `.md` files.
+- Use absolute paths for reliability.
+
+#### Optional: Per-Project Symlink (if you want project-scoped skills)
+
+In a target project:
+
+```bash
+cd ~/git/your-project
+mkdir -p .github
+ln -s ~/git/ai-agent-skills/skills .github/copilot-instructions
+```
+
+This creates `.github/copilot-instructions` as a symlink to the shared skills repo so updates are immediately available.
+
+Use this only if you specifically want project-scoped instruction wiring instead of global setup via User settings.
 
 #### Option 3: Organization-Wide (Copilot Enterprise)
 
 For organization admins:
 1. Go to https://github.com/organizations/waldronlab/settings/copilot
 2. Add skill files from domain directories (e.g., `r-packages/*.md`) to the knowledge base
+
+#### Verify It Works
+
+1. Run `Developer: Reload Window`.
+2. Open Copilot Chat in Agent mode.
+3. Trigger a known skill:
+
+```text
+@workspace What waldronlab skills are there?
+```
+
+If setup is correct, Copilot should route to `check-waldronlab-skills` and list available skills.
+
+### Direction
+
+The preferred direction is global setup for day-to-day use. A future skill can be added to automate per-project `.github` setup when needed.
 
 ### For Claude Code Users
 
@@ -169,6 +200,11 @@ Add to your workspace `.vscode/settings.json`:
 @workspace Create .github/instructions for this R package
 ```
 
+**Discovery check in GitHub Copilot**:
+```
+@workspace Do I have the waldronlab skills?
+```
+
 **With Claude Code**:
 ```
 /create-package-instructions
@@ -199,8 +235,6 @@ ai-agent-skills/
 ├── CONTRIBUTING.md                # Contribution guidelines
 ├── SKILL_STANDARD.md              # Standard format for cross-platform skills
 ├── SETUP.md                       # Setup guide for Claude Code & Copilot
-├── setup-copilot-link.sh          # Helper script for Copilot
-├── sync-claude-skills.sh          # Auto-sync Claude skills
 │
 └── skills/                        # All agent skills organized by domain
     ├── r-packages/                # R/Bioconductor package skills
@@ -213,7 +247,8 @@ ai-agent-skills/
     │       └── ...
     │
     ├── meta/                      # Repository infrastructure skills
-    │   └── create-skill.md        # Collaborative skill creation
+    │   ├── create-skill.md                # Collaborative skill creation
+    │   └── check-waldronlab-skills.md     # Setup verification and skill discovery
     │
     ├── metagenomics/              # Metagenomics skills (planned)
     │
@@ -243,7 +278,7 @@ Manual steps:
 5. Add platform-specific notes where necessary
 6. Test on both Claude Code and GitHub Copilot
 7. Add examples demonstrating the skill
-8. Update the domain's README file
+8. Update this main README if needed for discoverability
 9. Submit PR for review
 
 ### Adding New Domains
@@ -251,7 +286,7 @@ Manual steps:
 If you have a new category of skills:
 
 1. Create new domain directory with README.md
-2. Set up claude/ and copilot/ subdirectories
+2. Add at least one cross-platform skill file (`.md`) in that domain
 3. Add at least one working skill with examples
 4. Update this main README
 5. Submit PR for review
