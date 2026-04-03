@@ -46,6 +46,21 @@ Skills for generating `.github/instructions/` files for R/Bioconductor packages.
 - Bioconductor compliance guidance
 - Vignette and testing standards
 
+### 🛠️ [meta/](meta/)
+**Status**: ✅ Production ready
+
+Skills for working with the ai-agent-skills repository itself - creating, maintaining, and improving the skill framework.
+
+**Quick start**:
+- Claude Code: `/create-skill`
+- GitHub Copilot: `@workspace create a new skill`
+
+**Features**:
+- Collaborative Q&A for skill creation
+- Brainstorming from rough ideas
+- Platform-agnostic guidance
+- Iteration-friendly approach
+
 ### 🧬 [metagenomics/](metagenomics/)
 **Status**: 🚧 Planned
 
@@ -119,6 +134,7 @@ Add to your VS Code settings (`~/.config/Code/User/settings.json`):
 ```json
 {
   "claude.globalSkills": [
+    "~/git/ai-agent-skills/meta/create-skill.md",
     "~/git/ai-agent-skills/r-packages/analyze-r-package.md",
     "~/git/ai-agent-skills/r-packages/create-package-instructions.md",
     "~/git/ai-agent-skills/r-packages/update-package-instructions.md"
@@ -132,6 +148,7 @@ Add to your workspace `.vscode/settings.json`:
 ```json
 {
   "claude.skills": [
+    "../ai-agent-skills/meta/create-skill.md",
     "../ai-agent-skills/r-packages/analyze-r-package.md",
     "../ai-agent-skills/r-packages/create-package-instructions.md",
     "../ai-agent-skills/r-packages/update-package-instructions.md"
@@ -193,6 +210,10 @@ ai-agent-skills/
 │       ├── data-package-parquet/
 │       └── ...
 │
+├── meta/                          # Repository infrastructure skills
+│   ├── README.md                  # Meta skills documentation
+│   └── create-skill.md            # Collaborative skill creation
+│
 ├── metagenomics/                  # Metagenomics skills (planned)
 │   └── README.md
 │
@@ -213,6 +234,9 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Adding New Skills
 
+**Quick start**: Use the `/create-skill` skill (or `@workspace create a new skill`) to get guided help!
+
+Manual steps:
 1. Choose or create appropriate domain directory (e.g., `r-packages/`, `metagenomics/`)
 2. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
 3. Include YAML frontmatter with all required fields
