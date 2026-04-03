@@ -43,11 +43,14 @@ Infrastructure and workflow skills for working with this repository itself.
 **What happens**:
 - Collaborative Q&A to understand your intent
 - Guidance on domain and location
-- Brainstorming triggers (how users naturally invoke it)
 - Step-by-step process outline
 - Generated skill file in markdown format
+- Automatic validation with `validate-skill`
+- Automatic documentation update with `document-skill`
 
-**Output**: A new skill file ready for testing and iteration
+**Output**: A complete skill with validated file and updated SKILLS.md, ready for testing and committing
+
+**Related skills**: validate-skill, document-skill, check-waldronlab-skills
 
 ---
 
@@ -106,7 +109,38 @@ Infrastructure and workflow skills for working with this repository itself.
 
 **Output**: Comprehensive validation report with pass/fail status, categorized issues (CRITICAL/WARNING/INFO), and specific fix suggestions
 
-**Related skills**: create-skill, check-waldronlab-skills
+**Related skills**: create-skill, check-waldronlab-skills, document-skill
+
+---
+
+### document-skill
+
+**Purpose**: Automate documentation updates to SKILLS.md after creating or modifying a skill
+
+**Location**: `skills/document-skill/SKILL.md`
+
+**When to use**:
+- After creating a new skill with create-skill
+- After modifying an existing skill
+- When you need to update SKILLS.md with new skill information
+- As part of the skill creation workflow
+
+**Invocation**:
+- Natural language: "Document the new skill I just created", "Update SKILLS.md for the validate-r-docs skill", "Add documentation for my new skill"
+- Claude Code optional shortcut: `/document-skill`
+- Copilot optional shortcut: `@workspace document this skill`
+
+**What happens**:
+- Reads and validates the skill file
+- Extracts metadata and structure from YAML frontmatter
+- Auto-generates invocation examples and asks for confirmation
+- Creates complete SKILLS.md entry with all sections
+- Updates category, tag tables, and use case workflows
+- Shows preview diffs and asks for confirmation before applying changes
+
+**Output**: Updated SKILLS.md with the skill entry added to all relevant sections
+
+**Related skills**: create-skill, validate-skill, check-waldronlab-skills
 
 ---
 
@@ -239,7 +273,7 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 | Category | Skills | Purpose |
 |----------|--------|---------|
-| **meta** | create-skill, check-waldronlab-skills, validate-skill | Repository and workflow infrastructure |
+| **meta** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow infrastructure |
 | **r-packages** | analyze-r-package, create-package-instructions, update-package-instructions | R/Bioconductor package development |
 | **metagenomics** | (Planned) | Metagenomics data workflows |
 | **statistical-methods** | (Planned) | Statistical analysis patterns |
@@ -248,10 +282,11 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 | Tag | Skills | Use Case |
 |-----|--------|----------|
-| **infrastructure** | create-skill, check-waldronlab-skills, validate-skill | Repository and workflow tasks |
+| **infrastructure** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow tasks |
 | **validation** | validate-skill | Quality control and standards compliance |
 | **quality-control** | validate-skill | Ensuring skill quality |
-| **documentation** | create-package-instructions, update-package-instructions | Generating and maintaining docs |
+| **documentation** | create-package-instructions, document-skill, update-package-instructions | Generating and maintaining docs |
+| **automation** | document-skill | Automating repetitive documentation tasks |
 | **analysis** | analyze-r-package | Understanding code and architecture |
 | **bioconductor** | analyze-r-package, create-package-instructions, update-package-instructions | Bioconductor-specific workflows |
 | **data-access** | analyze-r-package (detects), create-package-instructions | Working with remote data |
@@ -270,7 +305,8 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 1. **Get guided help** → `create-skill`
 2. **Validate it meets standards** → `validate-skill`
-3. **Verify it's accessible** → `check-waldronlab-skills`
+3. **Update documentation** → `document-skill`
+4. **Verify it's accessible** → `check-waldronlab-skills`
 
 ### "I want to verify my setup..."
 
@@ -320,9 +356,10 @@ Want to add a new skill?
 
 1. **Brainstorm**: Use `create-skill` to develop your idea
 2. **Create**: Follow the guidance and create the skill file
-3. **Test**: Verify it works on your platform
-4. **Document**: Add an entry to this file (SKILLS.md)
-5. **Submit**: Create a PR for review
+3. **Validate**: Run `validate-skill` to ensure standards compliance
+4. **Document**: Use `document-skill` to update this file (SKILLS.md)
+5. **Test**: Verify it works on your platform
+6. **Submit**: Create a PR for review
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
