@@ -1,8 +1,10 @@
-# Bioconductor Standards Reference
+# Bioconductor Package Development Standards
 
-Core Bioconductor/CRAN standards that apply to all R packages in waldronlab. These are referenced by package-specific instruction files but maintained centrally.
+Standards for **developing** Bioconductor/CRAN packages. These are referenced by package-specific instruction files but maintained centrally.
 
-**For package-specific patterns and conventions, see the package's `.github/instructions/` directory.**
+**Prerequisites**: Package developers should also understand [bioconductor-usage.md](bioconductor-usage.md) for working with dependencies and understanding how users will interact with their package.
+
+**For package-specific patterns and conventions**, see the package's `.github/instructions/` directory.
 
 ## Overview
 
@@ -604,8 +606,9 @@ devtools::build_vignettes()
 
 ---
 
-**Version**: 2.0.0
+**Version**: 3.0.0
 **Last Updated**: 2026-04-03
 **Maintainers**: waldronlab
-**Purpose**: Single source of truth for Bioconductor standards across all waldronlab R packages
+**Purpose**: Development standards for Bioconductor packages (see [bioconductor-usage.md](bioconductor-usage.md) for package usage)
+**Audience**: Package developers, AI agents assisting with package development
 **Source**: Based on official [Bioconductor R Code Guidelines](https://contributions.bioconductor.org/r-code.html)

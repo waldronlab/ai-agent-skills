@@ -6,7 +6,7 @@ topics: [roxygen, examples, testing, documentation]
 # Testing and Documentation Guidance
 
 For complete standards, see:
-- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md) - Documentation and testing requirements
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md) - Documentation and testing requirements
 - [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Documentation and testing practices
 
 ## Package-Specific Testing

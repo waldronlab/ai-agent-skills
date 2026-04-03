@@ -226,7 +226,8 @@ The generated instructions are a starting point - feel free to customize!
 The [templates/](templates/) directory contains:
 
 **Core standards** (referenced by generated instructions):
-- [bioconductor-standards.md](templates/bioconductor-standards.md) - Core Bioconductor/CRAN requirements
+- [bioconductor-usage.md](templates/bioconductor-usage.md) - Understanding and using Bioconductor packages (for data analysis)
+- [bioconductor-development.md](templates/bioconductor-development.md) - Developing Bioconductor/CRAN packages (for package development)
 - [waldronlab-standards.md](templates/waldronlab-standards.md) - Lab-specific conventions
 
 **Why separate standards?**

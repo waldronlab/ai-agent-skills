@@ -6,7 +6,7 @@ topics: [coding-standards, parquet-structure, validation, api-design]
 # Development Guidance
 
 For complete Bioconductor and waldronlab standards, see:
-- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md)
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md)
 - [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md)
 
 ## Package-Specific Patterns

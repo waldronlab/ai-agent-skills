@@ -4,18 +4,35 @@ This directory contains shared templates and standards used by the r-packages sk
 
 ## Core Standards Documents
 
-### [bioconductor-standards.md](bioconductor-standards.md)
-**Purpose**: Single source of truth for Bioconductor/CRAN requirements
+### [bioconductor-usage.md](bioconductor-usage.md)
+**Purpose**: Understanding and using Bioconductor packages
 
-Core standards that apply to all R packages:
+For AI agents helping with **data analysis** and package usage:
+- Working with S4 classes
+- Common data structures (SummarizedExperiment, MultiAssayExperiment, etc.)
+- Using accessor functions properly
+- ExperimentHub/AnnotationHub data access
+- BiocParallel for users
+- Finding and understanding documentation
+
+**Audience**: Data analysts, researchers, AI agents assisting with analysis workflows
+
+### [bioconductor-development.md](bioconductor-development.md)
+**Purpose**: Standards for developing Bioconductor/CRAN packages
+
+For AI agents helping with **package development**:
+- Code style and formatting requirements
+- Function development best practices
+- S4 class implementation and organization
 - Documentation requirements (roxygen2)
 - Testing standards (testthat)
 - R CMD check and BiocCheck requirements
 - Version numbering conventions
 - Package structure requirements
-- S4 class patterns
-- Vignette standards
+- Dependency management
 - Bioconductor submission requirements
+
+**Audience**: Package developers, AI agents assisting with package development
 
 **Usage**: Referenced by generated instruction files to avoid duplication of universal standards. Package-specific instructions focus on what's unique to that package.
 
