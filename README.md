@@ -54,42 +54,21 @@ But natural language works everywhere.
 
 ## Available Skills
 
-See [SKILLS.md](SKILLS.md) for the complete skill catalog. Quick overview:
+See [SKILLS.md](SKILLS.md) for the complete skill catalog organized by category and use case.
 
-### Meta Domain (Repository Infrastructure)
-
-- **create-skill** - Collaborative Q&A for creating new skills
-- **check-waldronlab-skills** - Verify installation and discover available skills
-
-### R/Bioconductor Domain
-
-- **analyze-r-package** - Analyze package structure and characteristics
-- **create-package-instructions** - Generate comprehensive .github/instructions files
-- **update-package-instructions** - Update existing package instructions
-
-### Future Domains
-
-- **metagenomics** (🚧 Planned) - Standard metagenomics workflows
-- **statistical-methods** (🚧 Planned) - Statistical analysis patterns
-
-For details on each skill, see [SKILLS.md](SKILLS.md).
+**Skill domains:**
+- **Meta** - Repository infrastructure (skill creation, validation, documentation)
+- **R/Bioconductor** - Package analysis and documentation generation
+- **Metagenomics** (🚧 Planned)
+- **Statistical Methods** (🚧 Planned)
 
 ## Installation
-
-### Setup for Your Platform
-
-Choose your AI agent platform:
-
-- **Claude Code**: See [instructions/claude.md](instructions/claude.md) for setup
-- **GitHub Copilot**: See [instructions/copilot.md](instructions/copilot.md) for setup
-- **Other agents**: See [AGENTS.md](AGENTS.md) for compliance requirements
-
-### Platform-Specific Setup
 
 See the appropriate guide for your platform:
 - **Claude Code**: [instructions/claude.md](instructions/claude.md)
 - **GitHub Copilot**: [instructions/copilot.md](instructions/copilot.md)
 - **Google Gemini**: [instructions/gemini.md](instructions/gemini.md)
+- **Other agents**: [AGENTS.md](AGENTS.md) for compliance requirements
 
 Each guide includes complete setup instructions specific to that platform.
 
@@ -152,18 +131,11 @@ ai-agent-skills/
 ├── MIGRATION.md                   # Upgrade guide from v1.x to v2.0
 │
 ├── skills/                        # All skills (flat structure)
-│   ├── create-skill/
-│   │   └── SKILL.md               # Collaborative skill creation
-│   ├── check-waldronlab-skills/
-│   │   └── SKILL.md               # Skill discovery and verification
-│   ├── analyze-r-package/
-│   │   └── SKILL.md               # R package analysis
-│   ├── create-package-instructions/
-│   │   ├── SKILL.md               # Generate package instructions
-│   │   ├── templates/             # Shared Bioconductor and waldronlab standards
-│   │   └── examples/              # Example generated instructions
-│   └── update-package-instructions/
-│       └── SKILL.md               # Update existing instructions
+│   ├── {skill-name}/              # Each skill in its own directory
+│   │   ├── SKILL.md               # Skill documentation (required)
+│   │   ├── templates/             # Optional supporting files
+│   │   └── examples/              # Optional examples
+│   └── ... (see SKILLS.md for complete list)
 │
 └── instructions/                  # Platform adapters (thin wrappers)
     ├── README.md                  # Adapter purpose and requirements
@@ -204,9 +176,10 @@ Or manually:
 3. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
 4. Include YAML frontmatter with required fields (no `platforms:` or `triggers:`)
 5. Write platform-agnostic core logic
-6. Add to [SKILLS.md](SKILLS.md) index
-7. Test on multiple platforms
-8. Submit PR for review
+6. Run `validate-skill` to check standards compliance
+7. Run `document-skill` to update SKILLS.md automatically
+8. Test on multiple platforms
+9. Submit PR for review
 
 ### Adding New Domains
 

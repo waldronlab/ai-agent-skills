@@ -70,31 +70,34 @@ Example template:
 ```markdown
 # [Agent Name] Setup
 
-## Installation
+[Brief introduction - one sentence]
 
-[Platform-specific setup steps]
+## Setup
 
-## Discovering Skills
+1. Clone the repository (if needed):
+   ```bash
+   git clone https://github.com/waldronlab/ai-agent-skills.git
+   ```
 
-1. Read [SKILLS.md](../SKILLS.md) for available skills
-2. Describe what you need to me in natural language
-3. I'll match your request to a skill and execute it
+2. [Platform-specific configuration steps]
 
-## Optional [Platform] Shortcuts
+3. Reload/restart the agent
 
-[Platform-specific command syntax examples, if any]
+## Optional: [Platform] Shortcuts
 
-**Note**: These are optional. Natural language always works.
+[Brief mention that shortcuts exist, if applicable]
 
-## Usage Examples
-
-[Concrete examples specific to this platform]
+Natural language always works without shortcuts.
 
 ## Troubleshooting
 
-[Common issues and solutions for this platform]
+- **Issue**: Solution
+- **Issue**: Solution
 
-See [AGENTS.md](../AGENTS.md) for canonical behavior.
+## Next Steps
+
+- Browse skills: [SKILLS.md](../SKILLS.md)
+- General setup: [README.md](../README.md)
 ```
 
 ## Adapter Maintenance
