@@ -5,42 +5,18 @@ topics: [git, commits, branches, checks, bioconductor]
 
 # Git Workflow Guidance
 
-## Branch naming
-Use descriptive branch names such as:
-- `enhance-vignettes`
-- `fix-uuid-validation`
+For complete workflow standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md) - R CMD check, BiocCheck requirements
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Git workflow, commits, PRs, AI agent acknowledgements
 
-## Commit messages
-Use conventional commit style:
-```text
-type: brief description
+## Package-Specific Checks
 
-- Detailed point 1
-- Detailed point 2
+### Before Committing
 
-Co-Authored-By: [AI Agent Name and Version] <noreply@[provider].com>
-```
-
-Types:
-- `feat`
-- `fix`
-- `docs`
-- `test`
-- `refactor`
-- `chore`
-
-### AI Agent Acknowledgements
-Always include a `Co-Authored-By` line acknowledging AI assistance. Use the appropriate format for your agent:
-- **Claude Code**: `Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>`
-- **GitHub Copilot**: `Co-Authored-By: GitHub Copilot <noreply@github.com>`
-- **Cursor**: `Co-Authored-By: Cursor AI <noreply@cursor.sh>`
-- **Other agents**: Use the agent name, version if known, and appropriate email
-
-## Before committing
-- Run `R CMD check` on the built tarball
-- Verify vignettes knit successfully
-- Confirm examples in modified functions run
-- Regenerate docs with `roxygen2::roxygenize()` if needed
+Standard checks (see [Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md)) plus:
+- Verify vignettes knit successfully (this package has 5 vignettes)
+- Test parquet file access with local test data
+- Confirm UUID validation works correctly
 
 ## Quick commands
 ```bash

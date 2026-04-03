@@ -5,25 +5,30 @@ topics: [roxygen, examples, testing, documentation]
 
 # Testing and Documentation Guidance
 
-## Documentation requirements for exported functions
-Required roxygen tags:
-- `@title`
-- `@description`
-- `@param`
-- `@return`
-- `@examples`
+For complete standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md) - Documentation and testing requirements
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Documentation and testing practices
 
-## Examples
-- Include at least one runnable example
-- Use `\donttest` for examples that require network access or may hit rate limits
-- Never use `\dontrun`
+## Package-Specific Testing
+
+### Test Data
+- **Location**: Small local files in `inst/extdata/`
+- **File types**: Representative parquet, TSV/TXT, and RDS test files
+- **Remote testing**: Tests avoid remote dependencies where possible; use local alternatives
+
+### Testing Focus Areas
+- Invalid input and error handling
+- UUID validation patterns
+- Parquet column structure verification
+- TreeSummarizedExperiment output format
+
+## Package-Specific Documentation
+
+### Examples Approach
+- Include at least one runnable example per exported function
+- Use `\donttest{}` for examples requiring network access or that may hit rate limits
 - Always provide a local alternative using test data when network examples exist
-
-## Testing standards
-- Use small local files in `inst/extdata/`
-- Prefer tests that do not depend on remote services
-- Cover invalid input and error handling
-- Include representative parquet, TSV/TXT, and RDS test files as needed
+- **Never** use `\dontrun{}` - if it can't run, provide a local alternative
 
 ## Before considering a change complete
 - Run `roxygen2::roxygenize()` if docs changed

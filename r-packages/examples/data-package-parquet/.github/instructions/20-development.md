@@ -5,12 +5,18 @@ topics: [coding-standards, parquet-structure, validation, api-design]
 
 # Development Guidance
 
-## Coding standards
+For complete Bioconductor and waldronlab standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md)
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md)
+
+## Package-Specific Patterns
+
+### Coding Conventions
 - Use `@noRd` for internal helper functions
 - Export user-facing functions and document them fully (see [30-testing-and-docs.md](30-testing-and-docs.md))
-- Validation helpers should start with `confirm_*`
-- Return `TreeSummarizedExperiment` when appropriate
-- Use `parquet_colinfo(data_type)` to confirm column structure before coding against a data type
+- **Validation helpers**: Prefix with `confirm_*` (e.g., `confirm_valid_uuid()`)
+- **Return type**: Use `TreeSummarizedExperiment` for taxonomic data with hierarchy
+- **Column structure verification**: Use `parquet_colinfo(data_type)` before coding against a data type
 
 ## Column roles in parquet files
 - `cname`: column names, typically sample IDs / `uuid`

@@ -171,38 +171,52 @@ For each required file, create it with appropriate content based on the package 
 ```markdown
 # Development Patterns
 
-## Function Organization
-[How R/ directory is structured]
+For complete Bioconductor and waldronlab standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md)
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md)
 
-## Naming Conventions
-[Patterns observed in the codebase]
+## Package-Specific Patterns
+
+### Function Organization
+[How this package's R/ directory is structured]
+[Note any special files or organization patterns]
+
+### Naming Conventions
+[Patterns specific to this package]
+[e.g., validation helpers prefixed with confirm_*, data access with get_*]
 
 ## S4 Classes and Methods
-[If applicable]
+[If applicable - describe package-specific classes]
 
-### Classes
-[List with slots]
+### Classes Defined in This Package
+
+#### ClassName
+**Purpose**: [What this class represents]
+**Slots**:
+- `slot_name` (type): Description
 
 ### Methods
-[Key methods]
+[Key methods specific to this package's classes]
 
 ## Input Validation
-[Validation patterns used]
-
-## Error Handling
-[How errors and warnings are handled]
+[Package-specific validation patterns]
+[e.g., custom validators, special checks]
 
 ## Key Dependencies
-[Important dependencies and their usage]
+[Important dependencies and their specific usage in this package]
+- **dplyr**: Used for data transformation in processing functions
+- **TreeSummarizedExperiment**: Return type for taxonomic data
 
-## Code Style
-[Package-specific style guidelines]
+## Code Style Notes
+[Any package-specific style patterns that differ from standards]
 ```
 
 **Data to populate from analysis**:
-- S4 classes if defined
-- Key dependencies and why they're important
-- Observed coding patterns
+- S4 classes if defined (with slots and purpose)
+- Key dependencies and their specific role
+- Package-specific naming patterns
+- Custom validation patterns
+- Function organization approach
 
 #### 30-testing-and-docs.md
 
@@ -210,47 +224,63 @@ For each required file, create it with appropriate content based on the package 
 ```markdown
 # Testing and Documentation
 
-## Testing Framework
-[testthat / other]
+For complete standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md) - Documentation and testing requirements
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Documentation and testing practices
 
-## Test Structure
-[Organization from analysis]
+## Package-Specific Testing
 
-## Test Data
-- **Location**: [inst/extdata/, data/, etc.]
+### Test Organization
+[How tests are organized for this package]
+[e.g., tests/testthat/test-data-access.R, test-validation.R]
+
+### Test Data
+- **Location**: [inst/extdata/, tests/testthat/fixtures/]
 - **File types**: [Parquet, RDS, TSV, etc.]
+- **Purpose**: [What the test data represents]
 
-## Running Tests
+### Remote Data Testing
+[If applicable - how this package handles remote resources in tests]
+[e.g., skip conditions, local alternatives]
+
+### Running Tests
 \`\`\`r
+# All tests
 devtools::test()
+
+# Specific test file
 testthat::test_file("tests/testthat/test-name.R")
+
+# Skip remote tests
+Sys.setenv(SKIP_REMOTE_TESTS = "true")
+devtools::test()
 \`\`\`
 
-## Documentation Requirements
+## Package-Specific Documentation Patterns
 
-### Function Documentation (roxygen2)
-Required tags for exported functions:
-- `@title` and/or first line
-- `@description`
-- `@param` for each parameter
-- `@return` describing return value
-- `@examples` with working examples
-- `@export` for exported functions
+### Function Categories
+[Document how functions are grouped and documented]
 
-### Examples Guidelines
-- Use `\\donttest{}` for examples requiring remote resources
-- Use `\\dontrun{}` for examples that shouldn't run in R CMD check
-- Ensure examples are reproducible
+### Common Parameters
+[If functions share common parameters, document them]
+- `data`: [Standard interpretation across functions]
+- `study_id`: [How study IDs work in this package]
+
+### Examples Approach
+[Package-specific example conventions]
+[e.g., all examples use example_data() helper, network examples use \\donttest]
 
 ## Common Testing Patterns
-[Package-specific patterns]
+[Specific to this package]
+[e.g., how invalid UUIDs are tested, how empty data is handled]
 ```
 
 **Data to populate from analysis**:
-- Testing framework
-- Test file count and structure
-- Test data location and types
-- Whether tests use remote resources
+- Test file organization and names
+- Test data location, types, and purpose
+- Whether remote resources are tested
+- Common parameters across functions
+- Package-specific testing patterns
 
 #### 40-vignettes.md (if needed)
 
@@ -294,56 +324,77 @@ Guidelines for maintaining vignettes:
 ```markdown
 # Git Workflow
 
-## Branch Naming
-- `feature/description` - New features
-- `bugfix/description` - Bug fixes
-- `docs/description` - Documentation only
+For complete workflow standards, see:
+- [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-standards.md) - R CMD check, BiocCheck requirements
+- [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Git workflow, commits, PRs
 
-## Commit Messages
-Format:
+## Package-Specific Checks
+
+### Pre-Commit Quick Commands
+
+\`\`\`bash
+# Build and check
+R CMD build .
+R CMD check [PackageName]_*.tar.gz
+
+# Bioconductor check (if applicable)
+R -e "BiocCheck::BiocCheck('[PackageName]_*.tar.gz')"
+
+# Documentation
+R -e "roxygen2::roxygenize()"
+
+# Tests
+R -e "devtools::test()"
+
+# Vignettes (if applicable)
+R -e "devtools::build_vignettes()"
 \`\`\`
-type: brief description
 
-Optional detailed explanation.
+## Package-Specific Considerations
+
+### [If data package with remote resources]
+Testing checklist includes:
+- Local tests with example data
+- Remote data connectivity (manual check)
+- Large file handling performance
+
+### [If package has vignettes]
+Pre-commit vignette checks:
+\`\`\`r
+rmarkdown::render("vignettes/[vignette-name].Rmd")
 \`\`\`
 
-Types: feat, fix, docs, test, refactor
+### [If package has S4 classes]
+Verify:
+- Class validity methods work
+- Method dispatch is correct
+- show() methods display appropriately
 
-## Pre-Commit Checks
+## Version and Release
 
-Before committing:
-1. **Tests pass**: `devtools::test()`
-2. **Examples work**: `devtools::run_examples()`
-3. **Documentation builds**: `devtools::document()`
-4. **R CMD check passes**: `devtools::check()`
+Current version: [from DESCRIPTION]
 
-## Pull Requests
+### [If pre-Bioconductor: 0.99.x]
+- Increment patch version for changes
+- Prepare for Bioconductor submission when ready
 
-PRs should:
-- Have clear title and description
-- Pass all CI checks
-- Include tests for new functionality
-- Update documentation as needed
+### [If Bioconductor package: x.y.z]
+- Follow Bioconductor version bumping (see standards)
+- Coordinate with Bioconductor release cycle
 
-## Version Bumping
+## CI/CD
 
-[For Bioconductor packages]
-- Development: 0.99.x (pre-Bioconductor)
-- After acceptance: Increment y in x.y.z
-- Update DESCRIPTION and commit separately
-
-## Bioconductor Submission
-
-[If Data Package or submitting to Bioconductor]
-
-Requirements:
-- Pass `BiocCheck::BiocCheck()`
-- Vignettes build successfully
-- All examples run
+[If GitHub Actions or other CI configured]
+- Automated checks: [list what's automated]
+- Manual checks: [list what requires manual verification]
 ```
 
 **Data to populate from analysis**:
-- Package type affects Bioconductor submission section
+- Package name for command examples
+- Current version from DESCRIPTION
+- Package type (pre-Bioc, Bioc, CRAN)
+- Whether package has vignettes, S4 classes, remote data
+- CI/CD configuration if detected
 
 #### INDEX.md
 

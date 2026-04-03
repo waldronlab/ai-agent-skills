@@ -221,9 +221,21 @@ After generating instructions:
 
 The generated instructions are a starting point - feel free to customize!
 
-## Templates
+## Templates and Standards
 
-The [templates/](templates/) directory contains the base templates used to generate instructions. These show the structure and can be customized if you want to change the format organization-wide.
+The [templates/](templates/) directory contains:
+
+**Core standards** (referenced by generated instructions):
+- [bioconductor-standards.md](templates/bioconductor-standards.md) - Core Bioconductor/CRAN requirements
+- [waldronlab-standards.md](templates/waldronlab-standards.md) - Lab-specific conventions
+
+**Why separate standards?**
+- **Single source of truth**: Update standards once, applies to all packages
+- **Clearer separation**: Package instructions focus on what's unique
+- **Easier maintenance**: When Bioconductor rules change, update one file
+- **Reasonable self-containment**: Essential package context stays inline
+
+Generated instructions use a **hybrid approach**: they include package-specific patterns while referencing these shared standards for universal rules.
 
 ## Testing Your Generated Instructions
 
