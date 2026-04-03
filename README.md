@@ -30,7 +30,7 @@ This unified approach eliminates duplication and ensures consistency across plat
 
 ## Available Skill Domains
 
-### 🔧 [r-packages/](r-packages/)
+### 🔧 [r-packages/](skills/r-packages/)
 **Status**: ✅ Production ready
 
 Skills for generating `.github/instructions/` files for R/Bioconductor packages. Automatically creates comprehensive AI agent instructions tailored to your package type (data/analysis/infrastructure).
@@ -46,7 +46,7 @@ Skills for generating `.github/instructions/` files for R/Bioconductor packages.
 - Bioconductor compliance guidance
 - Vignette and testing standards
 
-### 🛠️ [meta/](meta/)
+### 🛠️ [meta/](skills/meta/)
 **Status**: ✅ Production ready
 
 Skills for working with the ai-agent-skills repository itself - creating, maintaining, and improving the skill framework.
@@ -61,7 +61,7 @@ Skills for working with the ai-agent-skills repository itself - creating, mainta
 - Platform-agnostic guidance
 - Iteration-friendly approach
 
-### 🧬 [metagenomics/](metagenomics/)
+### 🧬 [metagenomics/](skills/metagenomics/)
 **Status**: 🚧 Planned
 
 Skills for analyzing metagenomic data following waldronlab standards.
@@ -73,7 +73,7 @@ Skills for analyzing metagenomic data following waldronlab standards.
 - Multi-study integration
 - Reproducible analysis templates
 
-### 📊 [statistical-methods/](statistical-methods/)
+### 📊 [statistical-methods/](skills/statistical-methods/)
 **Status**: 🚧 Planned
 
 Skills for common statistical analysis patterns in microbiome and multi-omics research.
@@ -95,7 +95,7 @@ Copy the relevant instructions to your repository:
 
 ```bash
 # For R packages - copy unified skills
-cp ~/git/ai-agent-skills/r-packages/*.md \
+cp ~/git/ai-agent-skills/skills/r-packages/*.md \
    .github/copilot-instructions/
 ```
 
@@ -106,7 +106,7 @@ Copilot automatically loads instructions from `.github/copilot-instructions/`.
 Add to your workspace `.vscode/settings.json`:
 ```json
 {
-  "github.copilot.instructionsFile": "../ai-agent-skills/r-packages/"
+  "github.copilot.instructionsFile": "../ai-agent-skills/skills/r-packages/"
 }
 ```
 
@@ -134,10 +134,10 @@ Add to your VS Code settings (`~/.config/Code/User/settings.json`):
 ```json
 {
   "claude.globalSkills": [
-    "~/git/ai-agent-skills/meta/create-skill.md",
-    "~/git/ai-agent-skills/r-packages/analyze-r-package.md",
-    "~/git/ai-agent-skills/r-packages/create-package-instructions.md",
-    "~/git/ai-agent-skills/r-packages/update-package-instructions.md"
+    "~/git/ai-agent-skills/skills/meta/create-skill.md",
+    "~/git/ai-agent-skills/skills/r-packages/analyze-r-package.md",
+    "~/git/ai-agent-skills/skills/r-packages/create-package-instructions.md",
+    "~/git/ai-agent-skills/skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
@@ -148,10 +148,10 @@ Add to your workspace `.vscode/settings.json`:
 ```json
 {
   "claude.skills": [
-    "../ai-agent-skills/meta/create-skill.md",
-    "../ai-agent-skills/r-packages/analyze-r-package.md",
-    "../ai-agent-skills/r-packages/create-package-instructions.md",
-    "../ai-agent-skills/r-packages/update-package-instructions.md"
+    "../ai-agent-skills/skills/meta/create-skill.md",
+    "../ai-agent-skills/skills/r-packages/analyze-r-package.md",
+    "../ai-agent-skills/skills/r-packages/create-package-instructions.md",
+    "../ai-agent-skills/skills/r-packages/update-package-instructions.md"
   ]
 }
 ```
@@ -198,32 +198,31 @@ ai-agent-skills/
 ├── LICENSE                        # MIT License
 ├── CONTRIBUTING.md                # Contribution guidelines
 ├── SKILL_STANDARD.md              # Standard format for cross-platform skills
+├── SETUP.md                       # Setup guide for Claude Code & Copilot
+├── setup-copilot-link.sh          # Helper script for Copilot
+├── sync-claude-skills.sh          # Auto-sync Claude skills
 │
-├── r-packages/                    # R/Bioconductor package skills
-│   ├── README.md                  # R packages documentation
-│   ├── analyze-r-package.md       # Unified skill
-│   ├── create-package-instructions.md
-│   ├── update-package-instructions.md
-│   ├── templates/                 # Shared templates
-│   └── examples/                  # Real-world examples
-│       ├── README.md
-│       ├── data-package-parquet/
-│       └── ...
-│
-├── meta/                          # Repository infrastructure skills
-│   ├── README.md                  # Meta skills documentation
-│   └── create-skill.md            # Collaborative skill creation
-│
-├── metagenomics/                  # Metagenomics skills (planned)
-│   └── README.md
-│
-└── statistical-methods/           # Statistical analysis skills (planned)
-    └── README.md
+└── skills/                        # All agent skills organized by domain
+    ├── r-packages/                # R/Bioconductor package skills
+    │   ├── analyze-r-package.md
+    │   ├── create-package-instructions.md
+    │   ├── update-package-instructions.md
+    │   ├── templates/             # Shared templates
+    │   └── examples/              # Real-world examples
+    │       ├── data-package-parquet/
+    │       └── ...
+    │
+    ├── meta/                      # Repository infrastructure skills
+    │   └── create-skill.md        # Collaborative skill creation
+    │
+    ├── metagenomics/              # Metagenomics skills (planned)
+    │
+    └── statistical-methods/       # Statistical analysis skills (planned)
 ```
 
 ## Examples
 
-See [r-packages/examples/](r-packages/examples/) for complete examples of generated instructions from real waldronlab packages:
+See [skills/r-packages/examples/](skills/r-packages/examples/) for complete examples of generated instructions from real waldronlab packages:
 
 - **data-package-parquet** (parkinsonsMetagenomicData): Remote parquet data via DuckDB
 - More examples coming soon...
