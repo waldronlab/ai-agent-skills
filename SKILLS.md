@@ -242,6 +242,38 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 
 ---
 
+### security-audit-r-package
+
+**Purpose**: Perform comprehensive security audit of R/Bioconductor packages
+
+**Location**: `skills/security-audit-r-package/SKILL.md`
+
+**When to use**:
+- Auditing packages before CRAN/Bioconductor submission
+- Self-review for security vulnerabilities and code quality issues
+- Reviewing native code (C/C++/Fortran) for memory safety issues
+- Before public release or major version updates
+
+**Invocation**:
+- "Run security audit on this R package"
+- "Check this package for security vulnerabilities"
+- "Perform security review of this Bioconductor package"
+- "Security audit only the R/ directory"
+
+**What happens**:
+- Determines audit scope (default: DESCRIPTION, NAMESPACE, R/, src/)
+- Fetches standardized security audit instructions from reference gist
+- Reads all package files in the audit scope
+- Analyzes for security vulnerabilities, native code issues, code quality concerns, and dependency risks
+- Generates security report with standardized issue labels and severity ratings
+- Outputs report to console with flexible formatting based on context
+
+**Output**: Security audit report (markdown format) with findings categorized by severity, or clean report if no issues found. Each issue includes standardized label, severity, location, description, and recommended fix.
+
+**Related skills**: analyze-r-package, validate-skill, create-package-instructions
+
+---
+
 ## Metagenomics Skills
 
 *Planned for future release*
@@ -276,7 +308,7 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 | Category | Skills | Purpose |
 |----------|--------|---------|
 | **meta** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow infrastructure |
-| **r-packages** | analyze-r-package, create-package-instructions, update-package-instructions | R/Bioconductor package development |
+| **r-packages** | analyze-r-package, create-package-instructions, security-audit-r-package, update-package-instructions | R/Bioconductor package development |
 | **metagenomics** | (Planned) | Metagenomics data workflows |
 | **statistical-methods** | (Planned) | Statistical analysis patterns |
 
@@ -285,12 +317,14 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 | Tag | Skills | Use Case |
 |-----|--------|----------|
 | **infrastructure** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow tasks |
-| **validation** | validate-skill | Quality control and standards compliance |
-| **quality-control** | validate-skill | Ensuring skill quality |
+| **validation** | security-audit-r-package, validate-skill | Quality control and standards compliance |
+| **quality-control** | security-audit-r-package, validate-skill | Ensuring skill quality |
 | **documentation** | create-package-instructions, document-skill, update-package-instructions | Generating and maintaining docs |
 | **automation** | document-skill | Automating repetitive documentation tasks |
 | **analysis** | analyze-r-package | Understanding code and architecture |
-| **bioconductor** | analyze-r-package, create-package-instructions, update-package-instructions | Bioconductor-specific workflows |
+| **security** | security-audit-r-package | Security audits and vulnerability detection |
+| **audit** | security-audit-r-package | Comprehensive code auditing |
+| **bioconductor** | analyze-r-package, create-package-instructions, security-audit-r-package, update-package-instructions | Bioconductor-specific workflows |
 | **data-access** | analyze-r-package (detects), create-package-instructions | Working with remote data |
 
 ---
@@ -301,7 +335,8 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 1. **Understand the package** → `analyze-r-package`
 2. **Create AI instructions** → `create-package-instructions`
-3. **Keep instructions updated** → `update-package-instructions`
+3. **Audit for security issues** → `security-audit-r-package`
+4. **Keep instructions updated** → `update-package-instructions`
 
 ### "I want to create a new skill..."
 
