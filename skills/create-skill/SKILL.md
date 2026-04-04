@@ -1,7 +1,7 @@
 ---
 name: create-skill
 description: Help create a new AI agent skill through collaborative Q&A
-version: 1.2.0
+version: 1.2.1
 category: meta
 tags: [meta, infrastructure, skill-creation]
 author: waldronlab
@@ -100,60 +100,27 @@ Start with open-ended questions to understand what you want:
 
 ### 4. Generate the Skill File
 
-Create a well-structured skill file with:
+Create a well-structured skill file following the standard format:
 
-**YAML Frontmatter** (minimal, agent-agnostic):
-```yaml
----
-name: [kebab-case-name]
-description: [one-line purpose from your description]
-version: 1.0.0
-category: [domain]
-tags: [tag1, tag2]
-author: waldronlab
----
-```
+**YAML Frontmatter** (see AGENTS.md § Skill File Format for complete specification):
+- Required fields: `name` (kebab-case), `description` (one-line), `version` (1.0.0), `category`
+- Optional fields: `tags`, `author`
+- Prohibited fields: `platforms`, `triggers` (agent-agnostic design)
 
-**Main Content Sections**:
-
-1. **Title and Overview** (1-2 paragraphs)
-   - What the skill does
-   - Why it's useful
-   - Who should use it
-
-2. **Usage**
-   - How to invoke the skill (natural language examples)
-   - Platform adapters may provide optional shortcuts
-
-3. **Prerequisites** (if any)
-   - Required files or setup
-   - Directory location requirements
-   - Dependencies
-
-4. **Process**
-   - Numbered major steps from the outline
-   - Platform-agnostic descriptions
-   - Clear actions and expected results
-   - Decision points and branching logic
-
-5. **Output Format** (if applicable)
-   - What the skill produces
-   - Examples of expected output
-
-6. **Examples** (optional for initial draft)
-   - Concrete usage scenarios
-   - Can be refined iteratively
-
-7. **Notes** (optional)
-   - Additional context
-   - Caveats or limitations
-   - Future enhancements
+**Main Content Sections** (see AGENTS.md § Content Structure):
+1. **Title and Overview** - What the skill does, why it's useful, who should use it
+2. **Usage** - Natural language invocation examples
+3. **Prerequisites** - Required files, setup, dependencies (if any)
+4. **Process** - Numbered steps with platform-agnostic descriptions
+5. **Output Format** - What the skill produces (if applicable)
+6. **Examples** - Concrete usage scenarios (can add later)
+7. **Notes** - Additional context, caveats, future enhancements (optional)
 
 **Template Approach**:
 - Fill in what's clear from the conversation
-- Use TODO markers or placeholder text for uncertain sections
+- Use TODO markers for uncertain sections
 - Prioritize clarity over completeness
-- Skills are meant to be iterated on
+- Skills can be iterated on
 
 ### 5. Review and Refine
 

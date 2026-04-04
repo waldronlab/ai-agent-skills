@@ -1,7 +1,7 @@
 ---
 name: validate-skill
 description: Validate that a skill conforms to the ai-agent-skills repository standards
-version: 1.0.0
+version: 1.0.1
 category: meta
 tags: [meta, infrastructure, validation, quality-control]
 author: waldronlab
@@ -68,19 +68,17 @@ Read the complete skill file to analyze waldronlab-specific requirements.
 
 ### 4. Validate Waldronlab-Specific YAML Requirements
 
-Check waldronlab-specific frontmatter requirements:
+Check that frontmatter conforms to AGENTS.md § Skill File Format:
 
-**Required Fields** (waldronlab standard):
-- `name`: Must be kebab-case, match directory name
-- `description`: Must be one clear sentence (ideally under 150 characters)
-- `version`: Must follow semantic versioning (MAJOR.MINOR.PATCH)
-- `category`: Must be valid domain (meta, r-packages, metagenomics, statistical-methods, or new justified domain)
+**Required Fields** (AGENTS.md § Minimal Required Fields):
+- All required fields present: `name`, `description`, `version`, `category`
+- `name` is kebab-case and matches directory name
+- `description` is one clear sentence (ideally under 150 characters)
+- `version` follows semantic versioning (MAJOR.MINOR.PATCH)
+- `category` is a valid domain
 
-**Prohibited Fields** (waldronlab agent-agnostic standard):
-- `platforms`: ❌ Skills are platform-agnostic (see AGENTS.md)
-- `triggers`: ❌ Agents use natural language discovery via SKILLS.md (see AGENTS.md)
-
-These prohibited fields violate the agent-agnostic principle defined in AGENTS.md.
+**Prohibited Fields** (AGENTS.md § What NOT to Include):
+- No `platforms` or `triggers` fields (violates agent-agnostic principle)
 
 ### 5. Validate Waldronlab File Structure
 
@@ -99,19 +97,17 @@ Check waldronlab-specific section requirements:
 
 ### 6. Validate Platform-Agnostic Compliance
 
-Check compliance with AGENTS.md platform-agnostic requirements:
+Check compliance with AGENTS.md § Agent Neutrality:
 
-**Prohibited Platform-Specific References**:
-- ❌ Tool references: "use Read tool", "use Write tool", "use Edit tool", "use Grep", etc.
-- ❌ Platform commands in Usage: `/skill-name`, `@workspace skill-name`
-- ❌ Platform-specific instructions in Process section
+**Prohibited** (AGENTS.md § What NOT to Include):
+- Tool references ("use Read tool", "use Write tool", "use Edit tool", etc.)
+- Platform commands in Usage (`/skill-name`, `@workspace skill-name`)
+- Platform-specific instructions in Process section
 
-**Required Platform-Agnostic Language**:
-- ✅ Generic actions: "read the file", "write to", "search for", "edit the section"
-- ✅ Natural language in Usage: "Validate this skill", "Check if skill meets standards"
-- ✅ Platform shortcuts documented separately (in Platform-Specific Notes section if needed)
-
-This ensures skills work across Claude Code, GitHub Copilot, and future platforms.
+**Required**:
+- Generic actions ("read the file", "write to", "search for", "edit the section")
+- Natural language in Usage section
+- Platform shortcuts only in Platform-Specific Notes (if needed)
 
 ### 7. Check Waldronlab Naming Conventions
 
@@ -182,7 +178,7 @@ Generate a validation report in markdown format:
 ```markdown
 # Skill Validation Report: [skill-name]
 
-**Status**: ✅ PASS | ❌ FAIL ([N] waldronlab-specific issues)
+**Status**: ✅ PASS | ❌ FAIL ([N] issues)
 **File**: skills/[skill-name]/SKILL.md
 **Validated**: [timestamp]
 
@@ -190,10 +186,10 @@ Generate a validation report in markdown format:
 
 ## Generic Validation (markdownlint/yamllint)
 
-**markdownlint**: ✅ PASS (0 issues) | ⚠️ [N] warnings
-**yamllint**: ✅ PASS | ❌ FAIL (YAML syntax error on line X)
+**markdownlint**: ✅ PASS | ⚠️ [N] warnings
+**yamllint**: ✅ PASS | ❌ FAIL
 
-_Note: Generic validation uses standard markdown/YAML linters. Install markdownlint and yamllint for enhanced checking._
+_Optional: Install markdownlint and yamllint for enhanced checking._
 
 ---
 
@@ -201,58 +197,37 @@ _Note: Generic validation uses standard markdown/YAML linters. Install markdownl
 
 ### CRITICAL Issues (Must Fix)
 
-❌ **Prohibited field: platforms** (YAML frontmatter, line 7)
-   - Issue: The 'platforms:' field violates agent-agnostic standard
-   - Fix: Remove this field entirely. Platform shortcuts belong in instructions/{agent}.md
-   - Reference: AGENTS.md - "What NOT to Include"
-
-❌ **Platform-specific tool reference** (Process section, line 42)
-   - Issue: Found "use the Read tool" which is platform-specific
-   - Fix: Use platform-agnostic language: "Read the DESCRIPTION file to extract package metadata"
-   - Reference: AGENTS.md - "Platform-Agnostic Core Logic"
+❌ **[Issue title]** ([location])
+   - Issue: [What violates standards]
+   - Fix: [How to fix it]
+   - Reference: [AGENTS.md or SKILL_STANDARD.md section]
 
 ### WARNING Issues (Should Fix)
 
-⚠️ **Missing recommended section: Examples** (file structure)
-   - Issue: Examples section helps users understand usage
-   - Fix: Add ## Examples section with concrete usage scenarios
-   - Reference: SKILL_STANDARD.md - "Strongly Recommended Sections"
+⚠️ **[Issue title]** ([location])
+   - Issue: [What should be improved]
+   - Fix: [Recommendation]
 
 ### INFO Issues (Optional Improvements)
 
-ℹ️ **Description could be more concise** (YAML frontmatter, line 3)
-   - Issue: Description is 180 characters, ideally should be under 150
-   - Fix: Condense to focus on core purpose
+ℹ️ **[Issue title]** ([location])
+   - Issue: [Optional improvement]
+   - Fix: [Suggestion]
 
 ---
 
 ## Validation Summary
 
-**Generic Validation**:
-- markdownlint: ✅ PASS
-- yamllint: ✅ PASS
-
 **Waldronlab-Specific Checks**:
-- ✅ Required fields present (name, description, version, category)
-- ❌ Prohibited field present: platforms
-- ✅ No 'triggers' field
-- ✅ Name is kebab-case
-- ✅ Name matches directory
-- ✅ Title matches name
-- ✅ Version is semantic (1.0.0)
-- ✅ Usage section with natural language examples
-- ✅ Process section with numbered steps
-- ❌ Platform-specific tool references found
-- ⚠️ Examples section missing
-- ✅ References use correct relative paths
+- [List of checks with ✅ pass or ❌ fail status]
 
-**Total**: 2 CRITICAL, 1 WARNING, 1 INFO
+**Total**: [N] CRITICAL, [N] WARNING, [N] INFO
 
 ---
 
 ## Next Steps
 
-[Appropriate recommendations based on pass/fail]
+[Recommendations based on pass/fail status]
 ```
 
 ## Examples

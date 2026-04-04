@@ -1,7 +1,7 @@
 ---
 name: document-skill
 description: Automate documentation updates to SKILLS.md after creating or modifying a skill
-version: 1.0.0
+version: 1.0.1
 category: meta
 tags: [meta, infrastructure, documentation, automation]
 author: waldronlab
@@ -38,18 +38,8 @@ Platform adapters may provide optional shortcuts.
 
 **Read and parse the skill file:**
 - Read the complete SKILL.md file
-- Extract YAML frontmatter fields:
-  - `name` (required)
-  - `description` (required)
-  - `category` (required)
-  - `tags` (optional)
-  - `version` (optional)
-- Parse main content sections:
-  - Overview paragraph(s)
-  - Usage section
-  - Process section
-  - Output Format section (if present)
-  - Examples section (if present)
+- Extract YAML frontmatter fields (see AGENTS.md § Minimal Required Fields)
+- Parse main content sections (Overview, Usage, Process, Output Format, Examples)
 
 **Validate completeness:**
 - Confirm all required YAML fields are present
@@ -77,27 +67,19 @@ Platform adapters may provide optional shortcuts.
 ### {skill-name}
 
 **Purpose**: {description from YAML}
-
 **Location**: `skills/{skill-name}/SKILL.md`
 
 **When to use**:
-- {use case 1 from analysis}
-- {use case 2 from analysis}
-- {use case 3 from analysis}
+- {use cases from analysis}
 
 **Invocation**:
-- "{example 1}"
-- "{example 2}"
-- "{example 3}"
+- "{natural language examples}"
 
 **What happens**:
-- {step 1 summary}
-- {step 2 summary}
-- {step 3 summary}
+- {process step summaries}
 
 **Output**: {output description}
-
-**Related skills**: {related-skill-1}, {related-skill-2}
+**Related skills**: {related skills}
 
 ---
 ```
