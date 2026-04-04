@@ -9,7 +9,7 @@ author: waldronlab
 
 # update-package-instructions
 
-Update existing `.github/instructions/` files to reflect changes in an R/Bioconductor package. This skill intelligently detects what has changed and updates only the relevant sections while preserving manual customizations.
+Update existing `.github/instructions/` files when an R/Bioconductor package changes, preserving manual customizations.
 
 ## Usage
 
@@ -360,13 +360,11 @@ Options:
 
 ## Notes
 
-- Always preserve user customizations unless explicitly asked to overwrite
-- Use targeted edits preferentially over wholesale replacement
-- Check cross-references between files after updates
-- Version changes alone may not require full regeneration
-- When in doubt, ask the user before making destructive changes
-- Provide clear diffs or summaries so users can review changes
-- Incremental updates are better than full regeneration when possible
+- Preserve user customizations unless explicitly asked to overwrite
+- Use targeted edits over wholesale replacement
+- Check cross-references after updates
+- Ask before making destructive changes
+- Provide clear diffs for user review
 
 ---
 

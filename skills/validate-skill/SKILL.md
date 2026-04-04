@@ -9,9 +9,7 @@ author: waldronlab
 
 # validate-skill
 
-Validate that a skill file in the ai-agent-skills repository conforms to waldronlab-specific standards defined in SKILL_STANDARD.md and AGENTS.md. This skill uses existing generic validators (markdownlint, yamllint) for basic markdown and YAML validation, then adds waldronlab-specific checks for platform-agnostic compliance, prohibited fields, and repository conventions.
-
-Use this skill when creating new skills, reviewing PRs, or ensuring existing skills meet current standards.
+Validate that a skill conforms to waldronlab standards. Uses generic validators (markdownlint, yamllint) for basic checks, then adds waldronlab-specific validation for platform-agnostic compliance and repository conventions.
 
 ## Usage
 
@@ -307,22 +305,14 @@ _Note: Generic validation uses standard markdown/YAML linters. Install markdownl
 
 ## Platform-Specific Notes
 
-This skill can be used across platforms:
-
-**Claude Code**:
-- Use natural language: "Validate this skill"
-- Or slash command: `/validate-skill`
-- Can validate current file or specified skill
-
-**GitHub Copilot**:
-- Use `@workspace` pattern: "@workspace validate this skill"
-- Particularly useful in PR review workflows
-- Can integrate with GitHub Actions for CI/CD
+This skill works across platforms (Claude Code, GitHub Copilot, etc.).
 
 **CI/CD Integration**:
 - Can be invoked programmatically in GitHub Actions
 - Fails PR if validation fails
 - Provides actionable feedback in PR comments
+
+Platform-specific shortcuts are documented in instructions/{agent}.md.
 
 ## Notes
 

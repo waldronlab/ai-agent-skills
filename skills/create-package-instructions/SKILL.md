@@ -9,9 +9,7 @@ author: waldronlab
 
 # create-package-instructions
 
-Create a complete set of AI instructions for an R/Bioconductor package. This skill orchestrates the analysis of a package and creation of appropriate instruction files based on the package type and characteristics.
-
-The generated instructions help AI agents understand your package structure, coding standards, and workflows, making them more effective collaborators on your codebase.
+Create complete AI instruction documentation for an R/Bioconductor package in `.github/instructions/`.
 
 ## Usage
 
@@ -423,15 +421,11 @@ After creating all files, provide a detailed summary showing:
 
 ## Notes
 
-- Always run package analysis first to gather necessary information
-- Respect existing instruction files - ask before overwriting
-- Instructions should be concise and actionable for AI assistants
-- Focus on package-specific patterns, not general R/Bioconductor knowledge
-- Generated content is a starting point - encourage customization
-- Instructions should be committed to the repository for team use
-- Reference shared standards documents rather than duplicating them
-
-The generated instructions provide a foundation for AI-assisted development. Customization and iteration are expected based on team preferences and package evolution.
+- Run package analysis first to gather necessary information
+- Ask before overwriting existing instruction files
+- Focus on package-specific patterns, reference shared standards rather than duplicating
+- Generated content is a starting point—customization expected
+- Commit instructions to repository for team use
 
 ---
 

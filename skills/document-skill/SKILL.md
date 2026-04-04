@@ -9,7 +9,7 @@ author: waldronlab
 
 # document-skill
 
-Automate the process of updating repository documentation after creating or modifying a skill. This skill reads a skill file, extracts metadata and structure, generates appropriate SKILLS.md entries, and updates all relevant sections with user confirmation at each step.
+Automate updating SKILLS.md after creating or modifying a skill. Reads the skill file, generates entries, and updates all relevant sections with user confirmation.
 
 ## Usage
 
@@ -86,9 +86,9 @@ Platform adapters may provide optional shortcuts.
 - {use case 3 from analysis}
 
 **Invocation**:
-- Natural language: "{example 1}", "{example 2}", "{example 3}"
-- Claude Code optional shortcut: `/{skill-name}`
-- Copilot optional shortcut: `@workspace {natural language example}`
+- "{example 1}"
+- "{example 2}"
+- "{example 3}"
 
 **What happens**:
 - {step 1 summary}
@@ -244,13 +244,11 @@ No new files are created—only SKILLS.md is modified.
 
 ## Notes
 
-- **Interactive by design**: This skill confirms with the user at multiple points to ensure accuracy and give control
-- **Idempotent**: Can be run multiple times on the same skill (will show diff and ask to replace)
-- **Non-destructive previews**: All changes are shown before being applied
-- **Extensible**: Future versions could update platform-specific instructions (claude.md, copilot.md) if needed, but currently those files reference SKILLS.md as the single source of truth
-- **Validation recommended**: Run `validate-skill` before running `document-skill` to ensure the skill meets standards
-- **Works with git**: Changes to SKILLS.md can be reviewed in git diff and committed normally
-- **Smart suggestions**: Uses NLP to suggest relevant use cases and identify related skills
+- Interactive by design—confirms with user at multiple points
+- Idempotent—can run multiple times, shows diff before replacing
+- Non-destructive—all changes shown before applying
+- Run `validate-skill` first to ensure standards compliance
+- Changes can be reviewed in git diff and committed normally
 
 ## Integration with Other Skills
 

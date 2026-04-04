@@ -9,13 +9,7 @@ author: waldronlab
 
 # create-skill
 
-Help users create new AI agent skills through collaborative brainstorming and Q&A. This skill guides users from rough ideas to structured skill files, focusing on clarifying intent rather than enforcing perfect formatting.
-
-## Philosophy
-
-**Collaborative, not prescriptive**: This skill helps users develop and refine ideas through conversation. Accept rough examples, incomplete thoughts, and evolving concepts. The goal is to capture the user's intent and help them articulate it clearly - not to enforce rigid standards.
-
-**Iteration-friendly**: Generate working drafts that can be refined over time. A skill doesn't need to be perfect on first creation.
+Help create new AI agent skills through collaborative Q&A. Guides from rough ideas to structured skill files, focusing on intent over perfect formatting. Generates working drafts that can be refined iteratively.
 
 ## Usage
 
@@ -219,21 +213,7 @@ After the skill file is validated, use `document-skill` to automatically update 
 - `instructions/*.md` reference SKILLS.md as the single source of truth
 - No updates needed to these files when adding new skills
 - They will automatically discover the skill via SKILLS.md
-
-**Optional: Update User's Global Configuration**
-
-If the user wants the skill available immediately in their environment:
-
-**For Claude Code** (`~/.claude/CLAUDE.md`):
-- The skill will already be available via SKILLS.md reference
-- No additional configuration needed
-
-**For GitHub Copilot** (VS Code `settings.json`):
-- Add to `chat.skillsLocations` array if you want immediate access:
-  ```json
-  "/path/to/ai-agent-skills/skills/[skill-name]"
-  ```
-- Or just reference SKILLS.md and discover naturally
+- Platform-specific setup is documented in instructions/{agent}.md
 
 **Completion**:
 After document-skill completes, confirm with user:
@@ -300,7 +280,7 @@ Overview paragraph(s).
 
 ## Platform-Specific Notes
 
-Skills themselves contain no platform-specific code. Platform adapters (instructions/claude.md, instructions/copilot.md) document optional shortcuts and how to invoke skills on each platform, but the skill file remains universal.
+Skills contain no platform-specific code. Platform adapters (instructions/{agent}.md) document setup and invocation patterns for each platform, keeping skill files universal.
 
 ## Guidance for AI Agents
 
@@ -394,15 +374,11 @@ Result: `skills/[domain]/[workflow-name]/SKILL.md` capturing your process
 
 ## Notes
 
-- **Iteration is expected**: First draft doesn't need to be perfect
-- **User testing is essential**: Try the skill and refine based on feedback
-- **Standards are guidelines**: Focus on clarity and usefulness
-- **Metadata tags help discovery**: Use relevant tags (r-packages, bioconductor, data-access, etc.)
-- **Domain knowledge helps**: Familiarity with existing skills improves suggestions
-- **Documentation is automated**: Use `document-skill` to automatically update SKILLS.md after creating a skill—this makes it discoverable by users and agents
-- **Validate before documenting**: Use `validate-skill` to check standards compliance before running `document-skill`
-
-The goal is to **lower the barrier** to creating skills, not raise it. Make it easy to capture and share workflows.
+- First draft doesn't need to be perfect—iteration expected
+- Test the skill and refine based on feedback
+- Use relevant metadata tags to improve discovery
+- Run `validate-skill` before `document-skill` to check standards compliance
+- Goal: lower the barrier to creating skills and sharing workflows
 
 ---
 

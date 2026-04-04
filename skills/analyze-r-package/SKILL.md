@@ -9,7 +9,7 @@ author: waldronlab
 
 # analyze-r-package
 
-Analyze an R/Bioconductor package to understand its structure, purpose, and key characteristics. This skill provides structured output that can be used for documentation, understanding, or as input to other skills like `create-package-instructions`.
+Analyze an R/Bioconductor package to understand its structure, purpose, and key characteristics.
 
 ## Usage
 
@@ -271,10 +271,8 @@ This analysis output is consumed by:
 
 ## Notes
 
-- This skill produces analysis output for use by other skills or for user understanding
 - Manual verification recommended for complex packages
-- If ambiguities exist, ask the user for clarification rather than guessing
-- The output should be comprehensive enough to inform instruction generation
-- Results can be used directly as input to `create-package-instructions`
+- Ask for clarification rather than guessing when ambiguous
+- Output designed for use by other skills (e.g., `create-package-instructions`) or user understanding
 
 See [SKILL_STANDARD.md](../../SKILL_STANDARD.md) for format details and [create-package-instructions](../create-package-instructions/SKILL.md) for how to use this analysis.
