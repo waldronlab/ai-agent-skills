@@ -216,7 +216,7 @@ After the skill file is validated, use `document-skill` to automatically update 
   - Show previews and ask for confirmation before applying
 
 **Note on platform instructions**:
-- `instructions/claude.md` and `instructions/copilot.md` reference SKILLS.md as the single source of truth
+- `instructions/*.md` reference SKILLS.md as the single source of truth
 - No updates needed to these files when adding new skills
 - They will automatically discover the skill via SKILLS.md
 

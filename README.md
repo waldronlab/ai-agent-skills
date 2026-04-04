@@ -59,8 +59,8 @@ See [SKILLS.md](SKILLS.md) for the complete skill catalog organized by category 
 **Skill domains:**
 - **Meta** - Repository infrastructure (skill creation, validation, documentation)
 - **R/Bioconductor** - Package analysis and documentation generation
-- **Metagenomics** (🚧 Planned)
-- **Statistical Methods** (🚧 Planned)
+- **Metagenomics** (Planned)
+- **Statistical Methods** (Planned)
 
 ## Installation
 
@@ -128,7 +128,7 @@ ai-agent-skills/
 ├── SKILLS.md                      # Human-readable skill index (what skills exist)
 ├── SKILL_STANDARD.md              # Technical format spec (how to format skills)
 ├── CONTRIBUTING.md                # Contribution guidelines
-├── MIGRATION.md                   # Upgrade guide from v1.x to v2.0
+├── CHANGELOG.md                   # Version history and release notes
 │
 ├── skills/                        # All skills (flat structure)
 │   ├── {skill-name}/              # Each skill in its own directory
@@ -150,7 +150,7 @@ ai-agent-skills/
 - **[SKILLS.md](SKILLS.md)** - Complete skill catalog organized by domain
 - **[SKILL_STANDARD.md](SKILL_STANDARD.md)** - Technical format for creating skills
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute new skills or improvements
-- **[MIGRATION.md](MIGRATION.md)** - Upgrade guide for v1.x users
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
 - **[instructions/](instructions/)** - Platform-specific setup and shortcuts
 
 ## Examples
@@ -207,7 +207,7 @@ We aim to keep skills compatible with:
 - **GitHub Copilot**: Latest VS Code extension
 - **R/Bioconductor**: Current release and devel
 
-Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md) and [MIGRATION.md](MIGRATION.md).
+Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md).
 
 ## Support and Feedback
 
@@ -224,12 +224,6 @@ MIT License - see [LICENSE](LICENSE) for details.
 These skills are developed and maintained by the waldronlab at CUNY SPH and collaborators to make AI agents more effective collaborators.
 
 ---
-
-**Status Legend**:
-- ✅ Production ready
-- 🚧 Under development
-- 📋 Planned
-- ⚠️  Deprecated
 
 **Version**: 2.0.0 (agent-agnostic)
 **Last Updated**: 2026-04-03

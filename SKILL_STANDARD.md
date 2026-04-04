@@ -1,36 +1,25 @@
 # Skill Format Standard (Quick Reference)
 
-## Purpose
+Quick reference for creating skills with validation checklist, version management, and working examples.
 
-This document provides a quick reference for creating skills, including version management guidelines, a validation checklist, and a complete working example.
+**Authoritative specification**: [AGENTS.md § Skill File Format](AGENTS.md#skill-file-format)
 
-**For the authoritative format specification**, see [AGENTS.md](AGENTS.md) sections:
-- **Skill File Format** (lines 59-124) - Required/prohibited fields, content structure, platform-agnostic principles
-- **Agent Responsibilities** - How agents discover and invoke skills
-- **Compliance Criteria** - What makes a skill compliant
+## Documentation Map
 
-## Relationship to Other Documentation
-
-- **[AGENTS.md](AGENTS.md)**: Canonical format requirements and agent behavior (start here)
-- **SKILL_STANDARD.md** (this document): Quick reference with checklist and example
-- **[SKILLS.md](SKILLS.md)**: Complete skill catalog organized by domain
-- **[instructions/{agent}.md](instructions/)**: Platform-specific setup instructions
+- **[AGENTS.md](AGENTS.md)** - Canonical format requirements and agent behavior
+- **SKILL_STANDARD.md** (this file) - Quick reference, checklist, examples
+- **[SKILLS.md](SKILLS.md)** - Skill catalog organized by domain
+- **[instructions/](instructions/)** - Platform-specific setup
 
 ## Quick Format Summary
 
-For complete requirements, see **[AGENTS.md § Skill File Format](AGENTS.md#skill-file-format)**.
+**For complete format specification, see [AGENTS.md § Skill File Format](AGENTS.md#skill-file-format).**
 
-**Required YAML fields**:
-- `name` (kebab-case identifier)
-- `description` (one-line purpose for discovery)
-- `version` (semantic versioning)
-- `category` (domain: meta, r-packages, metagenomics, etc.)
-
-**Prohibited fields**: `platforms`, `triggers` (skills are agent-agnostic)
-
-**Content sections**: Title, Usage (natural language), Prerequisites, Process (numbered steps), Output Format, Examples, Notes
-
-**Key principle**: Describe WHAT to do (platform-agnostic), not HOW (tool-specific)
+**Quick reference**:
+- Required fields: `name`, `description`, `version`, `category`
+- Prohibited fields: `platforms`, `triggers` (agent-agnostic design)
+- Use natural language invocation examples
+- Describe WHAT to do, not HOW (tool-specific)
 
 ---
 
@@ -251,8 +240,6 @@ Read and analyze the DESCRIPTION file to extract package metadata.
 - Verify natural language invocation works
 - Check optional shortcuts work (if configured in platform adapters)
 - Update SKILLS.md using `document-skill`
-
-See [MIGRATION.md](MIGRATION.md) for detailed upgrade guide.
 
 ---
 

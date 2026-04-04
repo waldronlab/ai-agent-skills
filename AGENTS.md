@@ -394,11 +394,12 @@ An agent is **compliant** with this standard if it:
 
 ## Version History
 
-- **1.0.0** (2026-04-03) - Initial agent behavior standard
+- **2.0.0** (2026-04-03) - Agent behavior standard
   - Established core principles: agent neutrality, single source of truth, natural language discovery
   - Defined mandatory and optional agent responsibilities
   - Specified prohibited skill metadata (platforms, triggers)
   - Established SKILLS.md as primary discovery mechanism
+  - Clarified responsibility mapping and single source of truth principles
 
 ## Maintenance
 

@@ -9,7 +9,8 @@ This is the canonical index of all available AI agent skills in the waldronlab/a
 3. **Invoke naturally**: Describe what you need to your AI agent
    - Example: "Help me create a new skill"
    - Agent will match this to the appropriate skill and invoke it
-4. **Optional**: Use platform-specific shortcuts if available (see instructions/{agent}.md)
+
+**Platform shortcuts**: Optional shortcuts (like `/skill-name` or `@workspace` patterns) are documented in [instructions/](instructions/) for each platform.
 
 ## Setup & Discovery
 
@@ -36,9 +37,9 @@ Infrastructure and workflow skills for working with this repository itself.
 - Starting from a rough idea
 
 **Invocation**:
-- Natural language: "Help me create a new skill", "Create a skill for [domain]", "I want to make a skill that..."
-- Claude Code optional shortcut: `/create-skill`
-- Copilot optional shortcut: `@workspace create a new skill`
+- "Help me create a new skill"
+- "Create a skill for [domain]"
+- "I want to make a skill that..."
 
 **What happens**:
 - Collaborative Q&A to understand your intent
@@ -67,9 +68,10 @@ Infrastructure and workflow skills for working with this repository itself.
 - Checking setup for Claude Code or Copilot
 
 **Invocation**:
-- Natural language: "What skills are available?", "List waldronlab skills", "Are my skills installed?", "Do I have the waldronlab skills?"
-- Claude Code optional shortcut: `/check-waldronlab-skills`
-- Copilot optional shortcut: `@workspace What waldronlab skills are there?`
+- "What skills are available?"
+- "List waldronlab skills"
+- "Are my skills installed?"
+- "Do I have the waldronlab skills?"
 
 **What happens**:
 - Scans the repository for available skills
@@ -94,9 +96,9 @@ Infrastructure and workflow skills for working with this repository itself.
 - CI/CD validation in automated workflows
 
 **Invocation**:
-- Natural language: "Validate this skill", "Check if skills/[skill-name]/SKILL.md meets standards", "Does this skill conform to standards?"
-- Claude Code optional shortcut: `/validate-skill`
-- Copilot optional shortcut: `@workspace validate this skill`
+- "Validate this skill"
+- "Check if skills/[skill-name]/SKILL.md meets standards"
+- "Does this skill conform to standards?"
 
 **What happens**:
 - Runs generic validation (markdownlint, yamllint) if available
@@ -126,9 +128,9 @@ Infrastructure and workflow skills for working with this repository itself.
 - As part of the skill creation workflow
 
 **Invocation**:
-- Natural language: "Document the new skill I just created", "Update SKILLS.md for the validate-r-docs skill", "Add documentation for my new skill"
-- Claude Code optional shortcut: `/document-skill`
-- Copilot optional shortcut: `@workspace document this skill`
+- "Document the new skill I just created"
+- "Update SKILLS.md for the validate-r-docs skill"
+- "Add documentation for my new skill"
 
 **What happens**:
 - Reads and validates the skill file
@@ -161,9 +163,9 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 - Before generating documentation for a package
 
 **Invocation**:
-- Natural language: "Analyze this R package", "What type of package is this?", "Tell me about the package structure"
-- Claude Code optional shortcut: `/analyze-r-package`
-- Copilot optional shortcut: `@workspace analyze this R package`
+- "Analyze this R package"
+- "What type of package is this?"
+- "Tell me about the package structure"
 
 **What happens**:
 - Reads package metadata (DESCRIPTION, README, code)
@@ -189,9 +191,9 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 - After analyzing a package with analyze-r-package
 
 **Invocation**:
-- Natural language: "Create .github/instructions for this package", "Generate AI agent instructions", "Create instructions for this R package"
-- Claude Code optional shortcut: `/create-package-instructions`
-- Copilot optional shortcut: `@workspace Create .github/instructions for this R package`
+- "Create .github/instructions for this package"
+- "Generate AI agent instructions"
+- "Create instructions for this R package"
 
 **What happens**:
 - Uses analyze-r-package internally to understand the package
@@ -223,9 +225,9 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 - Keeping AI agent instructions current with the package
 
 **Invocation**:
-- Natural language: "Update the package instructions", "Refresh .github/instructions", "Update instructions based on recent changes"
-- Claude Code optional shortcut: `/update-package-instructions`
-- Copilot optional shortcut: `@workspace Update .github/instructions for this package`
+- "Update the package instructions"
+- "Refresh .github/instructions"
+- "Update instructions based on recent changes"
 
 **What happens**:
 - Re-analyzes the current package state
