@@ -28,85 +28,17 @@ Invoke this skill to check your setup or discover available skills:
 
 ## Process
 
-### 1. Discover Available Waldronlab Skills
-
-Read SKILLS.md from the repository to discover all available skills dynamically.
-
-**Process**:
-- Locate and read `SKILLS.md` in the repository root
-- Parse the skill entries by category (Meta Skills, R/Bioconductor Package Skills, etc.)
-- Extract for each skill:
-  - Skill name
-  - Category/domain
-  - Purpose (from the skill description)
-  - Location path
-
-If SKILLS.md is not accessible or no skills are found, return a clear not-found status and suggest checking skill path configuration.
-
-### 2. Summarize Skills
-
-For each discovered skill, provide:
-- Skill name
-- Domain/category
-- One-sentence purpose summary
-- Typical use case or when to use it
-
-Prefer concise summaries derived from each skill's frontmatter `description` and overview section.
-
-### 3. Answer User Questions About Skill Fit
-
-When the user asks task-oriented questions like "Is there a good waldronlab skill for [task]?":
-- Ask for brief context if the task is unclear
-- Recommend 1-2 best-fit skills with a one-line rationale each
-- If no skill is a clear match, say so and suggest `create-skill` to draft a new one
-- Reference SKILLS.md for detailed information
-
-### 4. Report Installation Health
-
-Conclude with a simple status statement:
-- "🏃 Levi says let's go!" when skills are found
-- "❌ Not detected" when no skills are found
-
-Include a short remediation hint when not detected.
+1. **Read SKILLS.md** from repository root
+2. **Parse by category** extracting skill names, descriptions, and categories
+3. **For listing**: Present organized by category with brief descriptions
+4. **For recommendations**: Match user need to skill descriptions, recommend 1-2 best-fit
+5. **Report status**: "🏃 Levi says let's go!" (found) or "❌ Not detected" (not found)
 
 ## Output Format
 
-Return one of the following:
-
-### 1. Skill Inventory
-
-```
-Status: 🏃 Levi says let's go!
-
-**[Category Name]**
-- [skill-name]: [Brief description from SKILLS.md]
-- [skill-name]: [Brief description from SKILLS.md]
-
-**[Category Name]**
-- [skill-name]: [Brief description from SKILLS.md]
-- [skill-name]: [Brief description from SKILLS.md]
-
-[Additional categories as found in SKILLS.md]
-```
-
-**Note**: Skill list is generated dynamically from SKILLS.md, not hard-coded.
-
-### 2. Question Answer
-
-```
-For [task description], I recommend:
-
-**Primary**: [skill-name]
-[Rationale]
-
-**Companion**: [skill-name] (optional)
-[Use case]
-```
-
-### 3. Discovery Help
-
-For broader discovery, reference SKILLS.md:
-"See SKILLS.md in the repository for the complete index organized by category and use case."
+- **Skill listing**: Organize by category with brief descriptions (dynamically from SKILLS.md)
+- **Recommendations**: Primary + optional companion with rationale
+- **Not found**: Suggest checking configuration or filing issue
 
 ## Examples
 
@@ -114,108 +46,47 @@ For broader discovery, reference SKILLS.md:
 
 **User**: "Do I have the waldronlab skills?"
 
-**Process**:
-1. Read SKILLS.md from repository root
-2. Parse skill entries by category
-3. Extract names and descriptions
-4. Format and present
-
-**Response** (dynamically generated from SKILLS.md):
+**Response** (dynamically from SKILLS.md):
 ```
 🏃 Levi says let's go!
 
 Available waldronlab skills:
 
 Meta
-  • [skills from Meta Skills section in SKILLS.md]
+  • [skills from Meta Skills section]
 
 R/Bioconductor
-  • [skills from R/Bioconductor Package Skills section in SKILLS.md]
+  • [skills from R/Bioconductor section]
 
-[Additional categories as defined in SKILLS.md]
+[Additional categories from SKILLS.md]
 
-For detailed information, see SKILLS.md in the repository.
+See SKILLS.md for details.
 ```
 
-### Example 2: Discovery
-
-**User**: "What waldronlab skills are there?"
-
-**Response** (same as Example 1 - concise catalog)
-
-### Example 3: Fit Recommendation
+### Example 2: Skill Recommendation
 
 **User**: "Is there a good waldronlab skill for creating package instructions?"
 
-**Process**:
-1. Read SKILLS.md to find relevant skills
-2. Match user need to skill descriptions
-3. Identify primary and companion skills
-
-**Response** (based on current SKILLS.md content):
+**Response**:
 ```
 Yes! I recommend:
 
-**Primary**: [skill-name from SKILLS.md that best matches]
-[Description and rationale from SKILLS.md]
+**Primary**: [skill-name from SKILLS.md]
+[Rationale]
 
-**Companion**: [related skill-name from SKILLS.md]
-[How it complements the primary skill]
+**Companion**: [related skill] (optional)
+[How it complements]
 ```
-
-### Example 4: No Skill Match
-
-**User**: "Do you have a skill for testing Shiny apps?"
-
-**Process**:
-1. Read SKILLS.md to search for matching skills
-2. If no match found, identify available domains
-3. Suggest create-skill or filing an issue
-
-**Response** (domains listed are from current SKILLS.md):
-```
-Not currently. Based on SKILLS.md, the waldronlab skills focus on:
-  • [List current categories from SKILLS.md]
-
-For creating a new skill, try describing your need in natural language
-(e.g., "Help me create a new skill for testing Shiny apps")
-
-Or open an issue at:
-https://github.com/waldronlab/ai-agent-skills/issues
-```
-
-## Platform-Specific Notes
-
-### Claude Code
-
-- Supports direct slash invocation: `/check-waldronlab-skills`
-- Good as a first diagnostic command in a new session
-- Results are saved in conversation context
-
-### GitHub Copilot
-
-- Works best with `@workspace` prompts like `@workspace What waldronlab skills are there?`
-- If skills appear duplicated, explain that multiple configured locations may expose the same skill
-- Results appear in chat window
 
 ## Troubleshooting
 
-### Skills Not Detected
+**Skills not detected**:
+- Verify skill paths in editor settings
+- Ensure waldronlab/ai-agent-skills repository is cloned
+- Reload window
+- See `instructions/claude.md` or `instructions/copilot.md` for setup
 
-If no skills are found:
-
-1. **Check configuration**: Verify skill paths in your editor settings
-2. **Check repository**: Clone/pull waldronlab/ai-agent-skills repository
-3. **Check permissions**: Ensure you can read files in the skills directory
-4. **Reload**: Run "Developer: Reload Window" in VS Code
-
-See the appropriate platform adapter:
-- Claude Code: `instructions/claude.md`
-- GitHub Copilot: `instructions/copilot.md`
-
-### Duplicate Skills
-
-If you see duplicate skill listings, it's likely because your configuration points to multiple locations that include the same skills. This is normal if using both global and per-workspace settings.
+**Duplicate listings**: Multiple configuration locations pointing to same skills (normal)
 
 ## Notes
 
