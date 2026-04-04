@@ -70,7 +70,7 @@ Infrastructure and workflow skills for working with this repository itself.
 **Invocation**:
 - "What skills are available?"
 - "List waldronlab skills"
-- "Are my skills installed?"
+- "Load waldronlab skills"
 - "Do I have the waldronlab skills?"
 
 **What happens**:

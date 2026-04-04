@@ -67,6 +67,7 @@ Natural language always works without memorizing patterns.
 - **Skills not found**: Verify path in `settings.json` is absolute and correct
 - **Skills not updating**: Reload VS Code (Cmd+Shift+P → Developer: Reload Window)
 - **Symlink broken**: Check: `ls -la .github/copilot-instructions`
+- **Skills not found**: Try "Load waldronlab skills" to trigger a refresh of the session's skill context.
 
 ## Next Steps
 
