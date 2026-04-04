@@ -122,6 +122,42 @@ Additional context or caveats.
 
 **Principle**: Describe WHAT to do, not HOW (specific tools). Let agents figure out HOW with their available capabilities.
 
+## Avoiding Content Duplication
+
+Skills must maintain this document (AGENTS.md) as the single source of truth for format specifications and standards.
+
+### What NOT to Duplicate in Skills
+
+Skills MUST NOT duplicate:
+- ❌ YAML field specifications from § Skill File Format
+- ❌ Required/prohibited field lists from § Minimal Required Fields / § What NOT to Include
+- ❌ Platform-agnostic principles from § Agent Neutrality
+- ❌ Content structure requirements from § Content Structure
+- ❌ External standards or checklists (reference the source instead)
+
+### How to Reference Properly
+
+Instead of duplicating, use references:
+```markdown
+✅ "See AGENTS.md § Skill File Format for complete specification"
+✅ "Check that frontmatter conforms to AGENTS.md § Minimal Required Fields"
+✅ "Use the standardized labels defined in [external source URL]"
+
+❌ Do not list: "Required fields: name, description, version, category..."
+❌ Do not copy: YAML templates or field descriptions
+❌ Do not duplicate: External classification systems or checklists
+```
+
+### When to Include Content
+
+Skills SHOULD include:
+- ✅ Skill-specific logic and workflow steps
+- ✅ Domain-specific knowledge and context
+- ✅ Concrete examples relevant to the skill's purpose
+- ✅ Decision trees or branching logic unique to the skill
+
+**Principle**: Reference authoritative sources; only include content unique to the skill's purpose.
+
 ## Skill Discovery & Invocation
 
 ### Primary Discovery Mechanism: SKILLS.md

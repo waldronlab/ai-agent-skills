@@ -70,6 +70,13 @@ Use this checklist when creating or updating skills (or run `validate-skill` to 
 - [ ] Examples work across platforms
 - [ ] No platform-specific assumptions in core logic
 
+### SSOT Compliance
+- [ ] No duplication of YAML field specifications from AGENTS.md
+- [ ] No duplication of validation rules or prohibited fields
+- [ ] External sources referenced, not copied (e.g., gists, standards)
+- [ ] References use format: "See [SOURCE] § [SECTION]"
+- [ ] Domain-specific content is skill's own, not duplicated from elsewhere
+
 ---
 
 ## Complete Skill Example
@@ -254,7 +261,7 @@ Read and analyze the DESCRIPTION file to extract package metadata.
 
 ---
 
-**Version**: 2.0.0
+**Version**: 2.1.0
 **Last Updated**: 2026-04-03
 **Authors**: waldronlab
 

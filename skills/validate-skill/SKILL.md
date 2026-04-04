@@ -1,7 +1,7 @@
 ---
 name: validate-skill
 description: Validate that a skill conforms to the ai-agent-skills repository standards
-version: 1.0.1
+version: 1.1.0
 category: meta
 tags: [meta, infrastructure, validation, quality-control]
 author: waldronlab
@@ -123,7 +123,26 @@ Validate waldronlab-specific naming and consistency:
 - Skill referenced consistently throughout the file
 - References to SKILL_STANDARD.md, AGENTS.md, SKILLS.md use correct relative paths
 
-### 8. Generate Validation Report
+### 8. Check for SSOT Violations
+
+Detect content duplication that violates single source of truth principle:
+
+**Common SSOT violations to flag**:
+- YAML field specifications (should reference AGENTS.md § Skill File Format)
+- Required/prohibited field lists (should reference AGENTS.md § Minimal Required Fields / § What NOT to Include)
+- Validation criteria or format rules (should reference AGENTS.md or SKILL_STANDARD.md)
+- External checklist duplication (should reference external source as authority)
+- Platform-agnostic principles (should reference AGENTS.md § Agent Neutrality)
+
+**Valid references pattern**: "See AGENTS.md § [Section]" or "defined in [source]"
+
+**Red flags**:
+- Lists of YAML fields with descriptions
+- YAML frontmatter templates
+- Repeated validation rules from AGENTS.md
+- Copied content from external sources (gists, standards documents)
+
+### 9. Generate Validation Report
 
 Create a comprehensive report with:
 
@@ -155,7 +174,7 @@ Create a comprehensive report with:
 - Waldronlab-specific checks: Total issues by severity
 - List of passed waldronlab checks
 
-### 9. Suggest Next Steps
+### 10. Suggest Next Steps
 
 Based on validation results:
 

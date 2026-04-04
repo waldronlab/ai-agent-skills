@@ -1,7 +1,7 @@
 ---
 name: create-skill
 description: Help create a new AI agent skill through collaborative Q&A
-version: 1.2.1
+version: 1.3.0
 category: meta
 tags: [meta, infrastructure, skill-creation]
 author: waldronlab
@@ -244,6 +244,7 @@ Overview paragraph(s).
 - **Platform shortcuts are optional**: Platform adapters may provide conveniences (slash commands, @workspace patterns) but aren't required
 - **Describe what, not how**: Use "read the file" not "use Read tool"
 - **Iterate, don't perfect**: First draft can be incomplete
+- **Avoid duplication**: Reference authoritative sources instead of copying content
 
 ## Platform-Specific Notes
 
@@ -268,6 +269,42 @@ Skills contain no platform-specific code. Platform adapters (instructions/{agent
 - Enforce strict formatting during brainstorming
 - Overwhelm with too many questions at once
 - Create the file without understanding intent
+
+### Avoiding SSOT Violations and Duplication
+
+**Critical principle**: Never duplicate content that exists in authoritative sources.
+
+**What NOT to duplicate**:
+- ❌ YAML field specifications (defined in AGENTS.md § Skill File Format)
+- ❌ Required/prohibited field lists (defined in AGENTS.md § Minimal Required Fields and § What NOT to Include)
+- ❌ Platform-agnostic principles (defined in AGENTS.md § Agent Neutrality)
+- ❌ Content structure requirements (defined in AGENTS.md § Content Structure)
+- ❌ Validation criteria (defined in AGENTS.md and enforced by validate-skill)
+- ❌ Issue type labels or severity definitions from external sources (use references)
+
+**When to reference vs duplicate**:
+- **Reference**: Format specifications, field definitions, standards, external checklists
+- **Include**: Skill-specific logic, domain knowledge, concrete examples, workflow steps
+
+**How to reference properly**:
+```markdown
+✅ Good: "Check that frontmatter conforms to AGENTS.md § Skill File Format"
+✅ Good: "Use the standardized issue labels defined in the audit instructions gist"
+✅ Good: "See AGENTS.md § Minimal Required Fields for complete list"
+
+❌ Bad: List all required fields (name, description, version, category...)
+❌ Bad: Copy the YAML template from AGENTS.md
+❌ Bad: Duplicate issue type labels from external source
+```
+
+**Signs of SSOT violation**:
+- Listing specific YAML fields with descriptions
+- Showing YAML frontmatter templates
+- Repeating validation rules
+- Copying external checklists or classification systems
+- Explaining format requirements already in AGENTS.md
+
+**Fix pattern**: Replace with "See [SOURCE] § [SECTION] for [WHAT]"
 
 ### Handling Uncertainty
 
