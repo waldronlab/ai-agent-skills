@@ -11,6 +11,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - metagenomics analysis skills
 - statistical-methods skills
 
+## [2.1.0] - 2026-04-03
+
+### Added
+- **security-audit-r-package** (v1.0.0) - Comprehensive security auditing for R/Bioconductor packages
+  - Analyzes R code, native code (C/C++/Fortran), dependencies, and package structure
+  - References external gist as single source of truth for security checks and issue labels
+  - Flexible output formatting (structured reports for full audits, concise for quick checks)
+  - Supports targeted audits (specific files/directories) or full package scope
+- AGENTS.md § Avoiding Content Duplication - Guidelines for preventing SSOT violations
+- SKILL_STANDARD.md § SSOT Compliance checklist
+
+### Changed
+- **create-skill** (v1.2.1 → v1.3.0) - Added comprehensive "Avoiding SSOT Violations" guidance
+  - SSOT = Single Source of Truth (avoid duplicating content across skills, documentation, validation)
+  - Lists what not to duplicate (YAML specs, validation criteria, external checklists)
+  - Provides reference patterns with examples
+  - Documents signs of SSOT violation and fix patterns
+- **validate-skill** (v1.0.1 → v1.1.0) - Added SSOT violation detection
+  - New validation step 8: "Check for SSOT Violations"
+  - Flags common duplication patterns (field lists, templates, copied checklists)
+  - Validates proper reference patterns
+- **document-skill** (v1.0.1) - Reduced duplication in YAML field descriptions
+
+### Improved
+- Meta skills now reference AGENTS.md as single source of truth (~95 lines of duplication removed)
+- All YAML field specifications reference AGENTS.md § Skill File Format
+- All validation criteria reference AGENTS.md § Minimal Required Fields / What NOT to Include
+- Validation report templates simplified (reduced from 76 lines to ~30 lines)
+- SKILL_STANDARD.md updated to v2.1.0 with SSOT compliance checklist
+
 ## [2.0.0] - 2026-04-03
 
 ### Changed
@@ -35,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive documentation with clear separation of concerns
 - Example from parkinsonsMetagenomicData (data-package-parquet)
 
-## [0.1.0] - 2026-01-15
+## [0.1.0] - 2026-04-03
 
 ### Added
 - Initial release
