@@ -30,17 +30,18 @@ Invoke this skill to check your setup or discover available skills:
 
 ### 1. Discover Available Waldronlab Skills
 
-Collect all discoverable skill files associated with `waldronlab/ai-agent-skills`.
+Read SKILLS.md from the repository to discover all available skills dynamically.
 
-At minimum, include these canonical skills:
-- `create-skill` (meta domain)
-- `validate-skill` (meta domain)
-- `check-waldronlab-skills` (meta domain)
-- `analyze-r-package` (r-packages domain)
-- `create-package-instructions` (r-packages domain)
-- `update-package-instructions` (r-packages domain)
+**Process**:
+- Locate and read `SKILLS.md` in the repository root
+- Parse the skill entries by category (Meta Skills, R/Bioconductor Package Skills, etc.)
+- Extract for each skill:
+  - Skill name
+  - Category/domain
+  - Purpose (from the skill description)
+  - Location path
 
-If no waldronlab skills are found, return a clear not-found status and suggest checking skill path configuration.
+If SKILLS.md is not accessible or no skills are found, return a clear not-found status and suggest checking skill path configuration.
 
 ### 2. Summarize Skills
 
@@ -58,12 +59,12 @@ When the user asks task-oriented questions like "Is there a good waldronlab skil
 - Ask for brief context if the task is unclear
 - Recommend 1-2 best-fit skills with a one-line rationale each
 - If no skill is a clear match, say so and suggest `create-skill` to draft a new one
-- Reference SKILLS.md (`/skills/SKILLS.md`) for detailed information
+- Reference SKILLS.md for detailed information
 
 ### 4. Report Installation Health
 
 Conclude with a simple status statement:
-- "✅ Installed and discoverable" when skills are found
+- "🏃 Levi says let's go!" when skills are found
 - "❌ Not detected" when no skills are found
 
 Include a short remediation hint when not detected.
@@ -75,18 +76,20 @@ Return one of the following:
 ### 1. Skill Inventory
 
 ```
-Status: ✅ Installed and discoverable
+Status: 🏃 Levi says let's go!
 
-**Meta Domain**
-- create-skill: Help create a new AI agent skill through collaborative Q&A
-- validate-skill: Validate that a skill conforms to repository standards
-- check-waldronlab-skills: Verify waldronlab skills and find the right one
+**[Category Name]**
+- [skill-name]: [Brief description from SKILLS.md]
+- [skill-name]: [Brief description from SKILLS.md]
 
-**R/Bioconductor Domain**
-- analyze-r-package: Analyze package structure and characteristics
-- create-package-instructions: Generate .github/instructions files
-- update-package-instructions: Update existing package instructions
+**[Category Name]**
+- [skill-name]: [Brief description from SKILLS.md]
+- [skill-name]: [Brief description from SKILLS.md]
+
+[Additional categories as found in SKILLS.md]
 ```
+
+**Note**: Skill list is generated dynamically from SKILLS.md, not hard-coded.
 
 ### 2. Question Answer
 
@@ -111,21 +114,25 @@ For broader discovery, reference SKILLS.md:
 
 **User**: "Do I have the waldronlab skills?"
 
-**Response**:
+**Process**:
+1. Read SKILLS.md from repository root
+2. Parse skill entries by category
+3. Extract names and descriptions
+4. Format and present
+
+**Response** (dynamically generated from SKILLS.md):
 ```
-✅ Status: Installed and discoverable
+🏃 Levi says let's go!
 
 Available waldronlab skills:
 
 Meta
-  • create-skill - Help create a new skill
-  • validate-skill - Validate skill standards compliance
-  • check-waldronlab-skills - List and verify skills (you are here)
+  • [skills from Meta Skills section in SKILLS.md]
 
 R/Bioconductor
-  • analyze-r-package - Understand package structure
-  • create-package-instructions - Generate AI agent instructions
-  • update-package-instructions - Refresh existing instructions
+  • [skills from R/Bioconductor Package Skills section in SKILLS.md]
+
+[Additional categories as defined in SKILLS.md]
 
 For detailed information, see SKILLS.md in the repository.
 ```
@@ -140,33 +147,38 @@ For detailed information, see SKILLS.md in the repository.
 
 **User**: "Is there a good waldronlab skill for creating package instructions?"
 
-**Response**:
+**Process**:
+1. Read SKILLS.md to find relevant skills
+2. Match user need to skill descriptions
+3. Identify primary and companion skills
+
+**Response** (based on current SKILLS.md content):
 ```
 Yes! I recommend:
 
-**Primary**: create-package-instructions
-Generates comprehensive .github/instructions files for R packages, including
-overview, data access patterns, development standards, and vignette docs.
+**Primary**: [skill-name from SKILLS.md that best matches]
+[Description and rationale from SKILLS.md]
 
-**Companion**: analyze-r-package
-Run this first to understand your package structure, then use its output
-to guide create-package-instructions.
+**Companion**: [related skill-name from SKILLS.md]
+[How it complements the primary skill]
 ```
 
 ### Example 4: No Skill Match
 
 **User**: "Do you have a skill for testing Shiny apps?"
 
-**Response**:
-```
-Not currently. The waldronlab skills focus on:
-  • R/Bioconductor package development
-  • Package documentation
-  • Repository infrastructure
+**Process**:
+1. Read SKILLS.md to search for matching skills
+2. If no match found, identify available domains
+3. Suggest create-skill or filing an issue
 
-For creating a new skill, try:
-  /create-skill (Claude)
-  @workspace create a new skill (Copilot)
+**Response** (domains listed are from current SKILLS.md):
+```
+Not currently. Based on SKILLS.md, the waldronlab skills focus on:
+  • [List current categories from SKILLS.md]
+
+For creating a new skill, try describing your need in natural language
+(e.g., "Help me create a new skill for testing Shiny apps")
 
 Or open an issue at:
 https://github.com/waldronlab/ai-agent-skills/issues
@@ -207,10 +219,11 @@ If you see duplicate skill listings, it's likely because your configuration poin
 
 ## Notes
 
+- **Dynamic discovery**: This skill reads SKILLS.md at runtime to discover available skills, ensuring it never goes out of sync
+- **Single source of truth**: SKILLS.md is the authoritative skill catalog; this skill queries it rather than duplicating content
 - Keep responses concise and actionable
 - Prioritize helping users confirm setup quickly
 - If skills are missing, provide actionable next steps
-- Reference SKILLS.md for detailed skill information
 - This skill complements SKILLS.md as the quick-check discovery tool
 
 See [AGENTS.md](../../AGENTS.md) for how skill discovery works and [SKILLS.md](../../SKILLS.md) for the complete index.
