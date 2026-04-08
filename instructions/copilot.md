@@ -1,76 +1,52 @@
-# GitHub Copilot Setup
+# GitHub Copilot
 
-Add waldronlab skills to GitHub Copilot.
+## Simple IDE-independent approach
 
-## Setup
+The simplest portable approach is to give Copilot a short bootstrap prompt such as:
 
-1. Clone the repository (if needed):
+```text
+Use the waldronlab AI agent skills from this repository: /path/to/ai-agent-skills.
+Start with SKILLS.md to find the best matching skill.
+Then read the corresponding skills/<skill-name>/SKILL.md file and follow it.
+If more than one skill matches, list the options briefly and choose the best fit.
+```
+
+This is not the same as installed persistent skills, but it is the simplest natural-language pattern that can work across Copilot surfaces and IDEs.
+
+## Persistent setup for Copilot Agent in VS Code
+
+Open VS Code, then add the waldronlab skills you want to use to Copilot's skill locations.
+
+1. Clone the repository if needed:
    ```bash
    git clone https://github.com/waldronlab/ai-agent-skills.git
    ```
 
-2. Add to VS Code User `settings.json` (Cmd+, → search "settings.json"):
-
-   See [SKILLS.md](../SKILLS.md) for the current list of skills.
-
-   Add each skill directory to your settings:
+2. Open VS Code user `settings.json` and add the skill directories you want from [SKILLS.md](../SKILLS.md):
    ```json
    {
      "chat.skillsLocations": [
        "/path/to/ai-agent-skills/skills/create-skill",
        "/path/to/ai-agent-skills/skills/check-waldronlab-skills",
        "/path/to/ai-agent-skills/skills/analyze-r-package"
-       // ... add other skills from SKILLS.md
      ]
    }
    ```
 
-   Replace `/path/to/ai-agent-skills` with the actual path (use `pwd`).
-
-3. Reload VS Code (Cmd+Shift+P → Developer: Reload Window).
-
-## Per-Project Setup (Optional)
-
-Create `.github/copilot-instructions` symlink in your project:
-```bash
-ln -s /path/to/ai-agent-skills/skills .github/copilot-instructions
-```
-
-Then add to `.vscode/settings.json` in that project:
-
-See [SKILLS.md](../SKILLS.md) for the current list of skills.
-
-```json
-{
-  "chat.skillsLocations": [
-    ".github/copilot-instructions/create-skill",
-    ".github/copilot-instructions/check-waldronlab-skills",
-    ".github/copilot-instructions/analyze-r-package"
-    // ... add other skills from SKILLS.md
-  ]
-}
-```
+3. Reload VS Code.
 
 ## Usage
 
-Open Copilot Chat and describe what you need:
+To confirm the setup worked, ask:
+
+```text
+What waldronlab skills do I have?
 ```
-@workspace Analyze this R package
-@workspace Create .github/instructions for this package
-@workspace Help me create a new skill
+
+To use the skills, ask naturally. For example:
+
+```text
+Help me create a new skill
+Analyze this R package
+Create .github/instructions for this package
 ```
-
-Natural language always works without memorizing patterns.
-
-## Troubleshooting
-
-- **Skills not found**: Verify path in `settings.json` is absolute and correct
-- **Skills not updating**: Reload VS Code (Cmd+Shift+P → Developer: Reload Window)
-- **Symlink broken**: Check: `ls -la .github/copilot-instructions`
-- **Skills not found**: Try "Load waldronlab skills" to trigger a refresh of the session's skill context.
-
-## Next Steps
-
-- Browse skills: [SKILLS.md](../SKILLS.md)
-- Usage examples: [README.md](../README.md#usage-examples)
-- General setup: [README.md](../README.md#installation)
