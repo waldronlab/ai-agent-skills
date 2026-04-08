@@ -9,7 +9,7 @@ Add waldronlab skills to your global Claude instructions.
    git clone https://github.com/waldronlab/ai-agent-skills.git
    ```
 
-2. Update `~/.claude/CLAUDE.md`:
+2. Add to `~/.claude/CLAUDE.md`:
    ```markdown
    # waldronlab AI Agent Skills
 
@@ -22,17 +22,4 @@ Add waldronlab skills to your global Claude instructions.
 
 3. Restart Claude Code or reload the workspace.
 
-## Optional: Slash Commands
-
-Claude Code supports shortcuts (e.g., `/create-skill`, `/analyze-r-package`). Natural language always works without them.
-
-## Troubleshooting
-
-- **Skills not found**: Verify path in `~/.claude/CLAUDE.md` is absolute and correct
-- **Slash commands not working**: Reload Claude Code (desktop: restart, web/IDE: Cmd+Shift+P → Developer: Reload Window)
-
-## Next Steps
-
-- Browse skills: [SKILLS.md](../SKILLS.md)
-- Usage examples: [README.md](../README.md#usage-examples)
-- General setup: [README.md](../README.md#installation)
+**Note**: If you use this step 2 instead of pasting the skills directly into `CLAUDE.md`, you will have to give permissions for Claude Code to read a file outside of your project directory when you use it.
