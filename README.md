@@ -1,6 +1,6 @@
 # waldronlab AI Agent Skills
 
-A collection of agent-agnostic skills and instructions for AI assistants (Claude Code, GitHub Copilot, and future platforms) working on projects relevant to the Waldron Lab at CUNY SPH. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
+A collection of agent-agnostic skills and instructions for AI assistants (Claude Code, GitHub Copilot, Gemini, and future platforms) working on projects relevant to the Waldron Lab at CUNY SPH. This repository provides domain-specific knowledge to help AI agents understand our codebases, workflows, and standards.
 
 ## What are AI Agent Skills?
 
@@ -12,98 +12,43 @@ Skills are structured instructions that teach AI agents about:
 - Organization-wide patterns
 
 With these skills, AI agents can:
-- Generate appropriate documentation
+- Create new skills and index them in [SKILLS.md](SKILLS.md)
 - Follow Bioconductor coding standards
-- Suggest context-aware improvements
-- Understand domain-specific patterns
-- Provide better assistance on complex tasks
+- Analyze R code and packages and suggest improvements
+- Define and follow bioinformatic workflows and statistical methods
 
 ## Agent-Agnostic Design
 
-Skills in this repository are **agent-agnostic** by design. They work across multiple AI agents through natural language invocation:
+Skills in this repository are **agent-agnostic** by design. They work across multiple AI agents through natural language invocation. For example:
 
-- **Canonical invocation**: Natural language matching skill descriptions
-- **Optional shortcuts**: Platform adapters document conveniences (slash commands, @workspace patterns)
-- **Single source**: One skill works everywhere without duplication
-- **Portable**: Skills adapt to any compliant agent platform
-
-See [AGENTS.md](AGENTS.md) for how agent behavior and skill discovery work. See [SKILL_STANDARD.md](SKILL_STANDARD.md) for technical format details.
-
-## Quick Start
-
-### 1. Find Skills
-
-Browse [SKILLS.md](SKILLS.md) to see all available skills organized by category and use case.
-
-### 2. Invoke Naturally
-
-Describe what you need in natural language:
+- "What waldronlab skills do I have?" (to confirm you have the skills installed)
 - "Help me create a new skill"
 - "Analyze this R package"
 - "Create .github/instructions for this package"
 
 Your AI agent will match your request to the appropriate skill and execute it.
 
-### 3. Optional Platform Shortcuts
+See [AGENTS.md](AGENTS.md) for detailed requirements for this repository, to be used for agent-assisted understanding of the repository and creation of new skills. See [SKILL_STANDARD.md](SKILL_STANDARD.md) for technical format details.
 
-If you prefer shortcuts:
-- **Claude Code**: `/skill-name` slash commands (see [instructions/claude.md](instructions/claude.md))
-- **GitHub Copilot**: `@workspace` patterns (see [instructions/copilot.md](instructions/copilot.md))
-
-But natural language works everywhere.
-
-## Available Skills
-
-See [SKILLS.md](SKILLS.md) for the complete skill catalog organized by category and use case.
-
-**Skill domains:**
-- **Meta** - Repository infrastructure (skill creation, validation, documentation)
-- **R/Bioconductor** - Package analysis and documentation generation
-- **Metagenomics** (Planned)
-- **Statistical Methods** (Planned)
-
-## Installation
-
-See the appropriate guide for your platform:
-- **Claude Code**: [instructions/claude.md](instructions/claude.md)
-- **GitHub Copilot**: [instructions/copilot.md](instructions/copilot.md)
-- **Google Gemini**: [instructions/gemini.md](instructions/gemini.md)
-- **Other agents**: [AGENTS.md](AGENTS.md) for compliance requirements
-
-Each guide includes complete setup instructions specific to that platform.
-
-### Verify Installation
-
-Ask your agent:
-- "Do I have the waldronlab skills?"
-- "What waldronlab skills are available?"
-
-The agent should list the installed skills.
+## Quick Start
+1. Install the skills on your platform (see [Installation](#installation))
+2. Ask your agent: "What waldronlab skills do I have?" to confirm
+3. Use natural language to invoke skills (see [Usage Examples](#usage-examples))
 
 ## Usage Examples
 
-### Creating R Package Instructions
+Create AI Instructions for an R Package:
 
-Natural language invocation (works everywhere):
 ```
 "Create .github/instructions for this R package"
 ```
 
-Or use optional shortcuts:
-- Claude Code: `/create-package-instructions`
-- GitHub Copilot: `@workspace Create .github/instructions`
+Analyze an R Package:
 
-### Analyzing an R Package
-
-Natural language invocation:
 ```
 "Analyze this R package"
 "What type of R package is this?"
 ```
-
-Or use optional shortcuts:
-- Claude Code: `/analyze-r-package`
-- GitHub Copilot: `@workspace analyze this package`
 
 ### Creating a New Skill
 
@@ -112,11 +57,7 @@ Natural language invocation:
 "Help me create a new skill for [purpose]"
 ```
 
-Or use optional shortcuts:
-- Claude Code: `/create-skill`
-- GitHub Copilot: `@workspace create a new skill`
-
-See [SKILLS.md](SKILLS.md) for all available skills and invocation examples.
+See [SKILLS.md](SKILLS.md) for all available skills and invocation examples. Using the skill-creation skill will guide you through the process of creating a new skill, validate that it conforms with standards, [SKILL_STANDARD.md](SKILL_STANDARD.md), and update the index in [SKILLS.md](SKILLS.md).
 
 ## Repository Structure
 
@@ -164,23 +105,6 @@ See [skills/create-package-instructions/examples/](skills/create-package-instruc
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-### Adding New Skills
-
-**Quick start**: Use the `create-skill` skill to get guided help!
-
-Natural language: "Help me create a new skill for [purpose]"
-
-Or manually:
-1. Create directory: `skills/{skill-name}/`
-2. Create file: `skills/{skill-name}/SKILL.md`
-3. Follow the [Agent Skills Standard Format](SKILL_STANDARD.md)
-4. Include YAML frontmatter with required fields (no `platforms:` or `triggers:`)
-5. Write platform-agnostic core logic
-6. Run `validate-skill` to check standards compliance
-7. Run `document-skill` to update SKILLS.md automatically
-8. Test on multiple platforms
-9. Submit PR for review
-
 ### Adding New Domains
 
 If you have a new category of skills:
@@ -200,20 +124,10 @@ Domain maintainers are responsible for:
 - Testing on supported platforms
 - Responding to issues
 
-### Version Compatibility
-
-We aim to keep skills compatible with:
-- **Claude Code**: Latest stable version
-- **GitHub Copilot**: Latest VS Code extension
-- **R/Bioconductor**: Current release and devel
-
-Breaking changes are documented in [CHANGELOG.md](CHANGELOG.md).
-
 ## Support and Feedback
 
 - **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/waldronlab/ai-agent-skills/issues)
 - **Discussions**: Ask questions in [GitHub Discussions](https://github.com/waldronlab/ai-agent-skills/discussions)
-- **Skills Check**: Use `check-waldronlab-skills` to verify your setup
 
 ## License
 
@@ -226,4 +140,4 @@ These skills are developed and maintained by the waldronlab at CUNY SPH and coll
 ---
 
 **Version**: 2.0.0 (agent-agnostic)
-**Last Updated**: 2026-04-03
+**Last Updated**: 2026-04-08
