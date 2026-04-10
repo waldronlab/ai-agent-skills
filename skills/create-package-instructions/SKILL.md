@@ -48,7 +48,6 @@ Based on the analysis output, determine which templates to use:
 | `20-development.md.template` | Always | `20-development.md` |
 | `30-testing-and-docs.md.template` | Always | `30-testing-and-docs.md` |
 | `40-vignettes.md.template` | Vignettes > 0 | `40-vignettes.md` |
-| `50-git-workflow.md.template` | Always | `50-git-workflow.md` |
 | `INDEX.md.template` | Always | `INDEX.md` |
 
 ### 3. Create `.github/instructions/` Directory

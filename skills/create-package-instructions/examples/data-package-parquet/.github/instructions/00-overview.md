@@ -15,7 +15,6 @@ Read these files for complete context:
 - **[20-development.md](20-development.md)** - Coding standards and best practices
 - **[30-testing-and-docs.md](30-testing-and-docs.md)** - Testing and documentation requirements
 - **[40-vignettes.md](40-vignettes.md)** - Vignette purposes and update guidance
-- **[50-git-workflow.md](50-git-workflow.md)** - Git branching, commits, and checks
 
 ## Key Data Access Functions
 

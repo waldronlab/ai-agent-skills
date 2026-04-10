@@ -16,7 +16,6 @@ For complete context, read these files in order:
 3. **[20-development.md](20-development.md)** - Coding standards and parquet structure
 4. **[30-testing-and-docs.md](30-testing-and-docs.md)** - Testing requirements and documentation standards
 5. **[40-vignettes.md](40-vignettes.md)** - Vignette purposes and update guidelines
-6. **[50-git-workflow.md](50-git-workflow.md)** - Git branching, commit style, and check procedures
 
 ## Quick Reference by Topic
 
@@ -40,11 +39,6 @@ For complete context, read these files in order:
 - **Vignette purposes**: [40-vignettes.md](40-vignettes.md#existing-vignette-purposes)
 - **Update guidelines**: [40-vignettes.md](40-vignettes.md#when-updating-vignettes)
 
-### Git Workflow
-- **Branch naming**: [50-git-workflow.md](50-git-workflow.md#branch-naming)
-- **Commit messages**: [50-git-workflow.md](50-git-workflow.md#commit-messages)
-- **Pre-commit checks**: [50-git-workflow.md](50-git-workflow.md#before-committing)
-- **Quick commands**: [50-git-workflow.md](50-git-workflow.md#quick-commands)
 
 ## File Organization
 

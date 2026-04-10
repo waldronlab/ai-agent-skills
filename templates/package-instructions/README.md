@@ -11,7 +11,6 @@ This directory contains templates for generating AI instruction documentation fo
 | `20-development.md.template` | Always | - | Development patterns and coding conventions |
 | `30-testing-and-docs.md.template` | Always | - | Testing and documentation guidelines |
 | `40-vignettes.md.template` | Conditional | Has vignettes | Vignette guide and reading order |
-| `50-git-workflow.md.template` | Always | - | Git workflow and release process |
 | `INDEX.md.template` | Always | - | Navigation and quick reference |
 
 ## Template Variables
@@ -81,7 +80,6 @@ This directory contains templates for generating AI instruction documentation fo
 | `{{VIGNETTE_LIST}}` | vignettes/ + YAML | List of vignettes with titles and purposes |
 | `{{READING_ORDER}}` | Content analysis | Recommended order and rationale |
 
-### 50-git-workflow.md.template
 
 | Variable | Source | Description |
 |----------|--------|-------------|
