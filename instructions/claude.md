@@ -14,8 +14,9 @@ Add waldronlab skills to your global Claude instructions.
    # waldronlab AI Agent Skills
 
    See: `/path/to/ai-agent-skills/SKILLS.md`
+   Behavior Standard: `/path/to/ai-agent-skills/AGENTS.md`
 
-   Describe what you need, and I'll match it to the appropriate skill.
+   Describe what you need, and I'll match it to the appropriate skill. Always follow the canonical behavior and Git workflow rules defined in AGENTS.md.
    ```
 
    Replace `/path/to/ai-agent-skills` with the actual path (use `pwd`).

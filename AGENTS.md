@@ -210,6 +210,10 @@ Compliant agents:
 - [ ] MUST adapt tool usage to agent's available capabilities
 - [ ] MUST produce output as documented in the skill
 - [ ] MUST NOT embed platform-specific requirements in skills
+- [ ] MUST ask the user if the work should be done on a new branch before editing files
+- [ ] MUST NOT commit changes without explicit approval from the user
+- [ ] MUST show a draft commit message for the user's approval in a standard text response prior to committing
+- [ ] MUST acknowledge the AI agent being used so that it will appear as a co-author (e.g., appending the GitHub co-author trailer `Co-authored-by: AI Agent <agent@example.com>` at the end of the commit message, separated by a blank line).
 
 ### SHOULD (Strong Recommendation)
 

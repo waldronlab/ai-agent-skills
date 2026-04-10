@@ -28,7 +28,6 @@ This directory contains real-world examples of `.github/instructions/` generated
 - ✅ 20-development.md - Coding standards and parquet structure
 - ✅ 30-testing-and-docs.md - Testing with local fixtures
 - ✅ 40-vignettes.md - 5 vignettes with distinct purposes
-- ✅ 50-git-workflow.md - Bioconductor checks and git workflow
 - ✅ INDEX.md - Navigation and quick reference
 
 **What Makes This Example Notable**:
@@ -52,7 +51,6 @@ data-package-parquet/
         ├── 20-development.md
         ├── 30-testing-and-docs.md
         ├── 40-vignettes.md
-        └── 50-git-workflow.md
 ```
 
 ---

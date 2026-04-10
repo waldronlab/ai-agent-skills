@@ -9,6 +9,24 @@ For complete standards, see:
 - [Core Bioconductor standards](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/bioconductor-development.md) - Documentation and testing requirements
 - [Waldronlab conventions](https://github.com/waldronlab/ai-agent-skills/blob/main/r-packages/templates/waldronlab-standards.md) - Documentation and testing practices
 
+## Development and Checking Commands
+
+```bash
+R CMD build .
+R CMD check parkinsonsMetagenomicData_*.tar.gz
+R -e "BiocCheck::BiocCheck('parkinsonsMetagenomicData_*.tar.gz')"
+R -e "roxygen2::roxygenize()"
+R -e "rmarkdown::render('vignettes/codebook.Rmd')"
+R CMD INSTALL .
+```
+
+## Package-Specific Considerations
+
+Standard checks (see Core Bioconductor standards linked above) plus:
+- Verify vignettes knit successfully (this package has 5 vignettes)
+- Test parquet file access with local test data
+- Confirm UUID validation works correctly
+
 ## Package-Specific Testing
 
 ### Test Data
@@ -34,4 +52,5 @@ For complete standards, see:
 - Run `roxygen2::roxygenize()` if docs changed
 - Verify examples still work
 - Check that exported functions have tests
-- Follow the complete checklist in [50-git-workflow.md](50-git-workflow.md#before-committing)
+- Verify vignettes knit successfully
+- Follow the complete checklist in the Core Bioconductor standards

@@ -4,6 +4,24 @@ For complete standards, see:
 - [Core Bioconductor standards](../../templates/bioconductor-development.md)
 - [Waldronlab conventions](../../templates/waldronlab-standards.md)
 
+## Development and Checking Commands
+
+```bash
+# Build and check
+R CMD build .
+R CMD check {{PACKAGE_NAME}}_*.tar.gz
+
+# Documentation
+R -e "roxygen2::roxygenize()"
+
+# Tests
+R -e "devtools::test()"
+```
+
+## Package-Specific Considerations
+
+{{PACKAGE_CONSIDERATIONS}}
+
 ## Package-Specific Testing
 
 ### Test Organization

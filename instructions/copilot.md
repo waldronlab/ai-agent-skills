@@ -9,6 +9,8 @@ Use the waldronlab AI agent skills from this repository: /path/to/ai-agent-skill
 Start with SKILLS.md to find the best matching skill.
 Then read the corresponding skills/<skill-name>/SKILL.md file and follow it.
 If more than one skill matches, list the options briefly and choose the best fit.
+
+You must also read and adhere to the agent behavior and safe execution standards defined in AGENTS.md.
 ```
 
 This is not the same as installed persistent skills, but it is the simplest natural-language pattern that can work across Copilot surfaces and IDEs.
