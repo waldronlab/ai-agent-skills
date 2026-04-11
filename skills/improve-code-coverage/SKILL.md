@@ -3,7 +3,7 @@ name: improve-code-coverage
 description: Analyze R package code coverage using covr, classify testing gaps, and proactively write test cases to improve coverage and result correctness.
 version: 1.0.0
 category: r-packages
-tags: [r, testing, code-coverage, covr, bioconductor]
+tags: [r-packages, testing, code-coverage, covr, bioconductor]
 author: waldronlab
 ---
 
