@@ -242,6 +242,36 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 
 ---
 
+### improve-code-coverage
+
+**Purpose**: Analyze R package code coverage using covr, classify testing gaps, and proactively write test cases to improve coverage and result correctness.
+
+**Location**: `skills/improve-code-coverage/SKILL.md`
+
+**When to use**:
+- Increasing an R package's test coverage
+- Evaluating testing rigor and identifying gaps
+- Proactively writing test cases categorized by normal use, edge cases, error handling, and correctness
+
+**Invocation**:
+- "Check my code coverage and help me write missing tests."
+- "Run covr on the package and improve testing for uncovered lines in R/my_function.R."
+- "Improve code coverage, focusing on edge cases and correctness."
+- "Summarize current code coverage."
+
+**What happens**:
+- Runs `covr` package coverage analysis and extracts percentages for `R/` and `src/`.
+- Summarizes coverage results, evaluating the types of tests present.
+- Identifies uncovered functions and logic branches.
+- Classifies missing testing needs into Normal Use, Edge Cases, Error Handling, or Correctness.
+- Drafts new `testthat` code blocks targeting identified gaps.
+
+**Output**: A chat summary breaking down coverage by test category, and code blocks containing `testthat` cases.
+
+**Related skills**: analyze-r-package, security-audit-r-package
+
+---
+
 ### security-audit-r-package
 
 **Purpose**: Perform comprehensive security audit of R/Bioconductor packages
@@ -308,7 +338,7 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 | Category | Skills | Purpose |
 |----------|--------|---------|
 | **meta** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow infrastructure |
-| **r-packages** | analyze-r-package, create-package-instructions, security-audit-r-package, update-package-instructions | R/Bioconductor package development |
+| **r-packages** | analyze-r-package, create-package-instructions, improve-code-coverage, security-audit-r-package, update-package-instructions | R/Bioconductor package development |
 | **metagenomics** | (Planned) | Metagenomics data workflows |
 | **statistical-methods** | (Planned) | Statistical analysis patterns |
 
@@ -317,6 +347,7 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 | Tag | Skills | Use Case |
 |-----|--------|----------|
 | **infrastructure** | create-skill, check-waldronlab-skills, document-skill, validate-skill | Repository and workflow tasks |
+| **testing** | improve-code-coverage | Software testing and coverage |
 | **validation** | security-audit-r-package, validate-skill | Quality control and standards compliance |
 | **quality-control** | security-audit-r-package, validate-skill | Ensuring skill quality |
 | **documentation** | create-package-instructions, document-skill, update-package-instructions | Generating and maintaining docs |
@@ -324,7 +355,9 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 | **analysis** | analyze-r-package | Understanding code and architecture |
 | **security** | security-audit-r-package | Security audits and vulnerability detection |
 | **audit** | security-audit-r-package | Comprehensive code auditing |
-| **bioconductor** | analyze-r-package, create-package-instructions, security-audit-r-package, update-package-instructions | Bioconductor-specific workflows |
+| **bioconductor** | analyze-r-package, create-package-instructions, improve-code-coverage, security-audit-r-package, update-package-instructions | Bioconductor-specific workflows |
+| **code-coverage** | improve-code-coverage | Code coverage analysis |
+| **covr** | improve-code-coverage | Tools wrapping the covr package |
 | **data-access** | analyze-r-package (detects), create-package-instructions | Working with remote data |
 
 ---
@@ -335,8 +368,9 @@ Skills for statistical analysis patterns in microbiome and multi-omics research.
 
 1. **Understand the package** → `analyze-r-package`
 2. **Create AI instructions** → `create-package-instructions`
-3. **Audit for security issues** → `security-audit-r-package`
-4. **Keep instructions updated** → `update-package-instructions`
+3. **Improve test coverage** → `improve-code-coverage`
+4. **Audit for security issues** → `security-audit-r-package`
+5. **Keep instructions updated** → `update-package-instructions`
 
 ### "I want to create a new skill..."
 
