@@ -17,6 +17,26 @@ With these skills, AI agents can:
 - Analyze R code and packages and suggest improvements
 - Define and follow bioinformatic workflows and statistical methods
 
+## Design Philosophy
+
+This repository is built on core architectural decisions tailored specifically to how Large Language Models (LLMs) operate and how we build software in the waldronlab.
+
+### Workflow Orchestration vs. Code-Centric Snippets
+
+Many AI skill repositories act simply as code snippet libraries—providing the AI with advanced copy-paste templates to execute a single task. While fast, this **Code-Centric approach** is brittle, lacks autonomy, and misses the "why" behind the code.
+
+Instead, we use **Workflow/Process Orchestration**. Our skills treat the AI like a junior developer given a Standard Operating Procedure (SOP). Rather than just providing raw syntax, a skill defines the *intent*, the *multi-step workflow*, and the *domain knowledge* required. 
+
+For example, our code coverage skill doesn't just provide the command to run `covr`; it orchestrates a workflow: run the coverage, summarize the gaps, classify testing needs (Normal Use, Edge Cases, Error Handling, Correctness), and proactively write new test cases based on those criteria. This approach enables high autonomy, ensures the AI adheres to waldronlab quality standards, and allows it to adapt to different project structures using its general reasoning capabilities.
+
+### Centralized Registry vs. Decentralized Discovery
+
+When an AI agent needs to discover what it can do, it can either search through a file tree (**Decentralized Discovery**) or read a single index (**Centralized Registry**).
+
+We use a **Centralized Registry** ([`SKILLS.md`](SKILLS.md)). For an AI agent, reading a single markdown file is an O(1) operation. Modern LLMs have massive context windows; parsing a comprehensive registry takes fractions of a second and negligible tokens. If discovery were decentralized, the agent would waste time, conversational turns, and context running search tools to hunt down the right instructions across dozens of folders. 
+
+A centralized registry also provides vital relational context, allowing the LLM to instantly understand how skills chain together through "Use Case Workflows". While scaling to hundreds of skills may eventually require auto-generating the `SKILLS.md` file via CI/CD to prevent human git merge conflicts, the discovery interface for the AI remains intentionally centralized.
+
 ## Agent-Agnostic Design
 
 Skills in this repository are **agent-agnostic** by design. They work across multiple AI agents through natural language invocation. For example:
