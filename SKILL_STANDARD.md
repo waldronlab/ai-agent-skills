@@ -64,6 +64,7 @@ Use this checklist when creating or updating skills (or run `validate-skill` to 
 - [ ] Output format is documented (if applicable)
 - [ ] Prerequisites are clear and complete
 - [ ] Cross-references use correct relative paths
+- [ ] Strategic code snippets are embedded only as guardrails within workflows (e.g., specific APIs), not as the primary logic
 
 ### Portability
 - [ ] Tool references are generalized or in platform-specific notes

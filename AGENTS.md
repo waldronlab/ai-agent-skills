@@ -56,6 +56,10 @@ Skills are **prompts**, not code. Agents interpret and execute them using their 
 - Avoid locking skills to specific agent APIs or syntax
 - Make skills work on minimal assumptions (just markdown + YAML frontmatter)
 
+### 6. Workflow over Code Snippets
+
+Skills must define workflows (the *intent*, *multi-step process*, and *domain knowledge*), not just provide raw code. While highly specific code snippets can be provided to overcome LLM anti-patterns, handle unique APIs, or adhere to strict lab standards (e.g., `BiocParallel` vs `lapply`), they must serve strictly as **guardrails** embedded within a numbered workflow step, never as the entire skill itself.
+
 ## Skill File Format
 
 ### Minimal Required Fields

@@ -109,7 +109,16 @@ Check compliance with AGENTS.md § Agent Neutrality:
 - Natural language in Usage section
 - Platform shortcuts only in Platform-Specific Notes (if needed)
 
-### 7. Check Waldronlab Naming Conventions
+### 7. Check Workflow vs. Code-Centric Design
+
+Verify the skill adheres to the Workflow Orchestration philosophy (README.md § Workflow Orchestration vs. Code-Centric Snippets):
+
+**Code Snippet Usage**:
+- Ensure the skill is not just a raw code snippet or code template.
+- Any provided code snippets must be embedded as "guardrails" within a broader, numbered workflow.
+- Snippets should serve a specific purpose (e.g., highly specific APIs, standardized lab methodology, or overcoming LLM anti-patterns).
+
+### 8. Check Waldronlab Naming Conventions
 
 Validate waldronlab-specific naming and consistency:
 
@@ -123,7 +132,7 @@ Validate waldronlab-specific naming and consistency:
 - Skill referenced consistently throughout the file
 - References to SKILL_STANDARD.md, AGENTS.md, SKILLS.md use correct relative paths
 
-### 8. Check for SSOT Violations
+### 9. Check for SSOT Violations
 
 Detect content duplication that violates single source of truth principle:
 
@@ -142,7 +151,7 @@ Detect content duplication that violates single source of truth principle:
 - Repeated validation rules from AGENTS.md
 - Copied content from external sources (gists, standards documents)
 
-### 9. Generate Validation Report
+### 10. Generate Validation Report
 
 Create a comprehensive report with:
 
@@ -174,7 +183,7 @@ Create a comprehensive report with:
 - Waldronlab-specific checks: Total issues by severity
 - List of passed waldronlab checks
 
-### 10. Suggest Next Steps
+### 11. Suggest Next Steps
 
 Based on validation results:
 

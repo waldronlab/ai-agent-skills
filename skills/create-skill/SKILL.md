@@ -86,6 +86,7 @@ Start with open-ended questions to understand what you want:
 - Key decisions or branching points
 - Required inputs at each stage
 - Expected outputs
+- Strategic code snippets (as guardrails for specific APIs, lab standards, or overcoming LLM anti-patterns)
 
 **Accept**:
 - High-level descriptions: "first it reads some files, then analyzes them"

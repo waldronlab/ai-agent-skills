@@ -17,9 +17,7 @@ With these skills, AI agents can:
 - Analyze R code and packages and suggest improvements
 - Define and follow bioinformatic workflows and statistical methods
 
-## Design Philosophy
-
-This repository is built on core architectural decisions tailored specifically to how Large Language Models (LLMs) operate and how we build software in the waldronlab.
+## Design Philosophy of these Skills
 
 ### Workflow Orchestration vs. Code-Centric Snippets
 
@@ -27,7 +25,15 @@ Many AI skill repositories act simply as code snippet libraries—providing the 
 
 Instead, we use **Workflow/Process Orchestration**. Our skills treat the AI like a junior developer given a Standard Operating Procedure (SOP). Rather than just providing raw syntax, a skill defines the *intent*, the *multi-step workflow*, and the *domain knowledge* required. 
 
-For example, our code coverage skill doesn't just provide the command to run `covr`; it orchestrates a workflow: run the coverage, summarize the gaps, classify testing needs (Normal Use, Edge Cases, Error Handling, Correctness), and proactively write new test cases based on those criteria. This approach enables high autonomy, ensures the AI adheres to waldronlab quality standards, and allows it to adapt to different project structures using its general reasoning capabilities.
+For example, our code coverage skill doesn't just provide the command to run `covr`; it orchestrates a workflow: run the coverage, summarize the gaps, classify testing needs (Normal Use, Edge Cases, Error Handling, Correctness), and proactively write new test cases based on those criteria. This approach enables high autonomy, ensures the AI adheres to quality standards, and allows it to adapt to different project structures using its general reasoning capabilities.
+
+**The Role of Code Snippets as Guardrails:**
+While we avoid purely code-centric skills, specific code snippets are vital in specialized domains like bioinformatics or statistics. **Code snippets should serve as guardrails within a broader workflow, rather than being the entire skill itself.** Use them specifically for:
+* **Highly Specific APIs:** Guiding the correct manipulation of complex data structures (e.g., `MultiAssayExperiment`).
+* **Standardized Lab Methodologies:** Enforcing strict, reproducible formulas or lab-standard normalization steps.
+* **Overcoming LLM Anti-Patterns:** Providing efficient syntax (e.g., `BiocParallel`) when an AI might default to slower base R approaches.
+
+In short: Use workflows for the **"what"** and **"why"**, and embed code snippets for the **"how"** only when exact syntax or specific methodology is strictly required.
 
 ### Centralized Registry vs. Decentralized Discovery
 
