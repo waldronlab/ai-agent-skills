@@ -21,27 +21,27 @@ With these skills, AI agents can:
 
 ### Workflow Orchestration vs. Code-Centric Snippets
 
-Many AI skill repositories act simply as code snippet libraries—providing the AI with advanced copy-paste templates to execute a single task. While fast, this **Code-Centric approach** is brittle, lacks autonomy, and misses the "why" behind the code.
+Many AI skill repositories are code snippet libraries, providing the AI with advanced copy-paste templates to execute a single task. While fast, this **Code-Centric approach** is brittle, lacks autonomy, and misses the "why" behind the code.
 
-Instead, we use **Workflow/Process Orchestration**. Our skills treat the AI like a junior developer given a Standard Operating Procedure (SOP). Rather than just providing raw syntax, a skill defines the *intent*, the *multi-step workflow*, and the *domain knowledge* required. 
+These skills instead provide **Workflow/Process Orchestration**. They treat the AI like a junior developer given a Standard Operating Procedure (SOP). Rather than just providing raw syntax, a skill defines the *intent*, the *multi-step workflow*, and the *domain knowledge* required. 
 
-For example, our code coverage skill doesn't just provide the command to run `covr`; it orchestrates a workflow: run the coverage, summarize the gaps, classify testing needs (Normal Use, Edge Cases, Error Handling, Correctness), and proactively write new test cases based on those criteria. This approach enables high autonomy, ensures the AI adheres to quality standards, and allows it to adapt to different project structures using its general reasoning capabilities.
+For example, our code coverage skill doesn't just provide the command to run `covr`; it orchestrates a workflow: run the coverage, summarize the gaps, classify testing needs (Normal Use, Edge Cases, Error Handling, Correctness), and proactively write new test cases based on those criteria. This approach enables high autonomy, encourages the AI to follow the intent of the process orchestration, and allows it to adapt to different project structures using its general reasoning capabilities.
 
 **The Role of Code Snippets as Guardrails:**
-While we avoid purely code-centric skills, specific code snippets are vital in specialized domains like bioinformatics or statistics. **Code snippets should serve as guardrails within a broader workflow, rather than being the entire skill itself.** Use them specifically for:
+While we avoid purely code-centric skills, specific code snippets can be valuable within bioinformatic and statistical workflows, **Code snippets serve as guardrails within a broader workflow** without being the entire skill itself. Use them specifically for:
 * **Highly Specific APIs:** Guiding the correct manipulation of complex data structures (e.g., `MultiAssayExperiment`).
-* **Standardized Lab Methodologies:** Enforcing strict, reproducible formulas or lab-standard normalization steps.
-* **Overcoming LLM Anti-Patterns:** Providing efficient syntax (e.g., `BiocParallel`) when an AI might default to slower base R approaches.
+* **Standardized Methodologies:** Enforcing strict, reproducible formulas and standardized steps.
+* **Overcoming LLM Anti-Patterns:** LLMs will generate "average" code that may be inefficient for specific contexts or go against community-specific standards and accepted statistical methods.  Providing specific syntax snippets can help steer the AI towards a preferred approach and away from common pitfalls.
 
-In short: Use workflows for the **"what"** and **"why"**, and embed code snippets for the **"how"** only when exact syntax or specific methodology is strictly required.
+In short: Use workflows for the **"what"** and **"why"**, and embed code snippets for the **"how"** only when exact syntax or specific methodology is required.
 
 ### Centralized Registry vs. Decentralized Discovery
 
 When an AI agent needs to discover what it can do, it can either search through a file tree (**Decentralized Discovery**) or read a single index (**Centralized Registry**).
 
-We use a **Centralized Registry** ([`SKILLS.md`](SKILLS.md)). For an AI agent, reading a single markdown file is an O(1) operation. Modern LLMs have massive context windows; parsing a comprehensive registry takes fractions of a second and negligible tokens. If discovery were decentralized, the agent would waste time, conversational turns, and context running search tools to hunt down the right instructions across dozens of folders. 
+We use a **Centralized Registry** ([`SKILLS.md`](SKILLS.md)). For an AI agent, reading a single markdown file is an O(1) operation well within the limits of modern LLMs. Decentralized registries are appropriate for large collections of independent skills without editorial input. However, we want to maintain a curated set of skills that are well-documented, tested, and organized by domain. A centralized registry allows us to provide relational context, allowing the LLM to understand how skills chain together through "Use Case Workflows" that orchestrate multiple skills. 
 
-A centralized registry also provides vital relational context, allowing the LLM to instantly understand how skills chain together through "Use Case Workflows". While scaling to hundreds of skills may eventually require auto-generating the `SKILLS.md` file via CI/CD to prevent human git merge conflicts, the discovery interface for the AI remains intentionally centralized.
+Scaling to hundreds of skills may eventually require auto-generating the `SKILLS.md` file via GitHub Actions rather than being user-updated.
 
 ## Agent-Agnostic Design
 
