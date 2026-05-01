@@ -316,13 +316,6 @@ Skills for analyzing, documenting, and developing R/Bioconductor packages follow
 - Updating `NEWS.md`, `NEWS`, or `NEWS.Rd` after a development cycle
 - Saving time when commit messages alone are insufficient to write clear NEWS entries
 
-**Invocation**:
-- "Update the NEWS file from recent commits"
-- "Draft NEWS entries from git history"
-- "Generate a changelog based on git commits"
-- "Add a NEWS entry for the upcoming release"
-- "Update NEWS based on what changed since the last release"
-
 **What happens**:
 - Detects the NEWS file format in use (`NEWS.md`, `NEWS`, or `NEWS.Rd`)
 - Derives the upcoming even-numbered release version from the current devel version
