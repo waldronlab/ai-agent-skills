@@ -43,28 +43,61 @@ Record the detected file path and format for use throughout the remaining steps.
 
 ### 2. Read Package Version
 
-Parse `DESCRIPTION` to extract the `Version:` field. This is the current development version (odd patch, e.g. `1.19.4`).
+Parse `DESCRIPTION` to extract the `Version:` field. In Bioconductor's versioning convention, the `devel` branch carries an **odd** minor version (the `Y` in `X.Y.Z`), while each released version has an **even** `Y`.
 
-Derive the upcoming release version by incrementing the minor version to the next even number:
-- `1.19.4` → release version is `1.20.0`
-- `2.5.7` → release version is `2.6.0`
+Examples:
+- Current devel `1.19.4` → upcoming release is `1.20.0`
+- Current devel `2.5.7` → upcoming release is `2.6.0`
+- Current devel `0.99.3` → this is a new package submission (version below `1.0.0`)
 
-This release version will be the heading for the new NEWS block.
+This derived release version will be the heading for the new NEWS block.
 
 ### 3. Determine Commit Range
 
-**Find the last release tag** (even minor version):
+Bioconductor packages do **not** use git tags for releases. Instead, the commit range is determined by searching the git log for a specific release-bump commit message.
 
-Run `git tag --list` and filter for tags matching the pattern of the even minor version (e.g., `1.18.0`, `v1.18.0`). Accept both bare (`1.18.0`) and `v`-prefixed (`v1.18.0`) tag formats.
+**Step 3a — Search for the release-bump commit**
 
-If the NEWS file already has an entry for the upcoming release version, offer to update it (append new commits since the last commit that is already covered).
+Run:
+```
+git log --oneline --all
+```
 
-**Commit range rules**:
-- If a release tag is found: use `<release-tag>..HEAD`
-- If no release tag is found but the NEWS file has a version heading: ask user to confirm the starting point
-- If neither: default to the last 50 commits and ask user to confirm
+Search for a commit whose message matches the pattern (case-insensitive):
+```
+bump x.y.z version to even y prior to creation of RELEASE_
+```
 
-Retrieve the full commit log for the range:
+This commit marks the point at which the previous release was cut. For example:
+```
+a1b2c3d bump 1.18.0 version to even y prior to creation of RELEASE_3_18 branch
+```
+
+**Step 3b — Find the devel-version bump commit that follows**
+
+Immediately after the release-bump commit, there should be a follow-up commit on `devel` that incremented the version back to an odd minor (e.g. `1.19.0`). Find the commit that directly follows the release-bump commit in the `devel` branch history:
+
+```
+git log --oneline <release-bump-sha>..HEAD
+```
+
+The oldest commit in that range is the starting point (i.e., use `<devel-bump-sha>..HEAD` as the range, where `<devel-bump-sha>` is the first commit after the release-bump commit).
+
+**Step 3c — Handle new packages (no release-bump commit found)**
+
+If no release-bump commit is found in the history:
+
+1. Check the current `Version:` field from `DESCRIPTION`.
+2. If the version is below `1.0.0` (e.g. `0.99.3`): treat the entire commit history as the range (i.e. `git log --oneline` from the first commit to `HEAD`) and note that this appears to be a new package submission.
+3. If the version is `1.0.0` or higher but no release-bump commit is found: **do not guess**. Tell the user:
+   > "No release-bump commit was found and the version is ≥ 1.0.0. Please specify a commit SHA to use as the starting point for the diff and NEWS entry generation."
+   Then wait for the user to provide a commit SHA and use `<user-sha>..HEAD` as the range.
+
+**Step 3d — Handle an existing NEWS entry for the upcoming release**
+
+If the NEWS file already has a section heading for the upcoming release version, offer to **append** new commits since the last commit already covered rather than regenerating the entire block.
+
+**Retrieve commits for the determined range**:
 ```
 git log <range> --oneline
 ```
@@ -219,8 +252,9 @@ Once confirmed:
 - **Not an R package directory** (`DESCRIPTION` missing): abort with "No DESCRIPTION file found — run this skill from an R package root"
 - **Not a git repository**: abort with "No git repository found — initialise git first"
 - **`git` not on PATH**: abort with "git is not available — install git and ensure it is on your PATH"
-- **No commits in range**: report "No new commits since `<tag>` — NEWS is already up to date"
-- **Ambiguous release tag** (multiple even-version tags): list candidates and ask user to select
+- **No commits in range**: report "No new commits since `<starting-commit>` — NEWS is already up to date"
+- **No release-bump commit and version ≥ 1.0.0**: prompt the user to supply a starting commit SHA; do not guess
+- **No release-bump commit and version < 1.0.0**: use full history and note this appears to be a new package submission
 - **Multiple NEWS files found**: list them and ask user which to update
 - **Diff too large** (> 500 changed lines for a single commit): summarise by file, note the limitation
 
@@ -230,15 +264,16 @@ Once confirmed:
 
 **Invocation**: "Update the NEWS file from recent commits"
 
-**Scenario**: All commits since `1.18.0` have descriptive messages.
+**Scenario**: Package with prior releases; all commits since the previous release have descriptive messages.
 
 **Process**:
 1. Finds `NEWS.md`, detects existing headings `NEW FEATURES` and `BUG FIXES`
-2. Derives release version `1.20.0` from current `1.19.4`
-3. Finds tag `1.18.0`, retrieves 12 commits — none are vague
-4. Categorises and drafts 12 entries
-5. Shows preview, user confirms
-6. Prepends block to `NEWS.md`
+2. Derives release version `1.20.0` from current devel `1.19.4`
+3. Finds release-bump commit `"bump 1.18.0 version to even y prior to creation of RELEASE_3_18 branch"`, then locates the subsequent devel-bump commit `b2c3d4e`
+4. Retrieves 12 commits in range `b2c3d4e..HEAD` — none are vague
+5. Categorises and drafts 12 entries
+6. Shows preview, user confirms
+7. Prepends block to `NEWS.md`
 
 ---
 
@@ -249,8 +284,8 @@ Once confirmed:
 **Scenario**: Several commits have messages like "API update", "fix", and "wip".
 
 **Process**:
-1. Finds `NEWS.md` and tag `1.18.0`
-2. Retrieves 8 commits: 5 specific, 3 vague
+1. Finds `NEWS.md`; locates release-bump and subsequent devel-bump commit
+2. Retrieves 8 commits in range: 5 specific, 3 vague
 3. For "API update" (commit `a1b2c3d`): inspects diff, finds `returnSamples()` signature changed — classifies as `SIGNIFICANT USER-VISIBLE CHANGES`
 4. For "fix" (commit `e4f5a6b`): inspects diff, finds test file edit — classifies as `BUG FIXES`
 5. For "wip" (commit `c7d8e9f`): diff shows only internal helper changes — classifies as `INTERNAL CHANGES`
@@ -259,35 +294,51 @@ Once confirmed:
 
 ---
 
-### Example 3: No Existing NEWS File
+### Example 3: New Package Submission (version < 1.0.0)
 
 **Invocation**: "Add a NEWS entry for the upcoming release"
 
-**Scenario**: New package with no NEWS file yet.
+**Scenario**: New package submission; `DESCRIPTION` shows `Version: 0.99.3`; no release-bump commit exists.
 
 **Process**:
 1. No NEWS file found; asks user which format to create → user selects `NEWS.md`
-2. No release tag found; asks user to confirm starting commit or use last 50 commits
-3. Drafts first-ever NEWS block
+2. No release-bump commit found; version is `0.99.3` (below `1.0.0`) — treat entire commit history as the range
+3. Drafts first-ever NEWS block noting this is a new package submission
 4. Shows preview, user confirms
 5. Creates `NEWS.md` with the new block
 
 ---
 
-### Example 4: PR Titles Used
+### Example 4: No Release-Bump Commit but Version ≥ 1.0.0
+
+**Invocation**: "Update the NEWS file"
+
+**Scenario**: Package is at `1.3.2` on devel but has no release-bump commit (e.g. history was rewritten or imported without full history).
+
+**Process**:
+1. Searches git log — no commit matching the release-bump pattern is found
+2. Version is `1.3.2` (≥ 1.0.0) — cannot determine range safely
+3. Tells the user: "No release-bump commit was found and the version is ≥ 1.0.0. Please specify a commit SHA to use as the starting point for the diff and NEWS entry generation."
+4. User provides `f9e8d7c`; skill uses `f9e8d7c..HEAD` as the range and proceeds normally
+
+---
+
+### Example 5: PR Titles Used
 
 **Invocation**: "Draft NEWS entries from git history"
 
 **Scenario**: Repository uses GitHub pull requests merged with squash-merge.
 
 **Process**:
-1. Merge commits parsed; PR titles extracted (e.g. "Add support for TreeSummarizedExperiment input" from PR #45)
-2. PR title used in place of merge commit subject "Merge pull request #45 from feature-branch"
-3. Richer, human-readable entries appear in draft with `(#45)` reference
+1. Locates release-bump and devel-bump commits to establish range
+2. Merge commits parsed; PR titles extracted (e.g. "Add support for TreeSummarizedExperiment input" from PR #45)
+3. PR title used in place of merge commit subject "Merge pull request #45 from feature-branch"
+4. Richer, human-readable entries appear in draft with `(#45)` reference
 
 ## Notes
 
-- This skill assumes the Bioconductor convention where the `devel` branch carries odd-numbered patch versions and the release version is even-numbered
+- This skill assumes the Bioconductor convention where the `devel` branch carries odd-numbered minor versions and each release has an even minor version; no git tags are used or required
+- The commit range is derived from the release-bump commit pattern ("bump x.y.z version to even y prior to creation of RELEASE_..."); if that pattern is absent and the version is ≥ 1.0.0, the user must supply a starting commit SHA
 - Category headings are inferred from the existing NEWS file; no new heading names are introduced unless the file is new or the user requests them
 - Diff inspection is scoped to `R/`, `src/`, `DESCRIPTION`, and `NAMESPACE` to avoid irrelevant noise from documentation or test-only commits
 - The skill does not run R or install packages; it relies entirely on `git` and file reads
