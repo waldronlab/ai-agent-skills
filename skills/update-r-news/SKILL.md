@@ -63,9 +63,9 @@ Run:
 git log --oneline --all
 ```
 
-Search for a commit whose message matches the pattern (case-insensitive):
+Search for a commit whose message matches the pattern (case-insensitive), where `<version>` is an actual version number with an even minor (e.g. `1.18.0`):
 ```
-bump x.y.z version to even y prior to creation of RELEASE_
+bump <version> version to even y prior to creation of RELEASE_
 ```
 
 This commit marks the point at which the previous release was cut. For example:
@@ -75,13 +75,13 @@ a1b2c3d bump 1.18.0 version to even y prior to creation of RELEASE_3_18 branch
 
 **Step 3b — Find the devel-version bump commit that follows**
 
-Immediately after the release-bump commit, there should be a follow-up commit on `devel` that incremented the version back to an odd minor (e.g. `1.19.0`). Find the commit that directly follows the release-bump commit in the `devel` branch history:
+Immediately after the release-bump commit, there should be a follow-up commit on `devel` that incremented the version back to an odd minor (e.g. `1.19.0`). The oldest commit in the range after the release-bump commit becomes the starting point:
 
 ```
 git log --oneline <release-bump-sha>..HEAD
 ```
 
-The oldest commit in that range is the starting point (i.e., use `<devel-bump-sha>..HEAD` as the range, where `<devel-bump-sha>` is the first commit after the release-bump commit).
+Use `<devel-bump-sha>..HEAD` as the range, where `<devel-bump-sha>` is the oldest (first) commit returned by the above command.
 
 **Step 3c — Handle new packages (no release-bump commit found)**
 
@@ -89,9 +89,7 @@ If no release-bump commit is found in the history:
 
 1. Check the current `Version:` field from `DESCRIPTION`.
 2. If the version is below `1.0.0` (e.g. `0.99.3`): treat the entire commit history as the range (i.e. `git log --oneline` from the first commit to `HEAD`) and note that this appears to be a new package submission.
-3. If the version is `1.0.0` or higher but no release-bump commit is found: **do not guess**. Tell the user:
-   > "No release-bump commit was found and the version is ≥ 1.0.0. Please specify a commit SHA to use as the starting point for the diff and NEWS entry generation."
-   Then wait for the user to provide a commit SHA and use `<user-sha>..HEAD` as the range.
+3. If the version is `1.0.0` or higher but no release-bump commit is found: **do not guess**. Ask the user to supply a starting commit SHA (see Error Handling).
 
 **Step 3d — Handle an existing NEWS entry for the upcoming release**
 
