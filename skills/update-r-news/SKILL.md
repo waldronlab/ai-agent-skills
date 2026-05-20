@@ -63,25 +63,34 @@ Run:
 git log --oneline --all
 ```
 
-Search for a commit whose message matches the pattern (case-insensitive), where `<version>` is an actual version number with an even minor (e.g. `1.18.0`):
+Search for a commit whose message matches this exact literal pattern (these commits are applied en masse by Bioconductor and do not include the actual package version number):
 ```
-bump <version> version to even y prior to creation of RELEASE_
+bump x.y.z version to even y prior to creation of RELEASE_
 ```
 
-This commit marks the point at which the previous release was cut. For example:
+For example, for the Bioconductor 3.18 release:
 ```
-a1b2c3d bump 1.18.0 version to even y prior to creation of RELEASE_3_18 branch
+a1b2c3d bump x.y.z version to even y prior to creation of RELEASE_3_18 branch
 ```
 
 **Step 3b — Find the devel-version bump commit that follows**
 
-Immediately after the release-bump commit, there should be a follow-up commit on `devel` that incremented the version back to an odd minor (e.g. `1.19.0`). The oldest commit in the range after the release-bump commit becomes the starting point:
+Immediately after the release-bump commit, Bioconductor applies a second en-masse commit that increments the `devel` branch back to an odd minor version. Its message matches the literal pattern:
+```
+bump x.y.z version to odd y following creation of RELEASE_
+```
 
+For example:
+```
+b2c3d4e bump x.y.z version to odd y following creation of RELEASE_3_18 branch
+```
+
+This second commit (`<devel-bump-sha>`) is the starting point for the commit range. Use `<devel-bump-sha>..HEAD` as the range.
+
+To locate it, find the oldest commit returned by:
 ```
 git log --oneline <release-bump-sha>..HEAD
 ```
-
-Use `<devel-bump-sha>..HEAD` as the range, where `<devel-bump-sha>` is the oldest (first) commit returned by the above command.
 
 **Step 3c — Handle new packages (no release-bump commit found)**
 
@@ -267,7 +276,7 @@ Once confirmed:
 **Process**:
 1. Finds `NEWS.md`, detects existing headings `NEW FEATURES` and `BUG FIXES`
 2. Derives release version `1.20.0` from current devel `1.19.4`
-3. Finds release-bump commit `"bump 1.18.0 version to even y prior to creation of RELEASE_3_18 branch"`, then locates the subsequent devel-bump commit `b2c3d4e`
+3. Finds release-bump commit `"bump x.y.z version to even y prior to creation of RELEASE_3_18 branch"`, then locates the subsequent devel-bump commit `"bump x.y.z version to odd y following creation of RELEASE_3_18 branch"` (`b2c3d4e`)
 4. Retrieves 12 commits in range `b2c3d4e..HEAD` — none are vague
 5. Categorises and drafts 12 entries
 6. Shows preview, user confirms
